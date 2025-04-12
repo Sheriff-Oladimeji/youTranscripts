@@ -2,27 +2,35 @@
 
 import React from "react";
 import { TranscriptItem } from "@/store/transcript-store";
+import { useTranslationStore } from "@/store/translation-store";
 
 interface TranscriptViewerProps {
-  videoId: string;
   transcript: TranscriptItem[];
   isLoading: boolean;
   error: string | null;
-  isTranslated: boolean;
 }
 
 export default function TranscriptViewer({
-  videoId,
   transcript,
   isLoading,
   error,
-  isTranslated,
 }: TranscriptViewerProps) {
+  const { translatedTranscript, currentLanguage, isTranslating } =
+    useTranslationStore();
+  const isTranslated = currentLanguage !== "en";
   // No sticky video functionality
 
-  if (isLoading) {
+  if (isLoading || isTranslating) {
     return (
       <div className="p-6 bg-muted rounded-lg animate-pulse">
+        {isTranslating && (
+          <div className="mb-4 p-2 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200 rounded">
+            <p className="text-sm font-medium flex items-center">
+              <span className="inline-block animate-pulse mr-2">⏳</span>
+              Translating transcript... This may take a moment.
+            </p>
+          </div>
+        )}
         <div className="h-4 bg-muted-foreground/20 rounded w-3/4 mb-4"></div>
         <div className="h-4 bg-muted-foreground/20 rounded w-1/2 mb-4"></div>
         <div className="h-4 bg-muted-foreground/20 rounded w-5/6 mb-4"></div>
@@ -62,12 +70,15 @@ export default function TranscriptViewer({
           </div>
         )}
 
-        <div className="space-y-4">
-          {transcript.map((item, index) => (
-            <p key={index} className="leading-relaxed text-base">
-              {item.text}
-            </p>
-          ))}
+        <div className="transcript-container">
+          <p className="leading-relaxed text-base">
+            {(translatedTranscript.length > 0
+              ? translatedTranscript
+              : transcript
+            ).map((item, index) => (
+              <span key={index}>{item.text} </span>
+            ))}
+          </p>
         </div>
       </div>
     </div>

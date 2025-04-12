@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useTranscriptStore } from "@/store/transcript-store";
+
 import { EmbeddedVideo } from "@/components/embedded-video";
 import TranscriptViewer from "@/components/transcript/transcript-viewer";
 import TranscriptHeader from "@/components/transcript/transcript-header";
@@ -18,14 +19,8 @@ export default function TranscriptPage({
   const resolvedParams = use(params);
   const { videoId } = resolvedParams;
 
-  const {
-    fetchTranscriptData,
-    isLoading,
-    error,
-    transcript,
-    videoTitle,
-    translationTarget,
-  } = useTranscriptStore();
+  const { fetchTranscriptData, isLoading, error, transcript, videoTitle } =
+    useTranscriptStore();
 
   useEffect(() => {
     if (videoId) {
@@ -51,7 +46,6 @@ export default function TranscriptPage({
 
         {/* Action Buttons */}
         <ActionButtons
-          videoId={videoId}
           onTranslateClick={() =>
             setShowTranslationSettings(!showTranslationSettings)
           }
@@ -62,11 +56,9 @@ export default function TranscriptPage({
 
         {/* Transcript Content */}
         <TranscriptViewer
-          videoId={videoId}
           transcript={transcript}
           isLoading={isLoading}
           error={error}
-          isTranslated={!!translationTarget}
         />
       </div>
     </main>

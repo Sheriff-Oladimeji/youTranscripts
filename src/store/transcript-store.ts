@@ -4,12 +4,14 @@ export interface TranscriptItem {
   text: string;
   duration: number;
   offset: number;
+  translatedText?: string;
 }
 
 interface TranscriptState {
   videoId: string | null;
   videoTitle: string;
   transcript: TranscriptItem[];
+  originalTranscript: TranscriptItem[];
   isLoading: boolean;
   error: string | null;
   selectedLanguage: string;
@@ -21,13 +23,15 @@ interface TranscriptState {
   fetchTranscriptData: (videoId: string) => Promise<void>;
   setSelectedLanguage: (language: string) => void;
   setTranslationTarget: (language: string | null) => void;
+  translateTranscript: (language: string) => Promise<void>;
   clearTranscript: () => void;
 }
 
-export const useTranscriptStore = create<TranscriptState>((set) => ({
+export const useTranscriptStore = create<TranscriptState>((set, get) => ({
   videoId: null,
   videoTitle: "",
   transcript: [],
+  originalTranscript: [],
   isLoading: false,
   error: null,
   selectedLanguage: "en",
@@ -63,6 +67,7 @@ export const useTranscriptStore = create<TranscriptState>((set) => ({
         videoId,
         videoTitle: data.metadata.title,
         transcript: data.transcript,
+        originalTranscript: data.transcript,
         isLoading: false,
       });
     } catch (error) {
@@ -77,16 +82,101 @@ export const useTranscriptStore = create<TranscriptState>((set) => ({
 
   setSelectedLanguage: (language) => set({ selectedLanguage: language }),
 
-  setTranslationTarget: (language) =>
+  setTranslationTarget: (language) => {
     set({
       translationTarget: language,
       isTranslating: !!language,
-    }),
+    });
+
+    if (language) {
+      get().translateTranscript(language);
+    } else {
+      // Restore original transcript
+      set({ transcript: get().originalTranscript });
+    }
+  },
+
+  translateTranscript: async (language) => {
+    const { transcript: currentTranscript } = get();
+    set({ isTranslating: true, error: null });
+
+    try {
+      // Combine all text into a single string with markers to split later
+      // This reduces the number of API calls significantly
+      const combinedText = currentTranscript
+        .map((item) => item.text)
+        .join("\n\n###SEGMENT###\n\n");
+
+      // Make a single API call for the entire transcript
+      const response = await fetch("/api/translate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          text: combinedText,
+          target_lang: language,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Translation failed");
+      }
+
+      const data = await response.json();
+
+      // Split the translated text back into segments
+      const translatedSegments = data.translatedText.split(
+        "\n\n###SEGMENT###\n\n"
+      );
+
+      // Create a new transcript with translations
+      if (translatedSegments.length !== currentTranscript.length) {
+        throw new Error("Translation segments don't match original transcript");
+      }
+
+      const translatedTranscript = currentTranscript.map((segment, index) => ({
+        ...segment,
+        translatedText: translatedSegments[index],
+        text: translatedSegments[index], // Replace text with translation
+      }));
+
+      // Update the transcript with translations
+      set({
+        transcript: translatedTranscript,
+        isTranslating: false,
+      });
+
+      // We can't directly import toast here, so we'll use a custom event
+      // to notify the UI that translation is complete
+      if (typeof window !== "undefined") {
+        window.dispatchEvent(
+          new CustomEvent("translation-complete", {
+            detail: { language },
+          })
+        );
+      }
+    } catch (error) {
+      console.error("Error translating transcript:", error);
+      set({
+        error:
+          error instanceof Error
+            ? error.message
+            : "Failed to translate transcript",
+        isTranslating: false,
+        // Keep the original transcript if translation fails
+        transcript: get().originalTranscript,
+      });
+    }
+  },
 
   clearTranscript: () =>
     set({
       transcript: [],
+      originalTranscript: [],
       videoTitle: "",
       error: null,
+      translationTarget: null,
     }),
 }));

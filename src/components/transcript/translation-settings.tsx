@@ -1,47 +1,38 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect } from "react";
 import { useTranscriptStore } from "@/store/transcript-store";
-import { Button } from "@/components/ui/button";
+import { useTranslationStore, languages } from "@/store/translation-store";
+
 import { Globe } from "lucide-react";
 
-// Language options for demonstration
-const languages = [
-  { code: "en", name: "English" },
-  { code: "es", name: "Spanish" },
-  { code: "fr", name: "French" },
-  { code: "de", name: "German" },
-  { code: "it", name: "Italian" },
-  { code: "pt", name: "Portuguese" },
-  { code: "ru", name: "Russian" },
-  { code: "ja", name: "Japanese" },
-  { code: "zh", name: "Chinese" },
-  { code: "ar", name: "Arabic" },
-  { code: "hi", name: "Hindi" },
-  { code: "ko", name: "Korean" },
-  { code: "tr", name: "Turkish" },
-  { code: "nl", name: "Dutch" },
-  { code: "sv", name: "Swedish" },
-  { code: "pl", name: "Polish" },
-];
-
 export default function TranslationSettings() {
-  const { setTranslationTarget, translationTarget } = useTranscriptStore();
-  const [selectedLanguage, setSelectedLanguage] = useState<string>("");
+  const { transcript } = useTranscriptStore();
+  const {
+    translateTo,
+    currentLanguage,
+    originalLanguage,
+    isTranslating,
+    error,
+    setOriginalTranscript,
+  } = useTranslationStore();
 
-  const handleTranslate = () => {
-    if (selectedLanguage) {
-      setTranslationTarget(selectedLanguage);
+  // Sync the transcript with the translation store
+  useEffect(() => {
+    if (transcript.length > 0) {
+      // For demo purposes, we're assuming English as the detected language
+      // In a real app, you would get this from the API or use language detection
+      setOriginalTranscript(transcript, "en");
     }
-  };
-
-  const handleCancelTranslation = () => {
-    setTranslationTarget(null);
-    setSelectedLanguage("");
-  };
+  }, [transcript, setOriginalTranscript]);
 
   return (
     <div className="p-5 bg-[#FFF4E6] dark:bg-[#3A2A15] rounded-lg mb-6 border border-[#FFAC5F] dark:border-[#FFAC5F]/30">
+      {error && (
+        <div className="mb-4 p-2 bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200 rounded">
+          <p className="text-sm font-medium">Translation error: {error}</p>
+        </div>
+      )}
       <div className="flex items-center mb-4">
         <Globe className="h-5 w-5 mr-2 text-[#FF9933]" />
         <h3 className="text-lg font-medium">Language & Translation Settings</h3>
@@ -56,56 +47,38 @@ export default function TranslationSettings() {
             <select
               id="language"
               className="w-full h-10 px-3 rounded-md border border-[#FFAC5F]/50 bg-white dark:bg-[#1F1F1F]"
-              value="en"
-              disabled
+              value={currentLanguage}
+              onChange={(e) => translateTo(e.target.value)}
+              disabled={isTranslating}
             >
-              <option value="en">English</option>
+              {/* Put original language first */}
+              {languages
+                .filter((lang) => lang.code === originalLanguage)
+                .map((lang) => (
+                  <option key={lang.code} value={lang.code}>
+                    {lang.name} (Original)
+                  </option>
+                ))}
+
+              {/* Then all other languages */}
+              {languages
+                .filter((lang) => lang.code !== originalLanguage)
+                .map((lang) => (
+                  <option key={lang.code} value={lang.code}>
+                    {lang.name}
+                  </option>
+                ))}
             </select>
-            <div className="absolute right-2 top-1/2 -translate-y-1/2 text-xs">
-              <span className="inline-block px-2 py-1 bg-[#FFAC5F]/20 rounded text-[#FF9933] dark:text-[#FFAC5F]">
-                Auto-detected
-              </span>
+          </div>
+
+          {isTranslating && (
+            <div className="mt-2 p-2 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200 rounded">
+              <p className="text-sm flex items-center">
+                <span className="inline-block animate-pulse mr-2">⏳</span>
+                Translating... Please wait
+              </p>
             </div>
-          </div>
-        </div>
-
-        <div className="flex-1">
-          <label htmlFor="translate" className="block text-sm font-medium mb-1">
-            Translate to
-          </label>
-          <div className="flex gap-2">
-            <select
-              id="translate"
-              className="flex-1 h-10 px-3 rounded-md border border-[#FFAC5F]/50 bg-white dark:bg-[#1F1F1F]"
-              value={selectedLanguage}
-              onChange={(e) => setSelectedLanguage(e.target.value)}
-              disabled={!!translationTarget}
-            >
-              <option value="">Select language</option>
-              {languages.map((lang) => (
-                <option key={lang.code} value={lang.code}>
-                  {lang.name}
-                </option>
-              ))}
-            </select>
-
-            {translationTarget ? (
-              <Button
-                onClick={handleCancelTranslation}
-                className="bg-red-600 hover:bg-red-700 text-white"
-              >
-                Cancel
-              </Button>
-            ) : (
-              <Button
-                onClick={handleTranslate}
-                className="bg-[#FFAC5F] hover:bg-[#FF9933] text-black font-medium"
-                disabled={!selectedLanguage}
-              >
-                Translate
-              </Button>
-            )}
-          </div>
+          )}
         </div>
       </div>
     </div>
