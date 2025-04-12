@@ -68,9 +68,13 @@ export const useTranscriptStore = create<TranscriptState>((set, get) => ({
       // Get the detected language from the API response
       const detectedLanguage = data.metadata.language || "en";
 
+      // Make sure we have a title
+      const videoTitle = data.metadata.title || "YouTube Video";
+      console.log("Setting video title in store:", videoTitle);
+
       set({
         videoId,
-        videoTitle: data.metadata.title,
+        videoTitle,
         transcript: data.transcript,
         originalTranscript: data.transcript,
         selectedLanguage: detectedLanguage,

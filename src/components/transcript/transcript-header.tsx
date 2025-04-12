@@ -69,7 +69,9 @@ export default function TranscriptHeader({
           ? "Loading transcript..."
           : error
           ? "Error loading transcript"
-          : `Transcript of ${title}`}
+          : title
+          ? `Transcript of ${title}`
+          : `Transcript of YouTube Video`}
       </h1>
 
       {!isLoading && !error && (

@@ -32,7 +32,26 @@ export const fetchTranscript = async (
 
   try {
     const info = await youtube.getInfo(videoId);
-    const title = info.basic_info?.title || "";
+
+    // Extract title from basic_info
+    let title = "";
+
+    if (info.basic_info?.title) {
+      title = info.basic_info.title;
+    } else {
+      // Use type assertion to try to access other properties that might contain the title
+      const infoAny = info as any;
+
+      if (typeof infoAny.title === "string") {
+        title = infoAny.title;
+      } else if (infoAny.page?.title) {
+        title = infoAny.page.title;
+      } else {
+        title = "YouTube Video";
+      }
+    }
+
+    console.log("Video title from YouTube API:", title);
     // Get the transcript data
     const transcriptData = await info.getTranscript();
 
@@ -102,7 +121,13 @@ export const fetchTranscript = async (
       };
     });
 
-    return { title, transcript, language };
+    // Ensure title is included in the response
+    console.log("Returning transcript data with title:", title);
+    return {
+      title,
+      transcript,
+      language,
+    };
   } catch (error) {
     console.error("Error fetching transcript:", error);
     throw error;

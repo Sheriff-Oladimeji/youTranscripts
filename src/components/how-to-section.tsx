@@ -58,7 +58,7 @@ export default function HowToSection() {
                 <Input
                   type="text"
                   placeholder="Paste YouTube URL here..."
-                  className="flex-1 h-12 bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-700"
+                  className="flex-1 h-12 bg-white py-4 dark:bg-gray-800 border-gray-300 dark:border-gray-700"
                   value={demoUrl}
                   onChange={(e) => setDemoUrl(e.target.value)}
                 />
