@@ -28,12 +28,22 @@ export async function POST(request: Request) {
     try {
       const transcriptData = await fetchTranscript(url);
 
+      // Log the transcript data to help debug
+      console.log("Transcript data received:", {
+        title: transcriptData.title,
+        language: transcriptData.language,
+        transcriptLength: transcriptData.transcript.length,
+      });
+
+      // Make sure we have a title, even if it's a fallback
+      const title = transcriptData.title || "YouTube Video";
+
       return NextResponse.json({
         transcript: transcriptData.transcript,
         metadata: {
           id: videoId,
           videoId: videoId,
-          title: transcriptData.title,
+          title: title,
           language: transcriptData.language,
           hasTranscript: true,
         },

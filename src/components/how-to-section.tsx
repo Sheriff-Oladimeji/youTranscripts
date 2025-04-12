@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Video } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { getVideoId } from "@/lib/youtube";
@@ -48,7 +49,7 @@ export default function HowToSection() {
                 if (videoId) {
                   router.push(`/transcript/${videoId}`);
                 } else {
-                  alert("Please enter a valid YouTube URL");
+                  toast.error("Please enter a valid YouTube URL");
                   setIsLoading(false);
                 }
               }}
@@ -57,7 +58,7 @@ export default function HowToSection() {
                 <Input
                   type="text"
                   placeholder="Paste YouTube URL here..."
-                  className="flex-1 h-12"
+                  className="flex-1 h-12 bg-white py-4 dark:bg-gray-800 border-gray-300 dark:border-gray-700"
                   value={demoUrl}
                   onChange={(e) => setDemoUrl(e.target.value)}
                 />
@@ -66,7 +67,7 @@ export default function HowToSection() {
                   className="h-12 px-8 bg-amber-500 hover:bg-amber-600 text-black font-bold"
                   disabled={isLoading}
                 >
-                  {isLoading ? "Loading..." : "Get Free Transcript"}
+                  {isLoading ? "Generating..." : "Get Free Transcript"}
                 </Button>
               </div>
             </form>

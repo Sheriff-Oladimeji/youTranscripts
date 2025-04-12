@@ -6,7 +6,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Copy, Globe, Clipboard } from "lucide-react";
+import { Languages, Globe, Clipboard } from "lucide-react";
+import { toast } from "sonner";
 import { getVideoId } from "@/lib/youtube";
 
 export default function HeroSection() {
@@ -22,7 +23,7 @@ export default function HeroSection() {
     if (videoId) {
       router.push(`/transcript/${videoId}`);
     } else {
-      alert("Please enter a valid YouTube URL");
+      toast.error("Please enter a valid YouTube URL");
       setIsLoading(false);
     }
   };
@@ -48,7 +49,7 @@ export default function HeroSection() {
           <Input
             type="text"
             placeholder="Paste YouTube URL here..."
-            className="flex-1 h-12 bg-white/10 backdrop-blur-sm border-white/20 text-white placeholder:text-white/70"
+            className="flex-1 h-12 bg-white/10 backdrop-blur-sm border-white/20 py-4 text-white placeholder:text-white/70"
             value={youtubeUrl}
             onChange={(e) => setYoutubeUrl(e.target.value)}
           />
@@ -57,7 +58,7 @@ export default function HeroSection() {
             className="h-12 px-8 bg-amber-500 hover:bg-amber-600 text-black font-bold"
             disabled={isLoading}
           >
-            {isLoading ? "Loading..." : "Get Free Transcript"}
+            {isLoading ? "Generating..." : "Get Free Transcript"}
           </Button>
         </form>
 
@@ -67,7 +68,7 @@ export default function HeroSection() {
             <span>One-click Copy</span>
           </div>
           <div className="flex items-center gap-2">
-            <Copy className="h-5 w-5" />
+            <Languages className="h-5 w-5" />
             <span>Supports Translation</span>
           </div>
           <div className="flex items-center gap-2">
