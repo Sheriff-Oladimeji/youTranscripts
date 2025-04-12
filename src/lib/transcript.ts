@@ -33,15 +33,16 @@ export const fetchTranscript = async (
   try {
     const info = await youtube.getInfo(videoId);
     const title = info.basic_info?.title || "";
-    // Get available transcript languages
-    const transcriptList = await info.getTranscript();
+    // Get the transcript data
+    const transcriptData = await info.getTranscript();
 
     // Get the language of the transcript
     let language = "en"; // Default to English
 
     try {
+      // Try to detect language from transcript data
       // Use type assertion to access properties that might not be in the type definition
-      const transcriptObj = transcriptList?.transcript as any;
+      const transcriptObj = transcriptData?.transcript as any;
 
       if (transcriptObj?.header?.language_menu?.items?.length > 0) {
         // Find the selected language
@@ -56,8 +57,6 @@ export const fetchTranscript = async (
     } catch (e) {
       console.warn("Could not detect transcript language:", e);
     }
-
-    const transcriptData = transcriptList;
 
     if (!transcriptData?.transcript?.content?.body?.initial_segments) {
       throw new Error("No transcript available for this video");

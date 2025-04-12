@@ -41,6 +41,12 @@ async function translateText(
   text: string,
   targetLang: string
 ): Promise<string> {
+  // Check for segment markers first
+  const newMarker = "__SEGMENT_MARKER_12345__";
+  if (text.includes(newMarker)) {
+    return translateLongText(text, targetLang);
+  }
+
   // For long texts, we need to split it into chunks to avoid URL length limitations
   // and potential issues with the translation APIs
   if (text.length > 5000) {
@@ -92,12 +98,28 @@ async function translateLongText(
   text: string,
   targetLang: string
 ): Promise<string> {
-  // Check if the text contains our segment markers
-  const hasSegmentMarkers = text.includes("###SEGMENT###");
+  // Check if the text contains our segment markers (old or new format)
+  const oldMarker = "###SEGMENT###";
+  const newMarker = "__SEGMENT_MARKER_12345__";
+
+  const hasOldSegmentMarkers = text.includes(oldMarker);
+  const hasNewSegmentMarkers = text.includes(newMarker);
 
   // If it has segment markers, we need to preserve them during translation
-  if (hasSegmentMarkers) {
-    // Split by segment markers
+  if (hasNewSegmentMarkers) {
+    // Split by new segment markers
+    const segments = text.split(newMarker);
+
+    // Translate each segment individually
+    const translatedSegments = await Promise.all(
+      segments.map((segment) => translateText(segment, targetLang))
+    );
+
+    // Rejoin with the same markers
+    return translatedSegments.join(newMarker);
+  } else if (hasOldSegmentMarkers) {
+    // Handle old format for backward compatibility
+    // Split by old segment markers
     const segments = text.split("\n\n###SEGMENT###\n\n");
 
     // Translate each segment individually

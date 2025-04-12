@@ -68,6 +68,9 @@ export const useTranslationStore = create<TranslationState>((set, get) => ({
     const { originalTranscript, originalLanguage } = get();
     const transcriptToTranslate = transcript || originalTranscript;
 
+    // Define a marker that's unlikely to appear in normal text
+    const SEGMENT_MARKER = "__SEGMENT_MARKER_12345__";
+
     // If selecting the original language or the transcript is empty, just revert to original
     if (language === originalLanguage || transcriptToTranslate.length === 0) {
       set({
@@ -97,7 +100,7 @@ export const useTranslationStore = create<TranslationState>((set, get) => ({
       // Combine all text into a single string with markers to split later
       const combinedText = transcriptToTranslate
         .map((item) => item.text)
-        .join("\n\n###SEGMENT###\n\n");
+        .join(SEGMENT_MARKER);
 
       // Make a single API call for the entire transcript
       const response = await fetch("/api/translate", {
@@ -119,13 +122,48 @@ export const useTranslationStore = create<TranslationState>((set, get) => ({
       const data = await response.json();
 
       // Split the translated text back into segments
-      const translatedSegments = data.translatedText.split(
-        "\n\n###SEGMENT###\n\n"
-      );
+      const translatedSegments = data.translatedText.split(SEGMENT_MARKER);
 
-      // Create a new transcript with translations
-      if (translatedSegments.length !== transcriptToTranslate.length) {
-        throw new Error("Translation segments don't match original transcript");
+      // Check if the translation preserved our markers by checking if we got multiple segments
+      if (translatedSegments.length > 1) {
+        // Create a new transcript with translations
+        // Handle case where segments don't match exactly
+        if (translatedSegments.length !== transcriptToTranslate.length) {
+          console.warn(
+            `Translation segments count mismatch: got ${translatedSegments.length}, expected ${transcriptToTranslate.length}`
+          );
+
+          // Use as many segments as we have, pad with original text if needed
+          while (translatedSegments.length < transcriptToTranslate.length) {
+            translatedSegments.push(
+              transcriptToTranslate[translatedSegments.length].text
+            );
+          }
+
+          // If we have too many segments, truncate
+          if (translatedSegments.length > transcriptToTranslate.length) {
+            translatedSegments.length = transcriptToTranslate.length;
+          }
+        }
+      } else {
+        // If the marker isn't in the response, it means the API didn't preserve our markers
+        // In this case, we'll just use the entire response as a single segment
+        console.warn(
+          "Translation API did not preserve segment markers. Using fallback approach."
+        );
+
+        // Use the entire translated text for the first segment and keep the rest as is
+        translatedSegments[0] = data.translatedText;
+
+        // Fill the rest with original text
+        for (let i = 1; i < transcriptToTranslate.length; i++) {
+          translatedSegments[i] = transcriptToTranslate[i].text;
+        }
+
+        // Show a warning to the user
+        toast.warning(
+          "Translation may be incomplete. Only the first segment was translated."
+        );
       }
 
       const translatedTranscript = transcriptToTranslate.map(
