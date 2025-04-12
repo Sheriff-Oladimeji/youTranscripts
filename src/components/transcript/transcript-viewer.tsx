@@ -1,23 +1,25 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { TranscriptItem } from '@/store/transcript-store';
+import React from "react";
+import { TranscriptItem } from "@/store/transcript-store";
 
 interface TranscriptViewerProps {
+  videoId: string;
   transcript: TranscriptItem[];
   isLoading: boolean;
   error: string | null;
   isTranslated: boolean;
 }
 
-export default function TranscriptViewer({ 
-  transcript, 
-  isLoading, 
+export default function TranscriptViewer({
+  videoId,
+  transcript,
+  isLoading,
   error,
-  isTranslated
+  isTranslated,
 }: TranscriptViewerProps) {
-  const [stickyVideo, setStickyVideo] = useState(false);
-  
+  // No sticky video functionality
+
   if (isLoading) {
     return (
       <div className="p-6 bg-muted rounded-lg animate-pulse">
@@ -29,7 +31,7 @@ export default function TranscriptViewer({
       </div>
     );
   }
-  
+
   if (error) {
     return (
       <div className="p-6 bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200 rounded-lg">
@@ -38,32 +40,19 @@ export default function TranscriptViewer({
       </div>
     );
   }
-  
+
   if (transcript.length === 0) {
     return (
       <div className="p-6 bg-muted rounded-lg">
-        <p className="text-center text-muted-foreground">No transcript available for this video.</p>
+        <p className="text-center text-muted-foreground">
+          No transcript available for this video.
+        </p>
       </div>
     );
   }
-  
+
   return (
-    <div className="relative">
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center">
-          <input
-            type="checkbox"
-            id="sticky-video"
-            className="mr-2"
-            checked={stickyVideo}
-            onChange={() => setStickyVideo(!stickyVideo)}
-          />
-          <label htmlFor="sticky-video" className="text-sm font-medium">
-            Stick video to top?
-          </label>
-        </div>
-      </div>
-      
+    <div className="relative mt-6">
       <div className="p-6 bg-muted rounded-lg">
         {isTranslated && (
           <div className="mb-4 p-2 bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-200 rounded">
@@ -72,10 +61,10 @@ export default function TranscriptViewer({
             </p>
           </div>
         )}
-        
+
         <div className="space-y-4">
           {transcript.map((item, index) => (
-            <p key={index} className="leading-relaxed">
+            <p key={index} className="leading-relaxed text-base">
               {item.text}
             </p>
           ))}

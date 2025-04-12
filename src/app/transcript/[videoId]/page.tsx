@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useTranscriptStore } from "@/store/transcript-store";
 import { EmbeddedVideo } from "@/components/embedded-video";
 import TranscriptViewer from "@/components/transcript/transcript-viewer";
 import TranscriptHeader from "@/components/transcript/transcript-header";
-import TranscriptControls from "@/components/transcript/transcript-controls";
+import ActionButtons from "@/components/transcript/action-buttons";
 import TranslationSettings from "@/components/transcript/translation-settings";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+// Removed unused tabs imports
 import { use } from "react";
 
 export default function TranscriptPage({
@@ -33,6 +33,8 @@ export default function TranscriptPage({
     }
   }, [videoId, fetchTranscriptData]);
 
+  const [showTranslationSettings, setShowTranslationSettings] = useState(false);
+
   return (
     <main className="flex flex-col min-h-screen bg-background">
       {/* Video Section */}
@@ -41,47 +43,31 @@ export default function TranscriptPage({
       <div className="w-full max-w-[800px] mx-auto px-4 py-6">
         {/* Transcript Header */}
         <TranscriptHeader
+          videoId={videoId}
           title={videoTitle}
           isLoading={isLoading}
           error={error}
         />
 
-        {/* Tabs for Transcript and AI */}
-        <Tabs defaultValue="transcript" className="mt-6">
-          <TabsList className="grid w-full grid-cols-2 mb-4">
-            <TabsTrigger value="transcript">Transcript</TabsTrigger>
-            <TabsTrigger value="ai">AI</TabsTrigger>
-          </TabsList>
+        {/* Action Buttons */}
+        <ActionButtons
+          videoId={videoId}
+          onTranslateClick={() =>
+            setShowTranslationSettings(!showTranslationSettings)
+          }
+        />
 
-          <TabsContent value="transcript" className="space-y-4">
-            {/* Transcript Controls */}
-            <TranscriptControls />
+        {/* Translation Settings (conditionally shown) */}
+        {showTranslationSettings && <TranslationSettings />}
 
-            {/* Translation Settings */}
-            <TranslationSettings />
-
-            {/* Transcript Content */}
-            <TranscriptViewer
-              transcript={transcript}
-              isLoading={isLoading}
-              error={error}
-              isTranslated={!!translationTarget}
-            />
-          </TabsContent>
-
-          <TabsContent value="ai">
-            <div className="p-6 bg-muted rounded-lg">
-              <h3 className="text-xl font-bold mb-4">
-                AI Features Coming Soon
-              </h3>
-              <p>
-                We&apos;re working on integrating AI features to help you
-                summarize, analyze, and get more value from your transcripts.
-                Stay tuned!
-              </p>
-            </div>
-          </TabsContent>
-        </Tabs>
+        {/* Transcript Content */}
+        <TranscriptViewer
+          videoId={videoId}
+          transcript={transcript}
+          isLoading={isLoading}
+          error={error}
+          isTranslated={!!translationTarget}
+        />
       </div>
     </main>
   );
