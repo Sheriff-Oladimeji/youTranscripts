@@ -15,6 +15,7 @@ interface TranscriptState {
   isLoading: boolean;
   error: string | null;
   selectedLanguage: string;
+  detectedLanguage: string;
   translationTarget: string | null;
   isTranslating: boolean;
 
@@ -35,6 +36,7 @@ export const useTranscriptStore = create<TranscriptState>((set, get) => ({
   isLoading: false,
   error: null,
   selectedLanguage: "en",
+  detectedLanguage: "en",
   translationTarget: null,
   isTranslating: false,
 
@@ -63,11 +65,16 @@ export const useTranscriptStore = create<TranscriptState>((set, get) => ({
 
       const data = await response.json();
 
+      // Get the detected language from the API response
+      const detectedLanguage = data.metadata.language || "en";
+
       set({
         videoId,
         videoTitle: data.metadata.title,
         transcript: data.transcript,
         originalTranscript: data.transcript,
+        selectedLanguage: detectedLanguage,
+        detectedLanguage: detectedLanguage,
         isLoading: false,
       });
     } catch (error) {
@@ -177,6 +184,8 @@ export const useTranscriptStore = create<TranscriptState>((set, get) => ({
       originalTranscript: [],
       videoTitle: "",
       error: null,
+      selectedLanguage: "en",
+      detectedLanguage: "en",
       translationTarget: null,
     }),
 }));

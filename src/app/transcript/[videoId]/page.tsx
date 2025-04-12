@@ -46,6 +46,7 @@ export default function TranscriptPage({
 
         {/* Action Buttons */}
         <ActionButtons
+          videoId={videoId}
           onTranslateClick={() =>
             setShowTranslationSettings(!showTranslationSettings)
           }

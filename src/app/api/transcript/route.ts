@@ -27,13 +27,14 @@ export async function POST(request: Request) {
 
     try {
       const transcriptData = await fetchTranscript(url);
-      
+
       return NextResponse.json({
         transcript: transcriptData.transcript,
         metadata: {
           id: videoId,
           videoId: videoId,
           title: transcriptData.title,
+          language: transcriptData.language,
           hasTranscript: true,
         },
       });

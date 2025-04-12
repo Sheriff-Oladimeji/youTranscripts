@@ -16,7 +16,11 @@ export const getYouTubeVideoId = (input: string): string => {
 
 export const fetchTranscript = async (
   url: string
-): Promise<{ title: string; transcript: TranscriptItem[] }> => {
+): Promise<{
+  title: string;
+  transcript: TranscriptItem[];
+  language: string;
+}> => {
   const videoId = getYouTubeVideoId(url);
 
   const youtube = await Innertube.create({
@@ -29,7 +33,31 @@ export const fetchTranscript = async (
   try {
     const info = await youtube.getInfo(videoId);
     const title = info.basic_info?.title || "";
-    const transcriptData = await info.getTranscript();
+    // Get available transcript languages
+    const transcriptList = await info.getTranscript();
+
+    // Get the language of the transcript
+    let language = "en"; // Default to English
+
+    try {
+      if (
+        transcriptList?.transcript?.header?.language_menu?.items?.length > 0
+      ) {
+        // Find the selected language
+        const selectedLanguage =
+          transcriptList.transcript.header.language_menu.items.find(
+            (item: any) => item.is_selected
+          );
+
+        if (selectedLanguage?.language_code) {
+          language = selectedLanguage.language_code;
+        }
+      }
+    } catch (e) {
+      console.warn("Could not detect transcript language:", e);
+    }
+
+    const transcriptData = transcriptList;
 
     if (!transcriptData?.transcript?.content?.body?.initial_segments) {
       throw new Error("No transcript available for this video");
@@ -75,7 +103,7 @@ export const fetchTranscript = async (
       };
     });
 
-    return { title, transcript };
+    return { title, transcript, language };
   } catch (error) {
     console.error("Error fetching transcript:", error);
     throw error;
