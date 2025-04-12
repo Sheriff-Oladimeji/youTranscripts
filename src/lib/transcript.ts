@@ -40,14 +40,14 @@ export const fetchTranscript = async (
     let language = "en"; // Default to English
 
     try {
-      if (
-        transcriptList?.transcript?.header?.language_menu?.items?.length > 0
-      ) {
+      // Use type assertion to access properties that might not be in the type definition
+      const transcriptObj = transcriptList?.transcript as any;
+
+      if (transcriptObj?.header?.language_menu?.items?.length > 0) {
         // Find the selected language
-        const selectedLanguage =
-          transcriptList.transcript.header.language_menu.items.find(
-            (item: any) => item.is_selected
-          );
+        const selectedLanguage = transcriptObj.header.language_menu.items.find(
+          (item: any) => item.is_selected
+        );
 
         if (selectedLanguage?.language_code) {
           language = selectedLanguage.language_code;
@@ -72,7 +72,7 @@ export const fetchTranscript = async (
       .map((segment: any) => segment.snippet.text);
 
     // Calculate approximate timestamps based on text length and video duration
-    let totalTextLength = segments.reduce(
+    const totalTextLength = segments.reduce(
       (sum: number, text: string) => sum + text.length,
       0
     );
