@@ -1,4 +1,4 @@
-import { Copy, Globe, Clipboard } from "lucide-react"
+import { Languages, Globe, Clipboard } from "lucide-react";
 
 export default function FeaturesSection() {
   return (
@@ -10,7 +10,7 @@ export default function FeaturesSection() {
           <p>Copy the entire transcript with a single click for easy access.</p>
         </div>
         <div className="flex flex-col items-center text-center p-6 bg-muted rounded-lg">
-          <Copy className="h-12 w-12 mb-4 text-red-600" />
+          <Languages className="h-12 w-12 mb-4 text-red-600" />
           <h3 className="text-xl font-bold mb-2">Supports Translation</h3>
           <p>Translate transcripts to over 125 languages instantly.</p>
         </div>
@@ -21,5 +21,5 @@ export default function FeaturesSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }
