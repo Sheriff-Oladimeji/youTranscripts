@@ -1,8 +1,17 @@
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Video } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { getVideoId } from "@/lib/youtube";
 
 export default function HowToSection() {
+  const [demoUrl, setDemoUrl] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+
   return (
     <section className="w-full py-12 bg-background" id="how-to">
       <div className="w-[90%] mx-auto">
@@ -31,16 +40,36 @@ export default function HowToSection() {
           </p>
 
           <div className="bg-gray-200/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-lg p-8 max-w-3xl mx-auto">
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Input
-                type="text"
-                placeholder="Paste YouTube URL here..."
-                className="flex-1 h-12"
-              />
-              <Button className="h-12 px-8 bg-amber-500 hover:bg-amber-600 text-black font-bold">
-                Get Free Transcript
-              </Button>
-            </div>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                setIsLoading(true);
+                const videoId = getVideoId(demoUrl);
+                if (videoId) {
+                  router.push(`/transcript/${videoId}`);
+                } else {
+                  alert("Please enter a valid YouTube URL");
+                  setIsLoading(false);
+                }
+              }}
+            >
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Input
+                  type="text"
+                  placeholder="Paste YouTube URL here..."
+                  className="flex-1 h-12"
+                  value={demoUrl}
+                  onChange={(e) => setDemoUrl(e.target.value)}
+                />
+                <Button
+                  type="submit"
+                  className="h-12 px-8 bg-amber-500 hover:bg-amber-600 text-black font-bold"
+                  disabled={isLoading}
+                >
+                  {isLoading ? "Loading..." : "Get Free Transcript"}
+                </Button>
+              </div>
+            </form>
           </div>
         </div>
       </div>

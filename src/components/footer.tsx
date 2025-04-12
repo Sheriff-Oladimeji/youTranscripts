@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
     <footer className="w-full border-t bg-background py-6">
-      <div className="container px-4 md:px-6">
+      <div className="w-[90%] mx-auto">
         <div className="text-sm text-muted-foreground mb-4">
           <p className="mb-4">
             Disclaimer: YouTubeTranscriptTool.com is an independent service and

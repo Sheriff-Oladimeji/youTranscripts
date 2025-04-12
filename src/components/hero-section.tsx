@@ -3,17 +3,28 @@
 import type React from "react";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Copy, Globe, Clipboard } from "lucide-react";
+import { getVideoId } from "@/lib/youtube";
 
 export default function HeroSection() {
   const [youtubeUrl, setYoutubeUrl] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // This would handle the transcript generation in a real implementation
-    console.log("Generating transcript for:", youtubeUrl);
+    setIsLoading(true);
+
+    const videoId = getVideoId(youtubeUrl);
+    if (videoId) {
+      router.push(`/transcript/${videoId}`);
+    } else {
+      alert("Please enter a valid YouTube URL");
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -44,8 +55,9 @@ export default function HeroSection() {
           <Button
             type="submit"
             className="h-12 px-8 bg-amber-500 hover:bg-amber-600 text-black font-bold"
+            disabled={isLoading}
           >
-            Get Free Transcript
+            {isLoading ? "Loading..." : "Get Free Transcript"}
           </Button>
         </form>
 
