@@ -52,6 +52,7 @@ export const fetchTranscript = async (
     }
 
     console.log("Video title from YouTube API:", title);
+
     // Get the transcript data
     const transcriptData = await info.getTranscript();
 
