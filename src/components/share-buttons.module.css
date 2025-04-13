@@ -107,12 +107,21 @@
 @media (min-width: 768px) {
   .shareButtonsContainer {
     position: fixed;
-    left: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
+    left: max(
+      1rem,
+      calc(50% - 490px)
+    ); /* Position relative to content but with minimum margin */
+    top: 300px; /* Fixed position from top, below the video */
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+  }
+}
+
+/* Small desktop screens */
+@media (min-width: 768px) and (max-width: 900px) {
+  .shareButtonsContainer {
+    left: 1rem;
   }
 }
 
@@ -183,9 +192,9 @@
   background-color: #e03d00;
 }
 
-.messengerButton {
-  background-color: #0084ff;
+.facebookButton {
+  background-color: #1877f2;
 }
-.messengerButton:hover {
-  background-color: #0078e9;
+.facebookButton:hover {
+  background-color: #0e5fc0;
 }

@@ -49,9 +49,12 @@ export default function ShareButtons({
     currentUrl
   )}&title=${encodeURIComponent(title)}`;
 
-  const emailShareUrl = `mailto:?subject=${encodeURIComponent(
-    title
-  )}&body=${encodeURIComponent(`Check out this transcript: ${currentUrl}`)}`;
+  // Fix email sharing by properly encoding the URL
+  const emailSubject = encodeURIComponent(title || "YouTube Transcript");
+  const emailBody = encodeURIComponent(
+    `Check out this transcript: ${currentUrl}`
+  );
+  const emailShareUrl = `mailto:?subject=${emailSubject}&body=${emailBody}`;
 
   const whatsappShareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(
     `${title} ${currentUrl}`
@@ -112,14 +115,19 @@ export default function ShareButtons({
       </a>
 
       {/* Email Button */}
-      <a
-        href={emailShareUrl}
+      <button
+        onClick={() => {
+          // Handle email sharing manually
+          const mailtoLink = `mailto:?subject=${emailSubject}&body=${emailBody}`;
+          window.location.href = mailtoLink;
+          toast.success("Email client opened");
+        }}
         className={`${styles.shareButton} ${styles.emailButton}`}
         aria-label="Share via Email"
         title="Share via Email"
       >
         <Mail className="w-5 h-5" />
-      </a>
+      </button>
 
       {/* Reddit Button */}
       <a
@@ -141,20 +149,26 @@ export default function ShareButtons({
         </svg>
       </a>
 
-      {/* Facebook Messenger Button */}
+      {/* Facebook Button */}
       <a
-        href={`https://www.facebook.com/dialog/send?link=${encodeURIComponent(
-          currentUrl
-        )}&app_id=291494419107518&redirect_uri=${encodeURIComponent(
+        href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
           currentUrl
         )}`}
         target="_blank"
         rel="noopener noreferrer"
-        className={`${styles.shareButton} ${styles.messengerButton}`}
-        aria-label="Share on Messenger"
-        title="Share on Messenger"
+        className={`${styles.shareButton} ${styles.facebookButton}`}
+        aria-label="Share on Facebook"
+        title="Share on Facebook"
       >
-        <MessageCircle className="w-5 h-5" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="white"
+        >
+          <path d="M9.19795 21.5H13.198V13.4901H16.8021L17.198 9.50977H13.198V7.5C13.198 6.94772 13.6457 6.5 14.198 6.5H17.198V2.5H14.198C11.4365 2.5 9.19795 4.73858 9.19795 7.5V9.50977H7.19795L6.80206 13.4901H9.19795V21.5Z" />
+        </svg>
       </a>
     </div>
   );
