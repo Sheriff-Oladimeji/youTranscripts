@@ -8,6 +8,7 @@ import TranscriptViewer from "@/components/transcript/transcript-viewer";
 import TranscriptHeader from "@/components/transcript/transcript-header";
 import ActionButtons from "@/components/transcript/action-buttons";
 import TranslationSettings from "@/components/transcript/translation-settings";
+import ShareButtons from "@/components/share-buttons";
 // Removed unused tabs imports
 import { use } from "react";
 
@@ -31,11 +32,14 @@ export default function TranscriptPage({
   const [showTranslationSettings, setShowTranslationSettings] = useState(false);
 
   return (
-    <main className="flex flex-col min-h-screen bg-background">
+    <main className="flex flex-col min-h-screen bg-background relative">
+      {/* Share Buttons */}
+      <ShareButtons title={videoTitle || `Transcript of YouTube Video`} />
+
       {/* Video Section */}
       <EmbeddedVideo videoId={videoId} />
 
-      <div className="w-full max-w-[800px] mx-auto px-4 py-6">
+      <div className="w-full max-w-[800px] mx-auto px-4 py-6 pb-24 md:pb-6">
         {/* Transcript Header */}
         <TranscriptHeader
           videoId={videoId}
