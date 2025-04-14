@@ -36,7 +36,15 @@ export async function POST(request: Request) {
       });
 
       // Make sure we have a title, even if it's a fallback
-      const title = transcriptData.title || "YouTube Video";
+      let title = transcriptData.title;
+
+      // Additional safeguard for title
+      if (!title || title.trim() === "") {
+        title = `YouTube Video (${videoId})`;
+        console.log("API: Title was empty, using default with videoId:", title);
+      }
+
+      console.log("API: Final title being returned:", title);
 
       return NextResponse.json({
         transcript: transcriptData.transcript,

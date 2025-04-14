@@ -69,7 +69,17 @@ export const useTranscriptStore = create<TranscriptState>((set, get) => ({
       const detectedLanguage = data.metadata.language || "en";
 
       // Make sure we have a title
-      const videoTitle = data.metadata.title || "YouTube Video";
+      let videoTitle = data.metadata.title;
+
+      // Additional safeguard for title
+      if (!videoTitle || videoTitle.trim() === "") {
+        videoTitle = `YouTube Video (${videoId})`;
+        console.log(
+          "Store: Title was empty, using default with videoId:",
+          videoTitle
+        );
+      }
+
       console.log("Setting video title in store:", videoTitle);
 
       set({
