@@ -78,36 +78,6 @@ export default function ActionButtons({
 
   return (
     <div className="space-y-3 mb-6">
-      {/* Chat with Video Button */}
-      <button
-        className="w-full py-4 px-6 bg-[#FFAC5F] hover:bg-[#FF9933] text-black font-medium rounded-lg flex items-center gap-2"
-        onClick={() => toast.info("This feature is coming soon!")}
-      >
-        <div className="flex items-center justify-center flex-1">
-          <MessageSquare className="h-5 w-5 mr-2" />
-          <span>Chat With This Video</span>
-          <span className="ml-2 text-xs bg-white/20 px-2 py-0.5 rounded">
-            free
-          </span>
-        </div>
-        <ExternalLink className="h-5 w-5" />
-      </button>
-
-      {/* Summarize Button */}
-      <button
-        className="w-full py-4 px-6 bg-[#00AAFF] hover:bg-[#0099EE] text-white font-medium rounded-lg flex items-center gap-2"
-        onClick={() => toast.info("This feature is coming soon!")}
-      >
-        <div className="flex items-center justify-center flex-1">
-          <Brain className="h-5 w-5 mr-2" />
-          <span>Summarize</span>
-          <span className="ml-2 text-xs bg-white/20 px-2 py-0.5 rounded">
-            free
-          </span>
-        </div>
-        <ExternalLink className="h-5 w-5" />
-      </button>
-
       {/* Copy Transcript Button */}
       <button
         className="w-full py-4 px-6 bg-[#FFD700] hover:bg-[#FFCC00] text-black font-medium rounded-lg flex items-center justify-center gap-2"
@@ -198,6 +168,36 @@ export default function ActionButtons({
       >
         <Languages className="h-5 w-5 mr-2" />
         <span>Language & Translation Settings</span>
+      </button>
+
+      {/* Chat with Video Button */}
+      <button
+        className="w-full py-4 px-6 bg-[#FFAC5F] hover:bg-[#FF9933] text-black font-medium rounded-lg flex items-center gap-2"
+        onClick={() => toast.info("This feature is coming soon!")}
+      >
+        <div className="flex items-center justify-center flex-1">
+          <MessageSquare className="h-5 w-5 mr-2" />
+          <span>Chat With This Video</span>
+          <span className="ml-2 text-xs bg-white/20 px-2 py-0.5 rounded">
+            free
+          </span>
+        </div>
+        <ExternalLink className="h-5 w-5" />
+      </button>
+
+      {/* Summarize Button */}
+      <button
+        className="w-full py-4 px-6 bg-[#00AAFF] hover:bg-[#0099EE] text-white font-medium rounded-lg flex items-center gap-2"
+        onClick={() => toast.info("This feature is coming soon!")}
+      >
+        <div className="flex items-center justify-center flex-1">
+          <Brain className="h-5 w-5 mr-2" />
+          <span>Summarize</span>
+          <span className="ml-2 text-xs bg-white/20 px-2 py-0.5 rounded">
+            free
+          </span>
+        </div>
+        <ExternalLink className="h-5 w-5" />
       </button>
 
       {/* Remove Sponsor Button */}
