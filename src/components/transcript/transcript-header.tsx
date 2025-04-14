@@ -47,20 +47,7 @@ export default function TranscriptHeader({
     fetchChannelInfo();
   }, [videoId, isLoading, error]);
 
-  const handleLikeClick = () => {
-    window.open(`https://www.youtube.com/watch?v=${videoId}`, "_blank");
-  };
-
-  const handleSubscribeClick = () => {
-    if (channelInfo?.channelId) {
-      window.open(
-        `https://www.youtube.com/channel/${channelInfo.channelId}?sub_confirmation=1`,
-        "_blank"
-      );
-    } else {
-      window.open(`https://www.youtube.com/watch?v=${videoId}`, "_blank");
-    }
-  };
+  // Like and Subscribe functions removed
 
   return (
     <div className="mb-6">
@@ -84,20 +71,6 @@ export default function TranscriptHeader({
                 : channelInfo?.channelTitle || "YouTube Creator"}
             </span>
           </div>
-          <span className="mx-2">•</span>
-          <button
-            onClick={handleLikeClick}
-            className="text-red-600 hover:underline"
-          >
-            Like
-          </button>
-          <span className="mx-2">•</span>
-          <button
-            onClick={handleSubscribeClick}
-            className="text-red-600 hover:underline"
-          >
-            Subscribe
-          </button>
         </div>
       )}
 
