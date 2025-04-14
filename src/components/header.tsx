@@ -22,6 +22,19 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="w-[95%] mx-auto flex h-16 items-center justify-between">
+        {/* Left: Hamburger Menu */}
+        <div>
+          <Button
+            onClick={toggleMenu}
+            aria-label="Toggle menu"
+          variant="secondary"
+            className="p-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-md transition-colors"
+          >
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </Button>
+        </div>
+
+        {/* Middle: Logo */}
         <div className="flex items-center gap-2">
           <div className="bg-red-600 text-white p-1 rounded">
             <svg
@@ -44,18 +57,26 @@ export default function Header() {
           </Link>
         </div>
 
+        {/* Right: Theme Toggle */}
+        <div>
+          <Button
+            variant="ghost"
+            aria-label="Toggle theme"
+            onClick={toggleTheme}
+          >
+            {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
+          </Button>
+        </div>
+
+        {/* Navigation Menu (Hidden by default, shown when menu is open) */}
         <nav
           className={`${
             isMenuOpen
-              ? "absolute top-16 left-0 right-0 bg-background border-b"
+              ? "absolute top-16 left-0 right-0 bg-background border-b z-50"
               : "hidden"
-          } md:block`}
+          }`}
         >
-          <ul
-            className={`${
-              isMenuOpen ? "flex flex-col p-4" : "flex items-center space-x-4"
-            }`}
-          >
+          <ul className="flex flex-col p-4 space-y-3">
             <li>
               <a
                 href="#features"
@@ -82,23 +103,6 @@ export default function Header() {
             </li>
           </ul>
         </nav>
-
-        <Button
-          variant="ghost"
-         
-          aria-label="Toggle theme"
-          onClick={toggleTheme}
-        >
-          {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
-        </Button>
-              <Button
-                 
-          className="md:hidden"
-          onClick={toggleMenu}
-          aria-label="Toggle menu"
-        >
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </Button>
       </div>
     </header>
   );
