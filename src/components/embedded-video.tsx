@@ -6,7 +6,7 @@ interface EmbeddedVideoProps {
 
 export function EmbeddedVideo({ videoId }: EmbeddedVideoProps) {
   return (
-    <div className="w-full">
+    <div className="w-full mt-8">
       <div id="video-container" className="w-full">
         <div className="max-w-[800px] mx-auto px-4 pt-4">
           <div className="relative w-full rounded-lg overflow-hidden shadow-lg">
