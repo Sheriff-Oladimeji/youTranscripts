@@ -65,6 +65,18 @@ export default function TranscriptPage({
           isLoading={isLoading}
           error={error}
         />
+
+        {/* Action Buttons (Bottom) */}
+        {!isLoading && !error && transcript.length > 0 && (
+          <div className="mt-8">
+            <ActionButtons
+              videoId={videoId}
+              onTranslateClick={() =>
+                setShowTranslationSettings(!showTranslationSettings)
+              }
+            />
+          </div>
+        )}
       </div>
     </main>
   );
