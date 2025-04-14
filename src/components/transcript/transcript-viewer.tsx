@@ -1,8 +1,9 @@
 "use client";
 
-import React from "react";
+import React, { useCallback } from "react";
 import { TranscriptItem } from "@/store/transcript-store";
 import { useTranslationStore } from "@/store/translation-store";
+import { ArrowUp } from "lucide-react";
 
 interface TranscriptViewerProps {
   transcript: TranscriptItem[];
@@ -79,6 +80,18 @@ export default function TranscriptViewer({
               <span key={index}>{item.text} </span>
             ))}
           </p>
+
+          {/* Back To Top Button */}
+          <div className="mt-8 flex justify-center">
+            <button
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              className="flex items-center justify-center gap-2 bg-[#FFAC5F] hover:bg-[#FF9933] text-black font-medium rounded-lg py-3 px-6 w-full max-w-md transition-all duration-300 ease-in-out"
+              aria-label="Back to top"
+            >
+              <ArrowUp className="h-5 w-5" />
+              <span>Back To Top</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
