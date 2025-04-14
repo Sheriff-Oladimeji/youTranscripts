@@ -33,25 +33,54 @@ export const fetchTranscript = async (
   try {
     const info = await youtube.getInfo(videoId);
 
-    // Extract title from basic_info
+    // Extract title from basic_info with more robust approach
     let title = "";
 
-    if (info.basic_info?.title) {
-      title = info.basic_info.title;
-    } else {
-      // Use type assertion to try to access other properties that might contain the title
-      const infoAny = info as any;
-
-      if (typeof infoAny.title === "string") {
-        title = infoAny.title;
-      } else if (infoAny.page?.title) {
-        title = infoAny.page.title;
+    try {
+      // First try to get title from basic_info
+      if (info.basic_info?.title) {
+        title = info.basic_info.title;
+        console.log("Title from basic_info:", title);
       } else {
-        title = "YouTube Video";
+        // Use type assertion to try to access other properties that might contain the title
+        const infoAny = info as any;
+
+        // Try different possible locations for the title
+        if (typeof infoAny.title === "string") {
+          title = infoAny.title;
+          console.log("Title from info.title:", title);
+        } else if (infoAny.page?.title) {
+          title = infoAny.page.title;
+          console.log("Title from info.page.title:", title);
+        } else if (infoAny.primary_info?.title) {
+          title = infoAny.primary_info.title;
+          console.log("Title from info.primary_info.title:", title);
+        } else if (infoAny.video_details?.title) {
+          title = infoAny.video_details.title;
+          console.log("Title from info.video_details.title:", title);
+        } else if (infoAny.metadata?.title) {
+          title = infoAny.metadata.title;
+          console.log("Title from info.metadata.title:", title);
+        } else {
+          // Last resort - use videoId as title
+          title = `YouTube Video (${videoId})`;
+          console.log("Using default title with videoId:", title);
+        }
       }
+
+      // Ensure title is not empty
+      if (!title || title.trim() === "") {
+        title = `YouTube Video (${videoId})`;
+        console.log("Title was empty, using default with videoId:", title);
+      }
+    } catch (error) {
+      console.error("Error extracting title:", error);
+      title = `YouTube Video (${videoId})`;
+      console.log("Error occurred, using default title with videoId:", title);
     }
 
-    console.log("Video title from YouTube API:", title);
+    // Log the final title for debugging
+    console.log("Final video title from YouTube API:", title);
 
     // Get the transcript data
     const transcriptData = await info.getTranscript();
