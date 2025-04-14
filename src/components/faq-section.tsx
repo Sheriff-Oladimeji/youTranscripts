@@ -85,9 +85,17 @@ export default function FaqSection() {
         </div>
 
         <div className="flex justify-center mt-12">
-          <button className="bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 px-8 rounded-lg transition-colors">
-            Get YouTubeTranscriptTool For Free!
-          </button>
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              // Scroll to the top of the page (hero section)
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+            className="bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 px-8 rounded-lg transition-colors cursor-pointer"
+          >
+            Try YouTube Transcript Generator for free
+          </a>
         </div>
       </div>
     </section>
