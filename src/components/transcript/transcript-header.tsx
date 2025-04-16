@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useTranscriptStore } from "@/store/transcript-store";
 
 interface TranscriptHeaderProps {
   videoId: string;
@@ -9,45 +9,13 @@ interface TranscriptHeaderProps {
   error: string | null;
 }
 
-interface ChannelInfo {
-  channelTitle: string;
-  channelId: string;
-}
-
 export default function TranscriptHeader({
   videoId,
   title,
   isLoading,
   error,
 }: TranscriptHeaderProps) {
-  const [channelInfo, setChannelInfo] = useState<ChannelInfo | null>(null);
-  const [isLoadingChannel, setIsLoadingChannel] = useState(false);
-
-  useEffect(() => {
-    const fetchChannelInfo = async () => {
-      if (!videoId || isLoading || error) return;
-
-      setIsLoadingChannel(true);
-      try {
-        const response = await fetch(`/api/channel?videoId=${videoId}`);
-        if (response.ok) {
-          const data = await response.json();
-          setChannelInfo({
-            channelTitle: data.channelTitle || "YouTube Creator",
-            channelId: data.channelId || "",
-          });
-        }
-      } catch (error) {
-        console.error("Error fetching channel info:", error);
-      } finally {
-        setIsLoadingChannel(false);
-      }
-    };
-
-    fetchChannelInfo();
-  }, [videoId, isLoading, error]);
-
-  // Like and Subscribe functions removed
+  const { channelTitle } = useTranscriptStore();
 
   return (
     <div className="mb-6">
@@ -61,14 +29,12 @@ export default function TranscriptHeader({
           : `Transcript of YouTube Video`}
       </h1>
 
-      {!isLoading && !error && (
+      {!isLoading && !error && channelTitle && (
         <div className="flex items-center text-sm text-muted-foreground">
           <div className="flex items-center">
             <span className="mr-2">Author:</span>
             <span className="font-medium">
-              {isLoadingChannel
-                ? "Loading..."
-                : channelInfo?.channelTitle || "YouTube Creator"}
+              {channelTitle || "YouTube Creator"}
             </span>
           </div>
         </div>
