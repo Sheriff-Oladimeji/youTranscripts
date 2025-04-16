@@ -10,6 +10,12 @@ export interface TranscriptItem {
 interface TranscriptState {
   videoId: string | null;
   videoTitle: string;
+  channelTitle: string;
+  publishDate: string;
+  views: string;
+  likes: string;
+  duration: string;
+  description: string;
   transcript: TranscriptItem[];
   originalTranscript: TranscriptItem[];
   isLoading: boolean;
@@ -31,6 +37,12 @@ interface TranscriptState {
 export const useTranscriptStore = create<TranscriptState>((set, get) => ({
   videoId: null,
   videoTitle: "",
+  channelTitle: "",
+  publishDate: "",
+  views: "0",
+  likes: "0",
+  duration: "",
+  description: "",
   transcript: [],
   originalTranscript: [],
   isLoading: false,
@@ -85,6 +97,12 @@ export const useTranscriptStore = create<TranscriptState>((set, get) => ({
       set({
         videoId,
         videoTitle,
+        channelTitle: data.metadata.channelTitle || "",
+        publishDate: data.metadata.publishDate || "",
+        views: data.metadata.views || "0",
+        likes: data.metadata.likes || "0",
+        duration: data.metadata.duration || "",
+        description: data.metadata.description || "",
         transcript: data.transcript,
         originalTranscript: data.transcript,
         selectedLanguage: detectedLanguage,
@@ -197,6 +215,12 @@ export const useTranscriptStore = create<TranscriptState>((set, get) => ({
       transcript: [],
       originalTranscript: [],
       videoTitle: "",
+      channelTitle: "",
+      publishDate: "",
+      views: "0",
+      likes: "0",
+      duration: "",
+      description: "",
       error: null,
       selectedLanguage: "en",
       detectedLanguage: "en",
