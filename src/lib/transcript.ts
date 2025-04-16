@@ -17,8 +17,53 @@ export const getYouTubeVideoId = (input: string): string => {
 // Cache for Innertube instances to avoid recreating them
 let youtubeInstance: any = null;
 
+// Helper function to check for language-specific character sets
+function detectLanguageFromCharacters(text: string): string | null {
+  // Define character ranges for different languages
+  const charRanges = {
+    zh: /[\u4E00-\u9FFF]/g, // Chinese
+    ja: /[\u3040-\u309F\u30A0-\u30FF]/g, // Japanese Hiragana and Katakana
+    ko: /[\uAC00-\uD7AF\u1100-\u11FF]/g, // Korean Hangul
+    ru: /[\u0400-\u04FF]/g, // Cyrillic (Russian)
+    ar: /[\u0600-\u06FF]/g, // Arabic
+    hi: /[\u0900-\u097F]/g, // Devanagari (Hindi)
+    th: /[\u0E00-\u0E7F]/g, // Thai
+  };
+
+  // Count characters in each range
+  const counts: Record<string, number> = {};
+
+  for (const [lang, regex] of Object.entries(charRanges)) {
+    const matches = text.match(regex);
+    counts[lang] = matches ? matches.length : 0;
+  }
+
+  // Find the language with the most character matches
+  let bestLang = null;
+  let bestCount = 0;
+
+  for (const [lang, count] of Object.entries(counts)) {
+    if (count > bestCount && count > 5) {
+      // Require at least 5 characters to be confident
+      bestCount = count;
+      bestLang = lang;
+    }
+  }
+
+  console.log("Character-based language detection counts:", counts);
+  return bestLang;
+}
+
 // Simple language detection based on common words
 function detectLanguageFromText(text: string): string {
+  // First try character-based detection for non-Latin scripts
+  const charBasedLang = detectLanguageFromCharacters(text);
+  if (charBasedLang) {
+    console.log(`Detected language ${charBasedLang} based on character sets`);
+    return charBasedLang;
+  }
+
+  // Fall back to word-based detection for Latin-script languages
   // Convert to lowercase for better matching
   const lowerText = text.toLowerCase();
 
@@ -33,6 +78,13 @@ function detectLanguageFromText(text: string): string {
     ru: ["и", "в", "на", "с", "по", "не", "что", "это", "как", "от"],
     ja: ["です", "は", "を", "に", "が", "の", "た", "て", "で", "も"],
     zh: ["的", "是", "在", "了", "和", "我", "有", "这", "不", "你"],
+    ar: ["في", "من", "على", "هذا", "أن", "مع", "لا", "هو", "أو", "بشكل"],
+    hi: ["के", "में", "है", "का", "और", "से", "को", "नहीं", "कि", "पर"],
+    ko: ["이", "는", "그", "에", "서", "있", "없", "하", "지", "아"],
+    tr: ["bir", "ve", "bu", "için", "o", "de", "ne", "var", "daha", "kadar"],
+    nl: ["de", "het", "een", "in", "van", "en", "is", "op", "dat", "te"],
+    sv: ["och", "att", "det", "i", "en", "jag", "på", "är", "för", "som"],
+    pl: ["i", "w", "na", "z", "do", "to", "się", "nie", "jest", "o"],
   };
 
   // Count occurrences of signature words for each language
