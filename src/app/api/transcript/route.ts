@@ -20,6 +20,7 @@ interface VideoMetadata {
   duration: string;
   description: string;
   hasTranscript: boolean;
+  language?: string;
 }
 
 export async function OPTIONS() {
@@ -33,13 +34,13 @@ export async function OPTIONS() {
   });
 }
 
-// Define the cache response type
+// Define the cache response type.
 interface CacheResponse {
   transcript: TranscriptSegment[];
   metadata: VideoMetadata;
 }
 
-// Simple in-memory cache for API responses
+// Simple in-memory cache for API responses.
 const apiCache: Record<string, { timestamp: number; data: CacheResponse }> = {};
 const CACHE_EXPIRY = 60 * 60 * 1000; // 1 hour in milliseconds
 
@@ -49,22 +50,19 @@ export async function POST(request: Request) {
     const videoId = getVideoId(url);
 
     if (!videoId) {
-      return NextResponse.json(
-        { error: "Invalid YouTube URL" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Invalid YouTube URL" }, { status: 400 });
     }
 
-    // Check cache first
+    // Check cache first.
     const now = Date.now();
     if (apiCache[videoId] && now - apiCache[videoId].timestamp < CACHE_EXPIRY) {
       console.log("API: Using cached data for", videoId);
       return NextResponse.json(apiCache[videoId].data);
     }
 
-    // Run YouTube API and transcript fetch in parallel for better performance
+    // Run YouTube API fetch and transcript fetch in parallel.
     const [videoData, transcriptResult] = await Promise.allSettled([
-      // YouTube API fetch
+      // Fetch video details via the YouTube API.
       (async () => {
         const youtube = google.youtube("v3");
         const videoResponse = await youtube.videos.list({
@@ -75,7 +73,7 @@ export async function POST(request: Request) {
         return videoResponse.data.items?.[0];
       })(),
 
-      // Transcript fetch
+      // Fetch the transcript.
       (async () => {
         try {
           return await fetchTranscript(url);
@@ -86,7 +84,7 @@ export async function POST(request: Request) {
       })(),
     ]);
 
-    // Handle YouTube API result
+    // If video data is not found, return an error.
     if (videoData.status !== "fulfilled" || !videoData.value) {
       return NextResponse.json({ error: "Video not found" }, { status: 404 });
     }
@@ -95,15 +93,18 @@ export async function POST(request: Request) {
     let transcript: TranscriptSegment[] = [];
     let hasTranscript = false;
     let title = video.snippet?.title || "";
+    let detectedLanguage = "en";
 
-    // Handle transcript result
+    // Process transcript result.
     if (transcriptResult.status === "fulfilled" && transcriptResult.value) {
       const transcriptData = transcriptResult.value;
       hasTranscript = true;
       transcript = transcriptData.transcript;
-      // Use the title from transcript if available
       if (transcriptData.title) {
         title = transcriptData.title;
+      }
+      if (transcriptData.language) {
+        detectedLanguage = transcriptData.language;
       }
     }
 
@@ -118,38 +119,31 @@ export async function POST(request: Request) {
       duration: video.contentDetails?.duration || "",
       description: video.snippet?.description || "",
       hasTranscript,
+      language: detectedLanguage,
     };
 
-    const responseData = {
-      transcript,
-      metadata,
-    };
+    const responseData = { transcript, metadata };
 
-    // Update cache
+    // Update the cache.
     apiCache[videoId] = {
       timestamp: now,
       data: responseData,
     };
 
-    // Limit cache size to prevent memory issues
+    // Optionally limit cache size.
     const cacheKeys = Object.keys(apiCache);
     if (cacheKeys.length > 100) {
-      // Remove oldest entries if cache gets too large
       const oldestKeys = cacheKeys
         .map((key) => ({ key, timestamp: apiCache[key].timestamp }))
         .sort((a, b) => a.timestamp - b.timestamp)
         .slice(0, 20)
         .map((item) => item.key);
-
       oldestKeys.forEach((key) => delete apiCache[key]);
     }
 
     return NextResponse.json(responseData);
   } catch (error) {
     console.error("API error:", error);
-    return NextResponse.json(
-      { error: "Failed to process video" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Failed to process video" }, { status: 500 });
   }
 }
