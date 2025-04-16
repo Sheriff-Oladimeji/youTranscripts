@@ -7,6 +7,26 @@ export interface TranscriptItem {
   translatedText?: string;
 }
 
+// Cache interface to store transcript data
+interface TranscriptCache {
+  [videoId: string]: {
+    timestamp: number;
+    data: {
+      transcript: TranscriptItem[];
+      metadata: {
+        title: string;
+        channelTitle: string;
+        publishDate: string;
+        views: string;
+        likes: string;
+        duration: string;
+        description: string;
+        language?: string;
+      };
+    };
+  };
+}
+
 interface TranscriptState {
   videoId: string | null;
   videoTitle: string;
@@ -24,6 +44,7 @@ interface TranscriptState {
   detectedLanguage: string;
   translationTarget: string | null;
   isTranslating: boolean;
+  cache: TranscriptCache;
 
   // Actions
   setVideoId: (videoId: string) => void;
@@ -32,6 +53,7 @@ interface TranscriptState {
   setTranslationTarget: (language: string | null) => void;
   translateTranscript: (language: string) => Promise<void>;
   clearTranscript: () => void;
+  clearCache: () => void;
 }
 
 export const useTranscriptStore = create<TranscriptState>((set, get) => ({
@@ -51,6 +73,7 @@ export const useTranscriptStore = create<TranscriptState>((set, get) => ({
   detectedLanguage: "en",
   translationTarget: null,
   isTranslating: false,
+  cache: {},
 
   setVideoId: (videoId) => set({ videoId }),
 
@@ -58,17 +81,53 @@ export const useTranscriptStore = create<TranscriptState>((set, get) => ({
     set({ isLoading: true, error: null });
 
     try {
-      // Construct a URL from the videoId
+      // Check if we have a valid cached version (less than 1 hour old)
+      const cachedData = get().cache[videoId];
+      const now = Date.now();
+      const cacheExpiry = 60 * 60 * 1000; // 1 hour in milliseconds
+
+      if (cachedData && now - cachedData.timestamp < cacheExpiry) {
+        console.log("Using cached transcript data for", videoId);
+
+        const data = cachedData.data;
+        const detectedLanguage = data.metadata.language || "en";
+
+        set({
+          videoId,
+          videoTitle: data.metadata.title,
+          channelTitle: data.metadata.channelTitle || "",
+          publishDate: data.metadata.publishDate || "",
+          views: data.metadata.views || "0",
+          likes: data.metadata.likes || "0",
+          duration: data.metadata.duration || "",
+          description: data.metadata.description || "",
+          transcript: data.transcript,
+          originalTranscript: data.transcript,
+          selectedLanguage: detectedLanguage,
+          detectedLanguage: detectedLanguage,
+          isLoading: false,
+        });
+
+        return;
+      }
+
+      // No valid cache, fetch from API
       const url = `https://www.youtube.com/watch?v=${videoId}`;
 
-      // Use browser's fetch API to call our own API
+      // Use browser's fetch API with AbortController for timeout
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+
       const response = await fetch("/api/transcript", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ url }),
+        signal: controller.signal,
       });
+
+      clearTimeout(timeoutId);
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -92,6 +151,25 @@ export const useTranscriptStore = create<TranscriptState>((set, get) => ({
         );
       }
 
+      // Update the cache
+      const newCache = { ...get().cache };
+      newCache[videoId] = {
+        timestamp: now,
+        data: {
+          transcript: data.transcript,
+          metadata: {
+            title: videoTitle,
+            channelTitle: data.metadata.channelTitle || "",
+            publishDate: data.metadata.publishDate || "",
+            views: data.metadata.views || "0",
+            likes: data.metadata.likes || "0",
+            duration: data.metadata.duration || "",
+            description: data.metadata.description || "",
+            language: detectedLanguage,
+          },
+        },
+      };
+
       console.log("Setting video title in store:", videoTitle);
 
       set({
@@ -108,6 +186,7 @@ export const useTranscriptStore = create<TranscriptState>((set, get) => ({
         selectedLanguage: detectedLanguage,
         detectedLanguage: detectedLanguage,
         isLoading: false,
+        cache: newCache,
       });
     } catch (error) {
       console.error("Error fetching transcript:", error);
@@ -226,4 +305,6 @@ export const useTranscriptStore = create<TranscriptState>((set, get) => ({
       detectedLanguage: "en",
       translationTarget: null,
     }),
+
+  clearCache: () => set({ cache: {} }),
 }));

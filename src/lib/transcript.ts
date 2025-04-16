@@ -14,22 +14,32 @@ export const getYouTubeVideoId = (input: string): string => {
   return match && match[1] ? match[1] : input;
 };
 
+// Cache for Innertube instances to avoid recreating them
+let youtubeInstance: any = null;
+
 export const fetchTranscript = async (
   url: string
 ): Promise<{ title: string; transcript: TranscriptItem[] }> => {
   const videoId = getYouTubeVideoId(url);
 
-  const youtube = await Innertube.create({
-    lang: "en",
-    location: "US",
-    retrieve_player: false,
-    enable_safety_mode: false,
-  });
+  // Create or reuse the Innertube instance
+  if (!youtubeInstance) {
+    console.time("Innertube creation");
+    youtubeInstance = await Innertube.create({
+      lang: "en",
+      location: "US",
+      retrieve_player: false,
+      enable_safety_mode: false,
+    });
+    console.timeEnd("Innertube creation");
+  }
 
   try {
-    const info = await youtube.getInfo(videoId);
+    console.time("Transcript fetch");
+    const info = await youtubeInstance.getInfo(videoId);
     const title = info.basic_info?.title || "";
     const transcriptData = await info.getTranscript();
+    console.timeEnd("Transcript fetch");
 
     if (!transcriptData?.transcript?.content?.body?.initial_segments) {
       throw new Error("No transcript available for this video");
@@ -50,34 +60,47 @@ export const fetchTranscript = async (
     );
     let currentOffset = 0;
 
-    const transcript = segments.map((text: string, index: number) => {
-      // Calculate segment duration based on text length proportion
-      const segmentProportion = text.length / totalTextLength;
-      const duration = Math.round(videoDuration * segmentProportion * 1000); // Convert to ms
-      const offset = currentOffset;
+    // Process transcript segments in batches for better performance
+    const batchSize = 100;
+    let transcript: TranscriptItem[] = [];
 
-      // Update offset for next segment
-      currentOffset += duration;
+    for (let i = 0; i < segments.length; i += batchSize) {
+      const batch = segments.slice(i, i + batchSize);
 
-      // For the last segment, ensure it ends at video duration
-      if (index === segments.length - 1) {
+      const batchTranscript = batch.map((text: string, batchIndex: number) => {
+        const index = i + batchIndex;
+        // Calculate segment duration based on text length proportion
+        const segmentProportion = text.length / totalTextLength;
+        const duration = Math.round(videoDuration * segmentProportion * 1000); // Convert to ms
+        const offset = currentOffset;
+
+        // Update offset for next segment
+        currentOffset += duration;
+
+        // For the last segment, ensure it ends at video duration
+        if (index === segments.length - 1) {
+          return {
+            text,
+            duration: Math.max(0, videoDuration * 1000 - offset),
+            offset,
+          };
+        }
+
         return {
           text,
-          duration: Math.max(0, videoDuration * 1000 - offset),
+          duration,
           offset,
         };
-      }
+      });
 
-      return {
-        text,
-        duration,
-        offset,
-      };
-    });
+      transcript = [...transcript, ...batchTranscript];
+    }
 
     return { title, transcript };
   } catch (error) {
     console.error("Error fetching transcript:", error);
+    // Reset the instance if there's an error, in case it's corrupted
+    youtubeInstance = null;
     throw error;
   }
 };
