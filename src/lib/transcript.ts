@@ -17,33 +17,340 @@ export const getYouTubeVideoId = (input: string): string => {
 // Cache for Innertube instances to avoid recreating them
 let youtubeInstance: any = null;
 
+// Simple language detection based on common words
+function detectLanguageFromText(text: string): string {
+  // Convert to lowercase for better matching
+  const lowerText = text.toLowerCase();
+
+  // Count words of different languages
+  const langSignatures = {
+    en: ["the", "and", "is", "in", "to", "it", "that", "of", "you", "for"],
+    es: ["el", "la", "los", "las", "y", "que", "es", "en", "de", "por"],
+    fr: ["le", "la", "les", "un", "une", "des", "et", "est", "que", "dans"],
+    de: ["der", "die", "das", "und", "ist", "in", "zu", "den", "für", "mit"],
+    it: ["il", "la", "i", "le", "e", "che", "di", "in", "per", "un"],
+    pt: ["o", "a", "os", "as", "e", "que", "em", "para", "por", "com"],
+    ru: ["и", "в", "на", "с", "по", "не", "что", "это", "как", "от"],
+    ja: ["です", "は", "を", "に", "が", "の", "た", "て", "で", "も"],
+    zh: ["的", "是", "在", "了", "和", "我", "有", "这", "不", "你"],
+  };
+
+  // Count occurrences of signature words for each language
+  const scores: Record<string, number> = {};
+
+  for (const [lang, words] of Object.entries(langSignatures)) {
+    scores[lang] = 0;
+    for (const word of words) {
+      // Count how many times this word appears
+      const regex = new RegExp(`\\b${word}\\b`, "g");
+      const matches = lowerText.match(regex);
+      if (matches) {
+        scores[lang] += matches.length;
+      }
+    }
+  }
+
+  // Find language with highest score
+  let bestLang = "en";
+  let bestScore = 0;
+
+  for (const [lang, score] of Object.entries(scores)) {
+    console.log(`Language ${lang} score: ${score}`);
+    if (score > bestScore) {
+      bestScore = score;
+      bestLang = lang;
+    }
+  }
+
+  return bestScore > 0 ? bestLang : "en";
+}
+
 export const fetchTranscript = async (
   url: string
-): Promise<{ title: string; transcript: TranscriptItem[] }> => {
+): Promise<{
+  title: string;
+  transcript: TranscriptItem[];
+  language: string;
+}> => {
   const videoId = getYouTubeVideoId(url);
 
   // Create or reuse the Innertube instance
   if (!youtubeInstance) {
-    console.time("Innertube creation");
-    youtubeInstance = await Innertube.create({
-      lang: "en",
-      location: "US",
-      retrieve_player: false,
-      enable_safety_mode: false,
-    });
-    console.timeEnd("Innertube creation");
+    try {
+      console.time("Innertube creation");
+      youtubeInstance = await Innertube.create({
+        lang: "en", // Use "en" for better compatibility
+        location: "US",
+        retrieve_player: false,
+        enable_safety_mode: false,
+      });
+      console.timeEnd("Innertube creation");
+    } catch (error) {
+      console.error("Error creating Innertube instance:", error);
+      throw new Error("Failed to initialize YouTube API");
+    }
   }
 
   try {
     console.time("Transcript fetch");
+
+    // Get video info
+    console.log(`Fetching info for video ID: ${videoId}`);
     const info = await youtubeInstance.getInfo(videoId);
+    if (!info) {
+      throw new Error("Failed to get video information");
+    }
+
     const title = info.basic_info?.title || "";
-    const transcriptData = await info.getTranscript();
+    console.log(`Video title: ${title}`);
+
+    // Before getting the transcript, try to get all available transcripts
+    console.log("Checking available transcripts...");
+    let availableTranscripts;
+    try {
+      // This is speculative - check if this method exists in the API
+      if (typeof info.getAvailableTranscripts === "function") {
+        availableTranscripts = await info.getAvailableTranscripts();
+        console.log("Available transcripts:", availableTranscripts);
+      } else {
+        console.log("getAvailableTranscripts method not available");
+      }
+    } catch (err) {
+      console.log("Could not get available transcripts:", err);
+    }
+
+    // Try to get the transcript
+    console.log("Fetching transcript...");
+    let transcriptData;
+    try {
+      transcriptData = await info.getTranscript();
+      if (!transcriptData) {
+        throw new Error("Transcript data is null or undefined");
+      }
+    } catch (transcriptError) {
+      console.error(
+        "Error fetching transcript with primary method:",
+        transcriptError
+      );
+
+      // Try alternative method
+      try {
+        console.log("Trying alternative transcript fetch method...");
+        // Some videos might have transcripts in a different format or location
+        // Try to get captions directly if available
+        if (info.captions && typeof info.captions.get === "function") {
+          const captionTracks = await info.captions.get();
+          if (captionTracks && captionTracks.length > 0) {
+            console.log(`Found ${captionTracks.length} caption tracks`);
+            // Use the first caption track
+            const firstTrack = captionTracks[0];
+            const captionData = await firstTrack.fetch();
+
+            if (
+              captionData &&
+              captionData.segments &&
+              captionData.segments.length > 0
+            ) {
+              transcriptData = {
+                transcript: {
+                  segments: captionData.segments,
+                  language: firstTrack.language_code || "en",
+                },
+              };
+              console.log(
+                `Successfully fetched ${captionData.segments.length} segments via alternative method`
+              );
+            } else {
+              throw new Error("No caption segments found");
+            }
+          } else {
+            throw new Error("No caption tracks found");
+          }
+        } else {
+          throw new Error("Captions API not available");
+        }
+      } catch (alternativeError) {
+        console.error(
+          "Error with alternative transcript method:",
+          alternativeError
+        );
+        throw new Error("No transcript available for this video");
+      }
+    }
+
     console.timeEnd("Transcript fetch");
 
-    if (!transcriptData?.transcript?.content?.body?.initial_segments) {
-      throw new Error("No transcript available for this video");
+    // Detailed logging of transcript data structure
+    console.log(
+      "Full transcript data structure:",
+      JSON.stringify(transcriptData, null, 2)
+    );
+
+    // Try multiple approaches to detect language
+    let detectedLanguage = "en"; // Default to English
+
+    // Method 1: Try to get language from transcript header
+    if (transcriptData?.transcript?.content?.header?.languageCode) {
+      detectedLanguage = transcriptData.transcript.content.header.languageCode;
+      console.log(
+        "Language detected from header.languageCode:",
+        detectedLanguage
+      );
+    } else if (transcriptData?.transcript?.content?.header?.language) {
+      detectedLanguage = transcriptData.transcript.content.header.language;
+      console.log("Language detected from header.language:", detectedLanguage);
     }
+
+    // Method 2: Try to get language from available transcript list
+    if (
+      detectedLanguage === "en" &&
+      transcriptData?.transcript_selector?.available_transcripts
+    ) {
+      // Get the first transcript in the list (usually the default/original one)
+      const firstTranscript = Object.keys(
+        transcriptData.transcript_selector.available_transcripts
+      )[0];
+      if (firstTranscript && firstTranscript !== "en") {
+        detectedLanguage = firstTranscript;
+        console.log(
+          "Language detected from available_transcripts:",
+          detectedLanguage
+        );
+      }
+    }
+
+    // Method 3: Extract language from segments if they contain language info
+    if (
+      detectedLanguage === "en" &&
+      transcriptData?.transcript?.content?.body?.initial_segments?.[0]
+    ) {
+      const firstSegment =
+        transcriptData.transcript.content.body.initial_segments[0];
+      if (firstSegment.language) {
+        detectedLanguage = firstSegment.language;
+        console.log("Language detected from first segment:", detectedLanguage);
+      }
+    }
+
+    // Method 4: Try to analyze the text content to identify language
+    if (
+      detectedLanguage === "en" &&
+      transcriptData?.transcript?.content?.body?.initial_segments
+    ) {
+      // Get first few segments to analyze language
+      const textSample = transcriptData.transcript.content.body.initial_segments
+        .slice(0, 5)
+        .filter((segment: any) => segment.snippet?.text)
+        .map((segment: any) => segment.snippet.text)
+        .join(" ");
+
+      // Log the text sample for manual inspection
+      console.log("Text sample for language detection:", textSample);
+    }
+
+    // Method 5: Use our custom language detection as a last resort
+    if (
+      detectedLanguage === "en" &&
+      transcriptData?.transcript?.content?.body?.initial_segments
+    ) {
+      // Get a larger sample for better detection
+      const textSample = transcriptData.transcript.content.body.initial_segments
+        .slice(0, 20)
+        .filter((segment: any) => segment.snippet?.text)
+        .map((segment: any) => segment.snippet.text)
+        .join(" ");
+
+      if (textSample.length > 100) {
+        // Only attempt if we have enough text
+        const detectedLang = detectLanguageFromText(textSample);
+        if (detectedLang !== "en") {
+          detectedLanguage = detectedLang;
+          console.log("Language detected by custom algorithm:", detectedLang);
+        }
+      }
+    }
+
+    // If we have available transcripts from earlier, use that information
+    if (
+      detectedLanguage === "en" &&
+      availableTranscripts &&
+      availableTranscripts.length > 0
+    ) {
+      if (
+        availableTranscripts[0].language_code &&
+        availableTranscripts[0].language_code !== "en"
+      ) {
+        detectedLanguage = availableTranscripts[0].language_code;
+        console.log("Language from available transcripts:", detectedLanguage);
+      }
+    }
+
+    // Check if we have valid transcript data
+    if (
+      !transcriptData?.transcript?.content?.body?.initial_segments ||
+      transcriptData.transcript.content.body.initial_segments.length === 0
+    ) {
+      console.error("No valid transcript segments found in standard format");
+
+      // Try alternative transcript formats
+      if (
+        transcriptData?.transcript?.segments &&
+        transcriptData.transcript.segments.length > 0
+      ) {
+        console.log("Found alternative transcript format with segments");
+
+        // Create a compatible format
+        transcriptData.transcript.content = {
+          body: {
+            initial_segments: transcriptData.transcript.segments.map(
+              (seg: any) => ({
+                snippet: { text: seg.text || seg.content || "" },
+              })
+            ),
+          },
+        };
+
+        console.log(
+          `Converted ${transcriptData.transcript.content.body.initial_segments.length} segments`
+        );
+      }
+      // Try another alternative format
+      else if (transcriptData?.captions && transcriptData.captions.length > 0) {
+        console.log("Found alternative transcript format with captions");
+
+        // Create a compatible format from captions
+        const captionSegments = [];
+        for (const caption of transcriptData.captions) {
+          if (caption.segments && caption.segments.length > 0) {
+            captionSegments.push(
+              ...caption.segments.map((seg: any) => ({
+                snippet: { text: seg.text || seg.content || "" },
+              }))
+            );
+          }
+        }
+
+        if (captionSegments.length > 0) {
+          transcriptData.transcript = transcriptData.transcript || {};
+          transcriptData.transcript.content = {
+            body: {
+              initial_segments: captionSegments,
+            },
+          };
+          console.log(`Converted ${captionSegments.length} caption segments`);
+        } else {
+          throw new Error("No transcript available for this video");
+        }
+      } else {
+        // No valid transcript found in any format
+        throw new Error("No transcript available for this video");
+      }
+    }
+
+    // Log the number of segments found
+    console.log(
+      `Found ${transcriptData.transcript.content.body.initial_segments.length} transcript segments`
+    );
 
     // Get video duration in seconds
     const videoDuration = info.basic_info?.duration || 0;
@@ -54,7 +361,7 @@ export const fetchTranscript = async (
       .map((segment: any) => segment.snippet.text);
 
     // Calculate approximate timestamps based on text length and video duration
-    let totalTextLength = segments.reduce(
+    const totalTextLength = segments.reduce(
       (sum: number, text: string) => sum + text.length,
       0
     );
@@ -96,7 +403,7 @@ export const fetchTranscript = async (
       transcript = [...transcript, ...batchTranscript];
     }
 
-    return { title, transcript };
+    return { title, transcript, language: detectedLanguage };
   } catch (error) {
     console.error("Error fetching transcript:", error);
     // Reset the instance if there's an error, in case it's corrupted

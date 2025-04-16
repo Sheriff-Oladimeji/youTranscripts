@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useTranscriptStore } from "@/store/transcript-store";
 import { useTranslationStore, languages } from "@/store/translation-store";
-import { Globe, Check, Loader2 } from "lucide-react";
+import { Globe, Check, Loader2, Info } from "lucide-react";
 
 export default function TranslationSettings() {
   const { transcript, detectedLanguage } = useTranscriptStore();
@@ -15,6 +15,21 @@ export default function TranslationSettings() {
     error,
     setOriginalTranscript,
   } = useTranslationStore();
+
+  // Debug logging for language detection
+  useEffect(() => {
+    console.log("TranslationSettings - Detected language:", detectedLanguage);
+    console.log("TranslationSettings - Original language:", originalLanguage);
+    console.log("TranslationSettings - Current language:", currentLanguage);
+
+    // Log the first few transcript items to check content
+    if (transcript.length > 0) {
+      console.log(
+        "TranslationSettings - Transcript sample:",
+        transcript.slice(0, 3)
+      );
+    }
+  }, [transcript, detectedLanguage, originalLanguage, currentLanguage]);
 
   // Sync the transcript with the translation store
   useEffect(() => {
@@ -53,6 +68,27 @@ export default function TranslationSettings() {
         <h3 className="text-lg font-medium text-white">
           Language & Translation Settings
         </h3>
+      </div>
+
+      {/* Language detection info */}
+      <div className="mb-4 p-3 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200 rounded-lg border border-blue-200 dark:border-blue-800">
+        <div className="flex items-start">
+          <Info className="h-5 w-5 mr-2 mt-0.5 flex-shrink-0" />
+          <div>
+            <p className="text-sm font-medium">
+              Detected language: {originalLanguageName}
+            </p>
+            <p className="text-xs mt-1">
+              Language is detected automatically from the video transcript.
+              {detectedLanguage !== "en" && (
+                <span className="block mt-1 font-medium">
+                  The transcript is in its original language (
+                  {originalLanguageName}).
+                </span>
+              )}
+            </p>
+          </div>
+        </div>
       </div>
 
       <div className="relative">
