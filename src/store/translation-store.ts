@@ -20,6 +20,7 @@ export const languages = [
   { code: "nl", name: "Dutch" },
   { code: "sv", name: "Swedish" },
   { code: "pl", name: "Polish" },
+  { code: "th", name: "Thai" },
 ];
 
 interface TranslationState {
