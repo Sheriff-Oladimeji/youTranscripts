@@ -39,7 +39,7 @@ export default function TranscriptPage({
   return (
     <main className="flex flex-col min-h-screen bg-background relative">
       {/* Share Buttons */}
-      <ShareButtons title={videoTitle || `Transcript of YouTube Video`} />
+      {/* <ShareButtons title={videoTitle || `Transcript of YouTube Video`} /> */}
 
       {/* Transcript Generator */}
       <TranscriptGenerator />
