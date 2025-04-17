@@ -6,6 +6,7 @@ import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { Sun, Moon } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -27,7 +28,7 @@ export default function Header() {
           <Button
             onClick={toggleMenu}
             aria-label="Toggle menu"
-          variant="secondary"
+            variant="secondary"
             className="p-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-md transition-colors"
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -35,25 +36,17 @@ export default function Header() {
         </div>
 
         {/* Middle: Logo */}
-        <div className="flex items-center gap-2">
-          <div className="bg-red-600 text-white p-1 rounded">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="lucide lucide-play"
-            >
-              <polygon points="5 3 19 12 5 21 5 3" />
-            </svg>
+        <div className="flex items-center">
+          <div className="rounded">
+            <Image
+              src="/logo.png"
+              alt="YouTranscripts Logo"
+              width={30}
+              height={30}
+            />
           </div>
           <Link href="/" className="text-xl font-bold">
-            YouTubeTranscriptTool
+            YouTranscripts
           </Link>
         </div>
 

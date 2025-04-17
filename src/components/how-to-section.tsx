@@ -18,8 +18,7 @@ export default function HowToSection() {
       <div className="w-[90%] mx-auto">
         <div className="bg-pink-100 dark:bg-pink-950/30 text-foreground rounded-xl p-8 md:p-12 mb-8">
           <h2 className="text-2xl md:text-3xl font-bold mb-6 flex items-center justify-center">
-            How to Generate a YouTubeTranscriptTool{" "}
-            <Video className="ml-2 h-6 w-6" />
+            How to Generate a YouTube Transcript <Video className="ml-2 h-6 w-6" />
           </h2>
 
           <ol className="space-y-4 max-w-[800px] mx-auto list-decimal list-inside mb-8">

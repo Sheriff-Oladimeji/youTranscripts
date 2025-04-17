@@ -11,10 +11,10 @@ export default function PromotionalSection() {
               Translation Features! <Rocket className="inline h-6 w-6 ml-2" />
             </h2>
             <p className="max-w-[800px] text-lg">
-              Use <strong>YouTube Transcript Tool</strong> to effortlessly
-              extract the transcript from any YouTube video. But that&apos;s not
-              all! We&apos;ve added powerful new features to make learning,
-              creating, and sharing easier than ever.
+              Use <strong>YouTranscripts</strong> to effortlessly extract the
+              transcript from any YouTube video. But that&apos;s not all!
+              We&apos;ve added powerful new features to make learning, creating,
+              and sharing easier than ever.
             </p>
           </div>
         </div>

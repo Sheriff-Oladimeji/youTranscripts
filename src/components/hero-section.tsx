@@ -32,7 +32,7 @@ export default function HeroSection() {
     <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-red-600 to-red-500 dark:from-red-700 dark:to-red-600 text-white">
       <div className="w-[90%] mx-auto flex flex-col items-center text-center">
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter mb-4">
-          YouTubeTranscriptTool
+          YouTranscripts
         </h1>
         <p className=" text-lg md:text-xl mb-2">
           Generate YouTube Transcript for FREE.

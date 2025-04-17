@@ -6,8 +6,7 @@ export default function WhySection() {
       <div className="w-[90%] mx-auto">
         <div className="bg-purple-600 text-white rounded-xl p-8 md:p-12 mb-8">
           <h2 className="text-2xl md:text-3xl font-bold mb-6 flex items-center justify-center">
-            Why you need YouTubeTranscriptTool?{" "}
-            <ThumbsUp className="ml-2 h-6 w-6" />
+            Why you need YouTranscripts? <ThumbsUp className="ml-2 h-6 w-6" />
           </h2>
 
           <div className="space-y-6 max-w-[800px] mx-auto">
@@ -15,8 +14,8 @@ export default function WhySection() {
               YouTube videos are invaluable for learning and entertainment.
               However, sometimes you need to <strong>take notes</strong> or
               share the content with someone who{" "}
-              <strong>prefers reading</strong>. YouTubeTranscriptTool makes it a
-              breeze to obtain the transcript from any YouTube video.
+              <strong>prefers reading</strong>. YouTranscripts makes it a breeze
+              to obtain the transcript from any YouTube video.
             </p>
 
             <div className="bg-green-500 text-white rounded-xl p-6 mt-8">
