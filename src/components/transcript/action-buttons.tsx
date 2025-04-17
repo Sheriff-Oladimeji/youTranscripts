@@ -76,6 +76,59 @@ export default function ActionButtons({
       });
   };
 
+  const handleSummarize = () => {
+    // Get the transcript text
+    const transcriptText = transcript.map((item) => item.text).join(" ");
+
+    // Create the prompt for ChatGPT
+    const promptText = `Summarize this youtube video transcript in detailed step by step points:`;
+
+    try {
+      // Also copy to clipboard as a fallback
+      navigator.clipboard
+        .writeText(`${promptText}\n\n${transcriptText}`)
+        .catch((err) => {
+          console.error(
+            "Clipboard write failed, but continuing with ChatGPT open:",
+            err
+          );
+        });
+
+      // Detect if user is on mobile or desktop
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+      // Unfortunately, ChatGPT doesn't support direct URL parameters for pre-filling the input
+      // So we'll just open ChatGPT and rely on the clipboard for pasting
+      const chatGptUrl = `https://chat.openai.com/`;
+
+      // Show toast message first
+      toast.success(
+        "Transcript copied! Opening ChatGPT in 3 seconds - please paste the transcript there.",
+        { duration: 5000 } // Show toast for 5 seconds
+      );
+
+      // Add a delay before opening ChatGPT to ensure users see the toast message
+      setTimeout(() => {
+        // Open the appropriate ChatGPT URL
+        if (isMobile) {
+          window.location.href = chatGptUrl;
+        } else {
+          window.open(chatGptUrl, "_blank");
+        }
+      }, 3000); // 3-second delay
+    } catch (err) {
+      console.error("Failed to process transcript for summarization:", err);
+      toast.error("Failed to open ChatGPT. Please try copying manually.");
+
+      // Fallback to just copying the text
+      navigator.clipboard
+        .writeText(`${promptText}\n\n${transcriptText}`)
+        .catch(() => {
+          console.error("Even clipboard fallback failed");
+        });
+    }
+  };
+
   return (
     <div className="space-y-3 mb-6">
       {/* Copy Transcript Button */}
@@ -188,11 +241,12 @@ export default function ActionButtons({
       {/* Summarize Button */}
       <button
         className="w-full py-4 px-6 bg-[#00AAFF] hover:bg-[#0099EE] text-white font-medium rounded-lg flex items-center gap-2"
-        onClick={() => toast.info("This feature is coming soon!")}
+        onClick={handleSummarize}
+        disabled={transcript.length === 0}
       >
         <div className="flex items-center justify-center flex-1">
           <Brain className="h-5 w-5 mr-2" />
-          <span>Summarize</span>
+          <span>Copy & Summarize with ChatGPT</span>
           <span className="ml-2 text-xs bg-white/20 px-2 py-0.5 rounded">
             free
           </span>
