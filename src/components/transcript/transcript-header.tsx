@@ -20,13 +20,21 @@ export default function TranscriptHeader({
   return (
     <div className="mb-6">
       <h1 className="text-2xl md:text-3xl font-bold mb-2">
-        {isLoading
-          ? "Loading transcript..."
-          : error
-          ? "Error loading transcript"
-          : title
-          ? `Transcript of ${title}`
-          : `Transcript of YouTube Video`}
+        {isLoading ? (
+          "Loading transcript..."
+        ) : error ? (
+          "Error loading transcript"
+        ) : title ? (
+          <>
+            <span className="font-bold">Transcript of </span>
+            <span className="font-normal">&ldquo;{title}&rdquo;</span>
+          </>
+        ) : (
+          <>
+            <span className="font-bold">Transcript of </span>
+            <span className="font-normal">YouTube Video</span>
+          </>
+        )}
       </h1>
 
       {!isLoading && !error && channelTitle && (
