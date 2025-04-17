@@ -4,10 +4,10 @@ export default function Footer() {
       <div className="w-[90%] mx-auto">
         <div className="text-sm text-muted-foreground mb-4">
           <p className="mb-4">
-            Disclaimer: YouTubeTranscriptTool.com is an independent service and
-            is not associated or affiliated with YouTube or Google. Any brand
-            names or logos displayed on this site are used for illustrative
-            purposes only and do not imply endorsement or partnership.
+            Disclaimer: YouTranscripts is an independent service and is not
+            associated or affiliated with YouTube or Google. Any brand names or
+            logos displayed on this site are used for illustrative purposes only
+            and do not imply endorsement or partnership.
           </p>
         </div>
 
