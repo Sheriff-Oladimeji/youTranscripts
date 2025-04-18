@@ -1,3 +1,6 @@
+// app/api/translate/route.ts
+// ---------------------------
+
 import { NextResponse } from "next/server";
 import { chunkText } from "@/lib/utils";
 
@@ -7,7 +10,7 @@ interface RequestBody {
 }
 
 /**
- * Translate a short piece of text using Google free endpoint.
+ * Translate a short piece of text using Google’s free endpoint.
  */
 async function translateText(
   text: string,
@@ -16,6 +19,7 @@ async function translateText(
   const url =
     `https://translate.googleapis.com/translate_a/single?` +
     `client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`;
+
   const res = await fetch(url);
   if (!res.ok) throw new Error("Google Translate failed");
   const data = await res.json();
@@ -30,7 +34,8 @@ async function translateText(
 }
 
 /**
- * Translate long text by chunking into safe lengths and preserving markers.
+ * Translate long text by chunking into safe lengths
+ * and preserving your segment markers.
  */
 async function translateLongText(
   text: string,
@@ -38,15 +43,14 @@ async function translateLongText(
 ): Promise<string> {
   const marker = "__SEGMENT_MARKER_12345__";
 
-  // 1) Break the text into safe-sized chunks
+  // 1) Break text into ≤ 4 500‑char chunks
   const chunks = chunkText(text, marker, 4500);
 
-  // 2) Translate each chunk with fallback
+  // 2) Translate each chunk with Google → fallback to MyMemory
   const translatedChunks = await Promise.all(
     chunks.map((chunk) =>
       translateText(chunk, targetLang).catch(async (err) => {
         console.warn("Google failed, falling back:", err);
-        // MyMemory fallback
         const memRes = await fetch(
           `https://api.mymemory.translated.net/get?q=${encodeURIComponent(
             chunk
@@ -61,7 +65,7 @@ async function translateLongText(
     )
   );
 
-  // 3) Re-insert markers between each translated chunk
+  // 3) Re‑insert markers
   return translatedChunks.join(marker);
 }
 
@@ -75,6 +79,7 @@ export async function POST(request: Request) {
       );
     }
 
+    // Always use the long translator, which will chunk internally
     const translatedText = await translateLongText(text, target_lang);
     return NextResponse.json({ translatedText });
   } catch (error) {
@@ -85,3 +90,8 @@ export async function POST(request: Request) {
     );
   }
 }
+
+// (Optional) force Node.js runtime if you need larger body‑size allowance
+export const config = {
+  runtime: "nodejs",
+};

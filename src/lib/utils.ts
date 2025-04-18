@@ -193,7 +193,9 @@ export function downloadAsPdf(content: string, filename: string): void {
 
 
 
-// utilities.ts
+
+
+
 /**
  * Split `text` into chunks of at most `maxLen` characters,
  * preserving any existing markers as boundaries when possible.
