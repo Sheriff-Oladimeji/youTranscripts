@@ -1,16 +1,73 @@
 import { NextResponse } from "next/server";
+import { chunkText } from "@/lib/utils";
 
-// Define request body type
 interface RequestBody {
   text: string;
   target_lang: string;
 }
 
+/**
+ * Translate a short piece of text using Google free endpoint.
+ */
+async function translateText(
+  text: string,
+  targetLang: string
+): Promise<string> {
+  const url =
+    `https://translate.googleapis.com/translate_a/single?` +
+    `client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error("Google Translate failed");
+  const data = await res.json();
+
+  let out = "";
+  if (Array.isArray(data[0])) {
+    for (const part of data[0]) {
+      out += part[0] || "";
+    }
+  }
+  return out;
+}
+
+/**
+ * Translate long text by chunking into safe lengths and preserving markers.
+ */
+async function translateLongText(
+  text: string,
+  targetLang: string
+): Promise<string> {
+  const marker = "__SEGMENT_MARKER_12345__";
+
+  // 1) Break the text into safe-sized chunks
+  const chunks = chunkText(text, marker, 4500);
+
+  // 2) Translate each chunk with fallback
+  const translatedChunks = await Promise.all(
+    chunks.map((chunk) =>
+      translateText(chunk, targetLang).catch(async (err) => {
+        console.warn("Google failed, falling back:", err);
+        // MyMemory fallback
+        const memRes = await fetch(
+          `https://api.mymemory.translated.net/get?q=${encodeURIComponent(
+            chunk
+          )}&langpair=auto|${targetLang}`
+        );
+        const memData = await memRes.json();
+        if (!memData?.responseData?.translatedText) {
+          throw new Error("MyMemory fallback failed");
+        }
+        return memData.responseData.translatedText;
+      })
+    )
+  );
+
+  // 3) Re-insert markers between each translated chunk
+  return translatedChunks.join(marker);
+}
+
 export async function POST(request: Request) {
   try {
-    const body = (await request.json()) as RequestBody;
-    const { text, target_lang } = body;
-
+    const { text, target_lang } = (await request.json()) as RequestBody;
     if (!text || !target_lang) {
       return NextResponse.json(
         { error: "Missing text or target_lang" },
@@ -18,124 +75,13 @@ export async function POST(request: Request) {
       );
     }
 
-    const translatedText = await translateText(text, target_lang);
+    const translatedText = await translateLongText(text, target_lang);
     return NextResponse.json({ translatedText });
   } catch (error) {
     console.error("Error in /api/translate:", error);
     return NextResponse.json(
-      {
-        error: error instanceof Error ? error.message : "Unknown error",
-      },
+      { error: error instanceof Error ? error.message : "Unknown error" },
       { status: 500 }
     );
   }
-}
-
-/**
- * Translates text using free translation APIs (Google Translate with fallback to MyMemory).
- * @param text - The text to translate.
- * @param targetLang - The target language code.
- * @returns The translated text.
- */
-async function translateText(
-  text: string,
-  targetLang: string
-): Promise<string> {
-  // Check for segment markers first
-  const newMarker = "__SEGMENT_MARKER_12345__";
-  if (text.includes(newMarker)) {
-    return translateLongText(text, targetLang);
-  }
-
-  // For long texts, we need to split it into chunks to avoid URL length limitations
-  // and potential issues with the translation APIs
-  if (text.length > 5000) {
-    return translateLongText(text, targetLang);
-  }
-
-  try {
-    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${encodeURIComponent(
-      text
-    )}`;
-    const response = await fetch(url);
-    const data = await response.json();
-
-    let translatedText = "";
-    if (data && Array.isArray(data[0])) {
-      for (const part of data[0]) {
-        if (part[0]) translatedText += part[0];
-      }
-      return translatedText;
-    }
-    throw new Error("Unexpected response format from Google Translate");
-  } catch (error) {
-    console.error("Google Translate failed:", error);
-
-    // Fallback to MyMemory API
-    try {
-      const response = await fetch(
-        `https://api.mymemory.translated.net/get?q=${encodeURIComponent(
-          text
-        )}&langpair=auto|${targetLang}`
-      );
-      const data = await response.json();
-      if (data?.responseData?.translatedText) {
-        return data.responseData.translatedText;
-      }
-      throw new Error("Invalid response from MyMemory API");
-    } catch (fallbackError) {
-      console.error("MyMemory API failed:", fallbackError);
-      throw new Error("All translation services failed");
-    }
-  }
-}
-
-/**
- * Handles translation of long text by splitting it into chunks
- * and preserving special markers.
- */
-async function translateLongText(
-  text: string,
-  targetLang: string
-): Promise<string> {
-  // Check if the text contains our segment markers (old or new format)
-  const oldMarker = "###SEGMENT###";
-  const newMarker = "__SEGMENT_MARKER_12345__";
-
-  const hasOldSegmentMarkers = text.includes(oldMarker);
-  const hasNewSegmentMarkers = text.includes(newMarker);
-
-  // If it has segment markers, we need to preserve them during translation
-  if (hasNewSegmentMarkers) {
-    // Split by new segment markers
-    const segments = text.split(newMarker);
-
-    // Translate each segment individually
-    const translatedSegments = await Promise.all(
-      segments.map((segment) => translateText(segment, targetLang))
-    );
-
-    // Rejoin with the same markers
-    return translatedSegments.join(newMarker);
-  } else if (hasOldSegmentMarkers) {
-    // Handle old format for backward compatibility
-    // Split by old segment markers
-    const segments = text.split("\n\n###SEGMENT###\n\n");
-
-    // Translate each segment individually
-    const translatedSegments = await Promise.all(
-      segments.map((segment) => translateText(segment, targetLang))
-    );
-
-    // Rejoin with the same markers
-    return translatedSegments.join("\n\n###SEGMENT###\n\n");
-  }
-
-  // For regular long text without markers, split by paragraphs
-  const paragraphs = text.split("\n\n");
-  const translatedParagraphs = await Promise.all(
-    paragraphs.map((paragraph) => translateText(paragraph, targetLang))
-  );
-
-  return translatedParagraphs.join("\n\n");
 }
