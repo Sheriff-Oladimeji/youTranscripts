@@ -46,11 +46,39 @@ const CACHE_EXPIRY = 60 * 60 * 1000; // 1 hour in milliseconds
 
 export async function POST(request: Request) {
   try {
-    const { url } = await request.json();
+    // Log the request content type
+    console.log("Request content type:", request.headers.get("content-type"));
+
+    // Safely parse the request body
+    let requestBody;
+    try {
+      requestBody = await request.json();
+      console.log("Request body parsed successfully:", requestBody);
+    } catch (parseError) {
+      console.error("Error parsing request body:", parseError);
+      return NextResponse.json(
+        { error: "Invalid JSON in request body" },
+        { status: 400 }
+      );
+    }
+
+    const { url } = requestBody;
+
+    if (!url) {
+      console.error("Missing URL in request body");
+      return NextResponse.json(
+        { error: "Missing URL in request" },
+        { status: 400 }
+      );
+    }
+
     const videoId = getVideoId(url);
 
     if (!videoId) {
-      return NextResponse.json({ error: "Invalid YouTube URL" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Invalid YouTube URL" },
+        { status: 400 }
+      );
     }
 
     // Check cache first.
@@ -144,6 +172,9 @@ export async function POST(request: Request) {
     return NextResponse.json(responseData);
   } catch (error) {
     console.error("API error:", error);
-    return NextResponse.json({ error: "Failed to process video" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to process video" },
+      { status: 500 }
+    );
   }
 }

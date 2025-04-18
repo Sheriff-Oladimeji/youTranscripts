@@ -1,8 +1,34 @@
 export function getVideoId(url: string): string | null {
-  const match = url.match(
-    /(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=|\/shorts\/))([^"&?\/\s]{11})/
-  );
-  return match ? match[1] : null;
+  // Handle empty or undefined URLs
+  if (!url) {
+    console.warn("Empty URL provided to getVideoId");
+    return null;
+  }
+
+  try {
+    // Try to match standard YouTube URLs and shorts
+    const match = url.match(
+      /(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=|\/shorts\/))([^"&?\/\s]{11})/
+    );
+
+    if (match && match[1]) {
+      return match[1];
+    }
+
+    // Additional check for mobile YouTube URLs
+    const mobileMatch = url.match(
+      /(?:m\.youtube\.com\/watch\?v=)([^"&?\/\s]{11})/
+    );
+    if (mobileMatch && mobileMatch[1]) {
+      return mobileMatch[1];
+    }
+
+    console.warn("No valid YouTube video ID found in URL:", url);
+    return null;
+  } catch (error) {
+    console.error("Error extracting YouTube video ID:", error);
+    return null;
+  }
 }
 
 export function getEmbedUrl(videoId: string): string {

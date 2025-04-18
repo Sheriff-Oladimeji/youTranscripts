@@ -14,13 +14,32 @@ export default function TranscriptGenerator() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Trim the URL to remove any whitespace
+    const trimmedUrl = youtubeUrl.trim();
+
+    if (!trimmedUrl) {
+      toast.error("Please enter a YouTube URL");
+      return;
+    }
+
     setIsLoading(true);
 
-    const videoId = getVideoId(youtubeUrl);
-    if (videoId) {
-      router.push(`/transcript/${videoId}`);
-    } else {
-      toast.error("Please enter a valid YouTube URL");
+    try {
+      const videoId = getVideoId(trimmedUrl);
+      if (videoId) {
+        console.log(
+          "Valid YouTube URL detected, navigating to transcript page"
+        );
+        router.push(`/transcript/${videoId}`);
+      } else {
+        console.error("Invalid YouTube URL:", trimmedUrl);
+        toast.error("Please enter a valid YouTube URL");
+        setIsLoading(false);
+      }
+    } catch (error) {
+      console.error("Error processing URL:", error);
+      toast.error("An error occurred. Please try again.");
       setIsLoading(false);
     }
   };
