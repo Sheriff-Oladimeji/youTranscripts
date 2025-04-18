@@ -116,78 +116,91 @@ export const useTranscriptStore = create<TranscriptState>((set, get) => ({
 
       // Use browser's fetch API with AbortController for timeout
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+      const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout (increased from 10s)
 
-      const response = await fetch("/api/transcript", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ url }),
-        signal: controller.signal,
-      });
-
-      clearTimeout(timeoutId);
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to fetch transcript");
-      }
-
-      const data = await response.json();
-
-      // Get the detected language from the API response
-      const detectedLanguage = data.metadata.language || "en";
-
-      // Make sure we have a title
-      let videoTitle = data.metadata.title;
-
-      // Additional safeguard for title
-      if (!videoTitle || videoTitle.trim() === "") {
-        videoTitle = `YouTube Video (${videoId})`;
-        console.log(
-          "Store: Title was empty, using default with videoId:",
-          videoTitle
-        );
-      }
-
-      // Update the cache
-      const newCache = { ...get().cache };
-      newCache[videoId] = {
-        timestamp: now,
-        data: {
-          transcript: data.transcript,
-          metadata: {
-            title: videoTitle,
-            channelTitle: data.metadata.channelTitle || "",
-            publishDate: data.metadata.publishDate || "",
-            views: data.metadata.views || "0",
-            likes: data.metadata.likes || "0",
-            duration: data.metadata.duration || "",
-            description: data.metadata.description || "",
-            language: detectedLanguage,
+      try {
+        console.log("Fetching transcript for URL:", url);
+        const response = await fetch("/api/transcript", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
           },
-        },
-      };
+          body: JSON.stringify({ url }),
+          signal: controller.signal,
+        });
 
-      console.log("Setting video title in store:", videoTitle);
+        clearTimeout(timeoutId);
 
-      set({
-        videoId,
-        videoTitle,
-        channelTitle: data.metadata.channelTitle || "",
-        publishDate: data.metadata.publishDate || "",
-        views: data.metadata.views || "0",
-        likes: data.metadata.likes || "0",
-        duration: data.metadata.duration || "",
-        description: data.metadata.description || "",
-        transcript: data.transcript,
-        originalTranscript: data.transcript,
-        selectedLanguage: detectedLanguage,
-        detectedLanguage: detectedLanguage,
-        isLoading: false,
-        cache: newCache,
-      });
+        // Check if the request was aborted
+        if (controller.signal.aborted) {
+          throw new Error("Request timed out. Please try again.");
+        }
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || "Failed to fetch transcript");
+        }
+
+        const data = await response.json();
+
+        // Get the detected language from the API response
+        const detectedLanguage = data.metadata.language || "en";
+
+        // Make sure we have a title
+        let videoTitle = data.metadata.title;
+
+        // Additional safeguard for title
+        if (!videoTitle || videoTitle.trim() === "") {
+          videoTitle = `YouTube Video (${videoId})`;
+          console.log(
+            "Store: Title was empty, using default with videoId:",
+            videoTitle
+          );
+        }
+
+        // Update the cache
+        const newCache = { ...get().cache };
+        newCache[videoId] = {
+          timestamp: now,
+          data: {
+            transcript: data.transcript,
+            metadata: {
+              title: videoTitle,
+              channelTitle: data.metadata.channelTitle || "",
+              publishDate: data.metadata.publishDate || "",
+              views: data.metadata.views || "0",
+              likes: data.metadata.likes || "0",
+              duration: data.metadata.duration || "",
+              description: data.metadata.description || "",
+              language: detectedLanguage,
+            },
+          },
+        };
+
+        console.log("Setting video title in store:", videoTitle);
+
+        set({
+          videoId,
+          videoTitle,
+          channelTitle: data.metadata.channelTitle || "",
+          publishDate: data.metadata.publishDate || "",
+          views: data.metadata.views || "0",
+          likes: data.metadata.likes || "0",
+          duration: data.metadata.duration || "",
+          description: data.metadata.description || "",
+          transcript: data.transcript,
+          originalTranscript: data.transcript,
+          selectedLanguage: detectedLanguage,
+          detectedLanguage: detectedLanguage,
+          isLoading: false,
+          cache: newCache,
+        });
+      } catch (fetchError) {
+        // Handle fetch-specific errors
+        clearTimeout(timeoutId);
+        console.error("Fetch error:", fetchError);
+        throw fetchError;
+      }
     } catch (error) {
       console.error("Error fetching transcript:", error);
       set({
