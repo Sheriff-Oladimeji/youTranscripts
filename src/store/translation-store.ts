@@ -159,22 +159,26 @@ export const useTranslationStore = create<TranslationState>((set, get) => ({
       }
     } catch (error) {
       console.error("Error translating transcript:", error);
-      // Only show error if not manually cancelled
-      if (error.name !== "AbortError") {
+      // Only handle non-abort errors
+      if (error instanceof Error) {
+        if (error.name !== "AbortError") {
+          set({
+            error: error.message,
+            isTranslating: false,
+            progress: 0,
+            translationController: null,
+          });
+          toast.error(`Translation failed: ${error.message}`);
+        }
+      } else {
+        // Unknown error shape
         set({
-          error:
-            error instanceof Error
-              ? error.message
-              : "Failed to translate transcript",
+          error: "Failed to translate transcript",
           isTranslating: false,
           progress: 0,
           translationController: null,
         });
-        toast.error(
-          `Translation failed: ${
-            error instanceof Error ? error.message : "Unknown error"
-          }`
-        );
+        toast.error("Translation failed: Unknown error");
       }
     }
   },
