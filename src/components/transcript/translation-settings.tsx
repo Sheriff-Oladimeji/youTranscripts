@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useTranscriptStore } from "@/store/transcript-store";
 import { useTranslationStore, languages } from "@/store/translation-store";
-import { Globe, Check, Loader2, Info } from "lucide-react";
+import { Globe, Check, Loader2, Info, ChevronDown } from "lucide-react";
 
 export default function TranslationSettings() {
   const { transcript, detectedLanguage } = useTranscriptStore();
@@ -94,46 +94,49 @@ export default function TranslationSettings() {
       </div>
 
       <div className="relative">
-        <div className="flex items-center gap-3 bg-gradient-to-r from-[#333] to-[#2a2a2a] dark:from-[#222] dark:to-[#1a1a1a] p-4 rounded-xl shadow-inner">
-          <div className="flex-grow">
-            <div className="flex items-center">
+        <div className="flex flex-col sm:flex-row items-center gap-3 bg-gradient-to-r from-[#333] to-[#2a2a2a] dark:from-[#222] dark:to-[#1a1a1a] p-4 rounded-xl shadow-inner">
+          <div className="w-full sm:w-[80%]">
+            <div className="flex items-center w-full">
               <Globe className="h-5 w-5 mr-3 text-blue-400" />
-              <select
-                id="language-selector"
-                className="w-full h-12 px-4 rounded-lg border border-gray-600 bg-[#222] dark:bg-[#111] text-white appearance-none cursor-pointer focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                value={currentLanguage}
-                onChange={(e) => {
-                  if (e.target.value) {
-                    setTargetLanguage(e.target.value);
-                    translateTo(e.target.value);
-                  }
-                }}
-                disabled={isTranslating}
-              >
-                {/* Original language option */}
-                <option value={originalLanguage}>
-                  {originalLanguageName} (Original)
-                </option>
+              <div className="relative flex-1">
+                <select
+                  id="language-selector"
+                  className="w-full h-12 px-4 pr-10 rounded-lg border border-gray-600 bg-[#222] dark:bg-[#111] text-white appearance-none cursor-pointer focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                  value={currentLanguage}
+                  onChange={(e) => {
+                    if (e.target.value) {
+                      setTargetLanguage(e.target.value);
+                      translateTo(e.target.value);
+                    }
+                  }}
+                  disabled={isTranslating}
+                >
+                  {/* Original language option */}
+                  <option value={originalLanguage}>
+                    {originalLanguageName} (Original)
+                  </option>
 
-                {/* Divider */}
-                <option disabled className="bg-gray-700">
-                  ───────────────
-                </option>
+                  {/* Divider */}
+                  <option disabled className="bg-gray-700">
+                    ───────────────
+                  </option>
 
-                {/* Other languages */}
-                {languages
-                  .filter((lang) => lang.code !== originalLanguage)
-                  .map((lang) => (
-                    <option key={lang.code} value={lang.code}>
-                      {lang.name}
-                    </option>
-                  ))}
-              </select>
+                  {/* Other languages */}
+                  {languages
+                    .filter((lang) => lang.code !== originalLanguage)
+                    .map((lang) => (
+                      <option key={lang.code} value={lang.code}>
+                        {lang.name}
+                      </option>
+                    ))}
+                </select>
+                <ChevronDown className="absolute top-1/2 right-3 -translate-y-1/2 text-gray-400 pointer-events-none" />
+              </div>
             </div>
           </div>
 
           <button
-            className={`min-w-[120px] h-12 px-4 py-2 flex items-center justify-center gap-2 rounded-lg font-medium transition-all duration-200 ${
+            className={`w-full  sm:w-[20%] h-12 px-4 py-2 flex items-center justify-center gap-2 rounded-lg font-medium transition-all duration-200 ${
               isTranslating
                 ? "bg-gray-600 cursor-not-allowed"
                 : currentLanguage === originalLanguage
