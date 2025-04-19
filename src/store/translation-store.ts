@@ -30,7 +30,8 @@ interface TranslationState {
   originalLanguage: string;
   isTranslating: boolean;
   error: string | null;
-  progress: number; // Added to track progress for long translations
+  progress: number;
+  translationController: AbortController | null;
 
   setOriginalTranscript: (
     transcript: TranscriptItem[],
@@ -40,7 +41,7 @@ interface TranslationState {
     language: string,
     transcript?: TranscriptItem[]
   ) => Promise<void>;
-  cancelTranslation: () => void; // Added for user to cancel long translations
+  cancelTranslation: () => void;
   reset: () => void;
 }
 
@@ -53,6 +54,7 @@ export const useTranslationStore = create<TranslationState>((set, get) => ({
   isTranslating: false,
   error: null,
   progress: 0,
+  translationController: null,
 
   // Set the original transcript
   setOriginalTranscript: (transcript, detectedLanguage) => {
@@ -68,11 +70,17 @@ export const useTranslationStore = create<TranslationState>((set, get) => ({
 
   // Cancel any ongoing translation
   cancelTranslation: () => {
+    const { translationController } = get();
+    if (translationController) {
+      translationController.abort();
+    }
+
     if (get().isTranslating) {
       set({
         isTranslating: false,
         error: "Translation cancelled by user",
         progress: 0,
+        translationController: null,
       });
       toast.info("Translation cancelled");
     }
@@ -90,7 +98,11 @@ export const useTranslationStore = create<TranslationState>((set, get) => ({
     }
 
     // Clear any previous errors
-    set({ error: null });
+    set({
+      error: null,
+      progress: 0,
+      translationController: new AbortController(),
+    });
 
     const SEGMENT_MARKER = "<<<SEGMENT_MARKER_12345>>>";
 
@@ -101,6 +113,8 @@ export const useTranslationStore = create<TranslationState>((set, get) => ({
         currentLanguage: originalLanguage,
         isTranslating: false,
         error: null,
+        progress: 0,
+        translationController: null,
       });
 
       if (language === originalLanguage) {
@@ -120,7 +134,7 @@ export const useTranslationStore = create<TranslationState>((set, get) => ({
 
     try {
       // Different strategy for very large transcripts vs smaller ones
-      const isLargeTranscript = transcriptToTranslate.length > 100;
+      const isLargeTranscript = transcriptToTranslate.length > 50;
 
       if (isLargeTranscript) {
         // For large transcripts, we'll translate in batches
@@ -139,27 +153,39 @@ export const useTranslationStore = create<TranslationState>((set, get) => ({
       }
 
       // Set translation is complete (already updated in the specific methods)
-      toast.success(`Translation to ${languageName} complete!`);
+      if (get().isTranslating) {
+        // Only show success if not cancelled
+        toast.success(`Translation to ${languageName} complete!`);
+      }
     } catch (error) {
       console.error("Error translating transcript:", error);
-      set({
-        error:
-          error instanceof Error
-            ? error.message
-            : "Failed to translate transcript",
-        isTranslating: false,
-        progress: 0,
-      });
-      toast.error(
-        `Translation failed: ${
-          error instanceof Error ? error.message : "Unknown error"
-        }`
-      );
+      // Only show error if not manually cancelled
+      if (error.name !== "AbortError") {
+        set({
+          error:
+            error instanceof Error
+              ? error.message
+              : "Failed to translate transcript",
+          isTranslating: false,
+          progress: 0,
+          translationController: null,
+        });
+        toast.error(
+          `Translation failed: ${
+            error instanceof Error ? error.message : "Unknown error"
+          }`
+        );
+      }
     }
   },
 
   // Reset the store
   reset: () => {
+    const { translationController } = get();
+    if (translationController) {
+      translationController.abort();
+    }
+
     set({
       originalTranscript: [],
       translatedTranscript: [],
@@ -168,6 +194,7 @@ export const useTranslationStore = create<TranslationState>((set, get) => ({
       isTranslating: false,
       error: null,
       progress: 0,
+      translationController: null,
     });
   },
 }));
@@ -184,6 +211,8 @@ async function translateSmallTranscript(
   const combinedText = transcript.map((item) => item.text).join(segmentMarker);
 
   try {
+    const controller = useTranslationStore.getState().translationController;
+
     // Send request to the translation API
     const response = await fetch("/api/translate", {
       method: "POST",
@@ -194,6 +223,7 @@ async function translateSmallTranscript(
         text: combinedText,
         target_lang: targetLanguage,
       }),
+      signal: controller?.signal,
     });
 
     if (!response.ok) {
@@ -216,6 +246,7 @@ async function translateSmallTranscript(
       currentLanguage: targetLanguage,
       isTranslating: false,
       progress: 100,
+      translationController: null,
     });
   } catch (error) {
     throw error; // Let the main function handle the error
@@ -230,100 +261,60 @@ async function translateLargeTranscript(
   targetLanguage: string,
   segmentMarker: string
 ) {
-  // For very large transcripts, we'll translate in batches of 20
-  const batchSize = 20;
-  const batches = [];
-
-  // Split into batches
+  const batchSize = 15;
+  const batches: TranscriptItem[][] = [];
   for (let i = 0; i < transcript.length; i += batchSize) {
     batches.push(transcript.slice(i, i + batchSize));
   }
+  const controller = useTranslationStore.getState().translationController;
 
-  console.log(`Translating large transcript in ${batches.length} batches`);
-
-  // Translated transcript items will be stored here
-  const translatedItems: TranscriptItem[] = [];
-
-  // Process each batch
-  for (let i = 0; i < batches.length; i++) {
-    const batch = batches[i];
-    const batchText = batch.map((item) => item.text).join(segmentMarker);
-
-    // Update progress
-    useTranslationStore.setState({
-      progress: Math.round((i / batches.length) * 100),
-    });
-
-    try {
-      // Send request to the translation API
-      const response = await fetch("/api/translate", {
+  try {
+    // initialize progress
+    useTranslationStore.setState({ progress: 0 });
+    const total = batches.length;
+    let completed = 0;
+    const batchPromises = batches.map((batch) => {
+      const textPayload = batch.map((item) => item.text).join(segmentMarker);
+      return fetch("/api/translate", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          text: batchText,
-          target_lang: targetLanguage,
-        }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Translation failed");
-      }
-
-      const data = await response.json();
-      const translatedSegments = data.translatedText.split(segmentMarker);
-
-      // Map translated segments back to transcript items for this batch
-      const translatedBatch = batch.map((segment, index) => ({
-        ...segment,
-        text: translatedSegments[index] || segment.text, // Fallback to original text
-      }));
-
-      // Add to our accumulated result
-      translatedItems.push(...translatedBatch);
-
-      // If we're not at the last batch, update the partially translated transcript
-      if (i < batches.length - 1) {
-        // Create a combined transcript with translated items so far, plus original remaining items
-        const partialTranslated = [
-          ...translatedItems,
-          ...transcript.slice((i + 1) * batchSize),
-        ];
-
-        // Update the store with partial results
-        useTranslationStore.setState({
-          translatedTranscript: partialTranslated,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: textPayload, target_lang: targetLanguage }),
+        signal: controller?.signal,
+      })
+        .then((res) => {
+          if (!res.ok) throw new Error("Batch translation failed");
+          return res.json();
+        })
+        .then((data) => {
+          const parts = data.translatedText.split(segmentMarker);
+          const translated = batch.map((item, idx) => ({
+            ...item,
+            text: parts[idx] || item.text,
+          }));
+          completed++;
+          useTranslationStore.setState({
+            progress: Math.round((completed / total) * 100),
+          });
+          return translated;
         });
-
-        // Pause between batches to avoid rate limiting
-        await new Promise((resolve) => setTimeout(resolve, 500));
-      }
-    } catch (error) {
-      console.error(`Error translating batch ${i + 1}:`, error);
-
-      // For batch failures, we continue with the next batch, but mark failed items
-      const failedBatch = batch.map((segment) => ({
-        ...segment,
-        text: `[Translation failed: ${segment.text}]`,
-      }));
-
-      translatedItems.push(...failedBatch);
-    }
-
-    // Check if translation was cancelled
-    if (!useTranslationStore.getState().isTranslating) {
-      console.log("Translation cancelled by user");
-      throw new Error("Translation cancelled");
-    }
+    });
+    const results = await Promise.all(batchPromises);
+    const translatedItems = results.flat();
+    useTranslationStore.setState({
+      translatedTranscript: translatedItems,
+      currentLanguage: targetLanguage,
+      isTranslating: false,
+      progress: 100,
+      translationController: null,
+    });
+  } catch (error) {
+    console.error("Error in parallel translation:", error);
+    useTranslationStore.setState({
+      translatedTranscript: transcript,
+      currentLanguage: targetLanguage,
+      isTranslating: false,
+      progress: 100,
+      translationController: null,
+    });
   }
-
-  // Update the store with complete results
-  useTranslationStore.setState({
-    translatedTranscript: translatedItems,
-    currentLanguage: targetLanguage,
-    isTranslating: false,
-    progress: 100,
-  });
 }

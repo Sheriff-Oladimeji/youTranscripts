@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useTranscriptStore } from "@/store/transcript-store";
 import { useTranslationStore, languages } from "@/store/translation-store";
-import { Globe, Check, Loader2, Info, X } from "lucide-react";
+import { Globe, Check, Loader2, Info } from "lucide-react";
 
 export default function TranslationSettings() {
   const { transcript, detectedLanguage } = useTranscriptStore();
@@ -24,8 +24,13 @@ export default function TranslationSettings() {
     console.log("TranslationSettings - Original language:", originalLanguage);
     console.log("TranslationSettings - Current language:", currentLanguage);
 
-    // Log the transcript length to help debug large transcripts
-    console.log("TranslationSettings - Transcript length:", transcript.length);
+    // Log the first few transcript items to check content
+    if (transcript.length > 0) {
+      console.log(
+        "TranslationSettings - Transcript sample:",
+        transcript.slice(0, 3)
+      );
+    }
   }, [transcript, detectedLanguage, originalLanguage, currentLanguage]);
 
   // Sync the transcript with the translation store
@@ -51,22 +56,6 @@ export default function TranslationSettings() {
   // Get the name of the target language
   const targetLanguageName =
     languages.find((lang) => lang.code === targetLanguage)?.name || "Original";
-
-  // Handle translation action
-  const handleTranslate = () => {
-    const select = document.getElementById(
-      "language-selector"
-    ) as HTMLSelectElement;
-    if (select && select.value) {
-      setTargetLanguage(select.value);
-      translateTo(select.value);
-    }
-  };
-
-  // Handle translation cancellation
-  const handleCancelTranslation = () => {
-    cancelTranslation();
-  };
 
   return (
     <div className="p-5 bg-[#222] dark:bg-[#111] rounded-lg mb-6 border border-gray-700 shadow-lg">
@@ -112,10 +101,11 @@ export default function TranslationSettings() {
               <select
                 id="language-selector"
                 className="w-full h-12 px-4 rounded-lg border border-gray-600 bg-[#222] dark:bg-[#111] text-white appearance-none cursor-pointer focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                value={targetLanguage}
+                value={currentLanguage}
                 onChange={(e) => {
                   if (e.target.value) {
                     setTargetLanguage(e.target.value);
+                    translateTo(e.target.value);
                   }
                 }}
                 disabled={isTranslating}
@@ -142,33 +132,44 @@ export default function TranslationSettings() {
             </div>
           </div>
 
-          {isTranslating ? (
-            <button
-              className="min-w-[120px] h-12 px-4 py-2 flex items-center justify-center gap-2 rounded-lg font-medium transition-all duration-200 bg-red-500 hover:bg-red-600 text-white"
-              onClick={handleCancelTranslation}
-            >
-              <X className="h-4 w-4" />
-              Cancel
-            </button>
-          ) : (
-            <button
-              className={`min-w-[120px] h-12 px-4 py-2 flex items-center justify-center gap-2 rounded-lg font-medium transition-all duration-200 ${
-                currentLanguage === originalLanguage
-                  ? "bg-blue-500 hover:bg-blue-600 text-white"
-                  : "bg-orange-500 hover:bg-orange-600 text-white"
-              }`}
-              onClick={handleTranslate}
-            >
-              {currentLanguage === originalLanguage ? (
-                <>
-                  <Check className="h-4 w-4" />
-                  Original
-                </>
-              ) : (
-                <>Translate</>
-              )}
-            </button>
-          )}
+          <button
+            className={`min-w-[120px] h-12 px-4 py-2 flex items-center justify-center gap-2 rounded-lg font-medium transition-all duration-200 ${
+              isTranslating
+                ? "bg-gray-600 cursor-not-allowed"
+                : currentLanguage === originalLanguage
+                ? "bg-blue-500 hover:bg-blue-600 text-white"
+                : "bg-orange-500 hover:bg-orange-600 text-white"
+            }`}
+            onClick={() => {
+              if (isTranslating) {
+                // Cancel translation if already in progress
+                cancelTranslation();
+              } else {
+                const select = document.getElementById(
+                  "language-selector"
+                ) as HTMLSelectElement;
+                if (select && select.value) {
+                  setTargetLanguage(select.value);
+                  translateTo(select.value);
+                }
+              }
+            }}
+            disabled={false} // Never disabled so we can cancel
+          >
+            {isTranslating ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Cancel
+              </>
+            ) : currentLanguage === originalLanguage ? (
+              <>
+                <Check className="h-4 w-4" />
+                Original
+              </>
+            ) : (
+              <>Translate</>
+            )}
+          </button>
         </div>
 
         {/* Current language indicator */}
@@ -191,33 +192,19 @@ export default function TranslationSettings() {
           </div>
         )}
 
-        {/* Translation progress indicator */}
         {isTranslating && (
-          <div className="mt-3 p-3 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200 rounded-lg border border-blue-200 dark:border-blue-800">
-            <p className="text-sm flex items-center mb-2">
+          <div className="mt-4">
+            {/* Translation Progress Bar */}
+            <div className="w-full bg-gray-700 rounded-full h-4 mb-2">
+              <div
+                className="bg-blue-500 h-4 rounded-full transition-all duration-300"
+                style={{ width: `${progress}%` }}
+              ></div>
+            </div>
+            <p className="text-sm flex items-center text-blue-300">
               <Loader2 className="h-4 w-4 animate-spin mr-2" />
-              Translating to {targetLanguageName}...{" "}
-              {progress > 0 ? `${progress}%` : "Please wait"}
+              Translating to {targetLanguageName}... {progress}% complete
             </p>
-
-            {/* Progress bar */}
-            {progress > 0 && (
-              <div className="w-full bg-gray-300 dark:bg-gray-700 rounded-full h-2.5">
-                <div
-                  className="bg-blue-500 h-2.5 rounded-full"
-                  style={{ width: `${progress}%` }}
-                ></div>
-              </div>
-            )}
-
-            {/* Extra message for long transcripts */}
-            {transcript.length > 100 && (
-              <p className="text-xs mt-2">
-                This is a long transcript and may take several minutes to
-                translate. You can cancel at any time and continue viewing in
-                the original language.
-              </p>
-            )}
           </div>
         )}
       </div>

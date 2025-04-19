@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+import { translate as googleTranslate } from '@vitalets/google-translate-api';
+import openTranslator from 'open-google-translator';
 
 // Define request body type
 interface RequestBody {
@@ -37,89 +39,32 @@ export async function POST(request: Request) {
 }
 
 /**
- * Translates a single piece of text with retries and fallback.
- * @param text - The text to translate.
- * @param targetLang - The target language code (e.g., "es" for Spanish).
- * @param retries - Number of retry attempts (default: 3).
- * @param delay - Initial delay between retries in milliseconds (default: 1000).
- * @returns The translated text.
- * @throws Error if all translation attempts fail.
+ * Translates text via local package with fallback.
  */
 async function translateWithRetry(
   text: string,
-  targetLang: string,
-  retries = 3,
-  delay = 1000
+  targetLang: string
 ): Promise<string> {
-  // Handle empty text case
-  if (!text.trim()) {
-    return "";
-  }
-
-  let currentDelay = delay;
-
-  for (let attempt = 1; attempt <= retries; attempt++) {
+  if (!text.trim()) return "";
+  try {
+    const { text: translated } = await googleTranslate(text, { to: targetLang });
+    return translated;
+  } catch (err) {
+    console.warn("Primary translate failed, falling back:", err);
     try {
-      // Attempt translation with Google Translate
-      const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${encodeURIComponent(
-        text
-      )}`;
-      const response = await fetch(url, {
-        // Add timeout to prevent hanging on large requests
-        signal: AbortSignal.timeout(10000),
+      // allow string codes despite strict type
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const data = await openTranslator.TranslateLanguageData({
+        listOfWordsToTranslate: [text],
+        fromLanguage: "auto" as any,
+        toLanguage: targetLang as any,
       });
-
-      if (!response.ok) {
-        throw new Error(`Google Translate error: ${response.status}`);
-      }
-
-      const data = await response.json();
-      let translatedText = "";
-
-      if (data && Array.isArray(data[0])) {
-        for (const part of data[0]) {
-          if (part[0]) translatedText += part[0];
-        }
-        return translatedText;
-      }
-      throw new Error("Unexpected response from Google Translate");
-    } catch (error) {
-      console.error(`Google Translate attempt ${attempt} failed:`, error);
-      if (attempt < retries) {
-        await new Promise((resolve) => setTimeout(resolve, currentDelay));
-        // Exponential backoff
-        currentDelay *= 2;
-        continue;
-      }
-
-      // Fallback to MyMemory if Google Translate fails after retries
-      try {
-        const response = await fetch(
-          `https://api.mymemory.translated.net/get?q=${encodeURIComponent(
-            text
-          )}&langpair=auto|${targetLang}`,
-          {
-            // Add timeout to prevent hanging
-            signal: AbortSignal.timeout(15000),
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error(`MyMemory error: ${response.status}`);
-        }
-
-        const data = await response.json();
-        if (data?.responseData?.translatedText) {
-          return data.responseData.translatedText;
-        }
-        throw new Error("Invalid response from MyMemory");
-      } catch (fallbackError) {
-        console.error(`MyMemory fallback failed:`, fallbackError);
-        throw new Error("All translation services failed");
-      }
+      return data[0]?.translation || text;
+    } catch (fallbackErr) {
+      console.error("Fallback translate failed:", fallbackErr);
+      throw new Error("Translation failed");
     }
   }
-  throw new Error("Translation failed after all retries");
 }
 
 /**
