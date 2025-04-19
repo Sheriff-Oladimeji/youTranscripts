@@ -14,6 +14,8 @@ export default function TranslationSettings() {
     isTranslating,
     error,
     setOriginalTranscript,
+    progress,
+    cancelTranslation,
   } = useTranslationStore();
 
   // Debug logging for language detection
@@ -139,20 +141,25 @@ export default function TranslationSettings() {
                 : "bg-orange-500 hover:bg-orange-600 text-white"
             }`}
             onClick={() => {
-              const select = document.getElementById(
-                "language-selector"
-              ) as HTMLSelectElement;
-              if (select && select.value) {
-                setTargetLanguage(select.value);
-                translateTo(select.value);
+              if (isTranslating) {
+                // Cancel translation if already in progress
+                cancelTranslation();
+              } else {
+                const select = document.getElementById(
+                  "language-selector"
+                ) as HTMLSelectElement;
+                if (select && select.value) {
+                  setTargetLanguage(select.value);
+                  translateTo(select.value);
+                }
               }
             }}
-            disabled={isTranslating}
+            disabled={false} // Never disabled so we can cancel
           >
             {isTranslating ? (
               <>
                 <Loader2 className="h-4 w-4 animate-spin" />
-                Translating...
+                Cancel
               </>
             ) : currentLanguage === originalLanguage ? (
               <>
@@ -186,10 +193,17 @@ export default function TranslationSettings() {
         )}
 
         {isTranslating && (
-          <div className="mt-3 p-3 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200 rounded-lg border border-blue-200 dark:border-blue-800">
-            <p className="text-sm flex items-center">
+          <div className="mt-4">
+            {/* Translation Progress Bar */}
+            <div className="w-full bg-gray-700 rounded-full h-4 mb-2">
+              <div
+                className="bg-blue-500 h-4 rounded-full transition-all duration-300"
+                style={{ width: `${progress}%` }}
+              ></div>
+            </div>
+            <p className="text-sm flex items-center text-blue-300">
               <Loader2 className="h-4 w-4 animate-spin mr-2" />
-              Translating to {targetLanguageName}... Please wait
+              Translating to {targetLanguageName}... {progress}% complete
             </p>
           </div>
         )}

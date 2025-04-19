@@ -190,3 +190,37 @@ export function downloadAsPdf(content: string, filename: string): void {
     }, 100);
   }, 500);
 }
+
+
+
+
+
+
+/**
+ * Split `text` into chunks of at most `maxLen` characters,
+ * preserving any existing markers as boundaries when possible.
+ */
+export function chunkText(
+  text: string,
+  marker: string = "__SEGMENT_MARKER_12345__",
+  maxLen: number = 4500
+): string[] {
+  // First, split by your segment marker so you don't break logical units.
+  const segments = text.split(marker);
+  const chunks: string[] = [];
+
+  for (const seg of segments) {
+    if (seg.length <= maxLen) {
+      chunks.push(seg);
+    } else {
+      // Break into sub‑segments of maxLen
+      let start = 0;
+      while (start < seg.length) {
+        chunks.push(seg.slice(start, start + maxLen));
+        start += maxLen;
+      }
+    }
+  }
+
+  return chunks;
+}
