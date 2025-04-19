@@ -46,22 +46,47 @@ async function translateWithRetry(
   targetLang: string
 ): Promise<string> {
   if (!text.trim()) return "";
+  // First attempt using open-google-translator
+  console.log("translateWithRetry: trying open-google-translator for language", targetLang);
   try {
-    const { text: translated } = await googleTranslate(text, { to: targetLang });
-    return translated;
-  } catch (err) {
-    console.warn("Primary translate failed, falling back:", err);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const data = await openTranslator.TranslateLanguageData({
+      listOfWordsToTranslate: [text],
+      fromLanguage: "auto" as any,
+      toLanguage: targetLang as any,
+    });
+    console.log('open-google-translator raw:', data);
+    const rawItems = Array.isArray(data) ? data : [data];
+    // Flatten translations arrays and strings
+    const flatItems: string[] = [];
+    rawItems.forEach((item: any) => {
+      if (typeof item === 'string') {
+        flatItems.push(item);
+      } else if (item && typeof item === 'object' && 'translation' in item) {
+        const t = item.translation;
+        if (Array.isArray(t)) flatItems.push(...t);
+        else flatItems.push(String(t));
+      } else {
+        flatItems.push(String(item));
+      }
+    });
+    // Remove two-letter language codes
+    const translations = flatItems.filter(str => !/^[a-z]{2}$/i.test(str));
+    const result = translations.join(' ');
+    console.log('open-google-translator success:', result.slice(0, 100));
+    return result;
+  } catch (primaryErr) {
+    console.warn(
+      "open-google-translator failed, falling back to google-translate-api:",
+      primaryErr
+    );
+    // Fallback to @vitalets/google-translate-api
     try {
-      // allow string codes despite strict type
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const data = await openTranslator.TranslateLanguageData({
-        listOfWordsToTranslate: [text],
-        fromLanguage: "auto" as any,
-        toLanguage: targetLang as any,
-      });
-      return data[0]?.translation || text;
+      const { text: translated } = await googleTranslate(text, { to: targetLang });
+      console.log("google-translate-api success:", translated.slice(0, 100));
+      return translated;
     } catch (fallbackErr) {
-      console.error("Fallback translate failed:", fallbackErr);
+      console.error("Both translators failed:", fallbackErr);
       throw new Error("Translation failed");
     }
   }
