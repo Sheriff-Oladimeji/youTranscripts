@@ -121,13 +121,9 @@ export default function ActionButtons({
 
       // Add a delay before opening ChatGPT to ensure users see the toast message
       setTimeout(() => {
-        if (isAndroid) {
-          // Android Intent to open ChatGPT app
-          window.location.href =
-            "intent://chat.openai.com/#Intent;scheme=https;package=com.openai.chatgpt;S.browser_fallback_url=https://chat.openai.com;end";
-        } else if (isIOS) {
-          // iOS deep link to ChatGPT app
-          window.location.href = "chatgpt://chat.openai.com";
+        // Use universal link on mobile to open native app if supported
+        if (isAndroid || isIOS) {
+          window.location.href = chatGptUrl;
         } else {
           // Desktop/web fallback
           window.open(chatGptUrl, "_blank");
