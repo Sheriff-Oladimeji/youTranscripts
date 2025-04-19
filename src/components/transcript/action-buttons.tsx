@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useTranscriptStore } from "@/store/transcript-store";
+import { useTranslationStore } from "@/store/translation-store";
 import {
   Brain,
   MessageSquare,
@@ -18,7 +19,7 @@ import {
   formatTranscriptForDownload,
   generateUniqueId,
   downloadTextFile,
-} from "@/lib/utils";
+} from "@/lib/export";
 
 interface ActionButtonsProps {
   videoId?: string; // Make it optional to maintain backward compatibility
@@ -64,7 +65,12 @@ export default function ActionButtons({
   }, [showFormatOptions]);
 
   const handleCopyTranscript = () => {
-    const text = transcript.map((item) => item.text).join(" ");
+    const { translatedTranscript, currentLanguage, originalLanguage } = useTranslationStore.getState();
+    const source =
+      translatedTranscript.length > 0 && currentLanguage !== originalLanguage
+        ? translatedTranscript
+        : transcript;
+    const text = source.map((item) => item.text).join(" ");
     navigator.clipboard
       .writeText(text)
       .then(() => {
@@ -77,8 +83,12 @@ export default function ActionButtons({
   };
 
   const handleSummarize = () => {
-    // Get the transcript text
-    const transcriptText = transcript.map((item) => item.text).join(" ");
+    const { translatedTranscript, currentLanguage, originalLanguage } = useTranslationStore.getState();
+    const source =
+      translatedTranscript.length > 0 && currentLanguage !== originalLanguage
+        ? translatedTranscript
+        : transcript;
+    const transcriptText = source.map((item) => item.text).join(" ");
 
     // Create the prompt for ChatGPT
     const promptText = `Summarize this youtube video transcript in detailed step by step points:`;
@@ -165,17 +175,16 @@ export default function ActionButtons({
                 onClick={() => {
                   // Generate a unique filename
                   const filename = generateUniqueId();
-
-                  // Format the transcript content as TXT
+                  // Use translated transcript if available
+                  const { translatedTranscript, currentLanguage, originalLanguage } = useTranslationStore.getState();
+                  const source = translatedTranscript.length > 0 && currentLanguage !== originalLanguage ? translatedTranscript : transcript;
+                  // Format the transcript content
                   const content = formatTranscriptForDownload(
-                    transcript,
-                    videoTitle,
-                    "txt"
+                    source,
+                    videoTitle
                   );
-
                   // Download the file
                   downloadTextFile(content, filename, "txt");
-
                   // Show success toast and close dropdown
                   toast.success("Transcript downloaded as TXT!");
                   setShowFormatOptions(false);
@@ -193,10 +202,12 @@ export default function ActionButtons({
                 className="w-full px-4 py-3 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center"
                 onClick={() => {
                   const filename = generateUniqueId();
+                  // Use translated transcript if available
+                  const { translatedTranscript, currentLanguage, originalLanguage } = useTranslationStore.getState();
+                  const source = translatedTranscript.length > 0 && currentLanguage !== originalLanguage ? translatedTranscript : transcript;
                   const content = formatTranscriptForDownload(
-                    transcript,
-                    videoTitle,
-                    "pdf"
+                    source,
+                    videoTitle
                   );
                   downloadTextFile(content, filename, "pdf");
                   toast.success("Transcript downloaded as PDF!");
