@@ -204,7 +204,11 @@ export default function ActionButtons({
               <button
                 className="w-full px-4 py-3 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center"
                 onClick={() => {
-                  const filename = generateUniqueId();
+                  // Use video title as filename (sanitize spaces and invalid chars)
+                  const baseName = videoTitle
+                    ? videoTitle.replace(/[^\w\s-]/g, "").trim().replace(/\s+/g, "_")
+                    : generateUniqueId();
+                  const filename = baseName;
                   // Use translated transcript if available
                   const { translatedTranscript, currentLanguage, originalLanguage } = useTranslationStore.getState();
                   const source = translatedTranscript.length > 0 && currentLanguage !== originalLanguage ? translatedTranscript : transcript;
