@@ -104,8 +104,10 @@ export default function ActionButtons({
           );
         });
 
-      // Detect if user is on mobile or desktop
-      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      // Detect platform specifically
+      const ua = navigator.userAgent;
+      const isAndroid = /Android/i.test(ua);
+      const isIOS = /iPhone|iPad|iPod/i.test(ua);
 
       // Unfortunately, ChatGPT doesn't support direct URL parameters for pre-filling the input
       // So we'll just open ChatGPT and rely on the clipboard for pasting
@@ -119,10 +121,15 @@ export default function ActionButtons({
 
       // Add a delay before opening ChatGPT to ensure users see the toast message
       setTimeout(() => {
-        // Open the appropriate ChatGPT URL
-        if (isMobile) {
-          window.location.href = chatGptUrl;
+        if (isAndroid) {
+          // Android Intent to open ChatGPT app
+          window.location.href =
+            "intent://chat.openai.com/#Intent;scheme=https;package=com.openai.chatgpt;S.browser_fallback_url=https://chat.openai.com;end";
+        } else if (isIOS) {
+          // iOS deep link to ChatGPT app
+          window.location.href = "chatgpt://chat.openai.com";
         } else {
+          // Desktop/web fallback
           window.open(chatGptUrl, "_blank");
         }
       }, 3000); // 3-second delay
