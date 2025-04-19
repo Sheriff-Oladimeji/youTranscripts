@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useTranscriptStore } from "@/store/transcript-store";
+import { useTranslationStore } from "@/store/translation-store";
 import {
   Brain,
   MessageSquare,
@@ -64,7 +65,12 @@ export default function ActionButtons({
   }, [showFormatOptions]);
 
   const handleCopyTranscript = () => {
-    const text = transcript.map((item) => item.text).join(" ");
+    const { translatedTranscript, currentLanguage, originalLanguage } = useTranslationStore.getState();
+    const source =
+      translatedTranscript.length > 0 && currentLanguage !== originalLanguage
+        ? translatedTranscript
+        : transcript;
+    const text = source.map((item) => item.text).join(" ");
     navigator.clipboard
       .writeText(text)
       .then(() => {
@@ -77,8 +83,12 @@ export default function ActionButtons({
   };
 
   const handleSummarize = () => {
-    // Get the transcript text
-    const transcriptText = transcript.map((item) => item.text).join(" ");
+    const { translatedTranscript, currentLanguage, originalLanguage } = useTranslationStore.getState();
+    const source =
+      translatedTranscript.length > 0 && currentLanguage !== originalLanguage
+        ? translatedTranscript
+        : transcript;
+    const transcriptText = source.map((item) => item.text).join(" ");
 
     // Create the prompt for ChatGPT
     const promptText = `Summarize this youtube video transcript in detailed step by step points:`;
