@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { useTranslationStore } from "@/store/translation-store"; // Sync original transcript to translation store
 
 export interface TranscriptItem {
   text: string;
@@ -122,6 +123,11 @@ export const useTranscriptStore = create<TranscriptState>((set, get) => ({
           detectedLanguage: detectedLanguage,
           isLoading: false,
         });
+        // Sync to translation store
+        useTranslationStore.getState().setOriginalTranscript(
+          data.transcript,
+          detectedLanguage
+        );
       } catch (fetchError) {
         // Handle fetch-specific errors
         clearTimeout(timeoutId);
