@@ -97,10 +97,11 @@ export const useTranslationStore = create<TranslationState>((set, get) => ({
       return;
     }
 
-    // Clear any previous errors
+    // Clear previous errors and old translation
     set({
       error: null,
       progress: 0,
+      translatedTranscript: [],
       translationController: new AbortController(),
     });
 
@@ -214,6 +215,13 @@ async function translateSmallTranscript(
   // Combine transcript segments into a single string with markers
   const combinedText = transcript.map((item) => item.text).join(segmentMarker);
 
+  // If too long for single API call, fallback directly to batch
+  const MAX_API_CHARS = 4000;
+  if (combinedText.length > MAX_API_CHARS) {
+    console.warn("Combined text too long, falling back to batch translation");
+    return await translateLargeTranscript(transcript, targetLanguage, segmentMarker);
+  }
+
   try {
     const controller = useTranslationStore.getState().translationController;
 
@@ -253,7 +261,9 @@ async function translateSmallTranscript(
       translationController: null,
     });
   } catch (error) {
-    throw error; // Let the main function handle the error
+    console.warn("translateSmallTranscript failed, falling back to batch translation:", error);
+    // Fallback to batch translation for reliability
+    return await translateLargeTranscript(transcript, targetLanguage, segmentMarker);
   }
 }
 
