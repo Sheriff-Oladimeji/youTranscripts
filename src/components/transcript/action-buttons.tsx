@@ -5,9 +5,7 @@ import { useTranscriptStore } from "@/store/transcript-store";
 import { useTranslationStore } from "@/store/translation-store";
 import {
   Brain,
-  MessageSquare,
   Copy,
-  Shield,
   ExternalLink,
   Languages,
   Download,
@@ -22,14 +20,10 @@ import {
 } from "@/lib/export";
 
 interface ActionButtonsProps {
-  videoId?: string; // Make it optional to maintain backward compatibility
   onTranslateClick: () => void;
 }
 
-export default function ActionButtons({
-  videoId, // We don't use this prop currently, but keep it for type compatibility
-  onTranslateClick,
-}: ActionButtonsProps) {
+export default function ActionButtons({ onTranslateClick }: ActionButtonsProps) {
   const { transcript, videoTitle } = useTranscriptStore();
   const [showFormatOptions, setShowFormatOptions] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -241,21 +235,6 @@ export default function ActionButtons({
         <span>Language & Translation Settings</span>
       </button>
 
-      {/* Chat with Video Button */}
-      <button
-        className="w-full py-4 px-6 bg-[#FFAC5F] hover:bg-[#FF9933] text-black font-medium rounded-lg flex items-center gap-2"
-        onClick={() => toast.info("This feature is coming soon!")}
-      >
-        <div className="flex items-center justify-center flex-1">
-          <MessageSquare className="h-5 w-5 mr-2" />
-          <span>Chat With This Video</span>
-          <span className="ml-2 text-xs bg-white/20 px-2 py-0.5 rounded">
-            free
-          </span>
-        </div>
-        <ExternalLink className="h-5 w-5" />
-      </button>
-
       {/* Summarize Button */}
       <button
         className="w-full py-4 px-6 bg-[#00AAFF] hover:bg-[#0099EE] text-white font-medium rounded-lg flex items-center gap-2"
@@ -270,15 +249,6 @@ export default function ActionButtons({
           </span>
         </div>
         <ExternalLink className="h-5 w-5" />
-      </button>
-
-      {/* Remove Sponsor Button */}
-      <button
-        className="w-full py-4 px-6 bg-[#FF6B6B] hover:bg-[#FF5252] text-white font-medium rounded-lg flex items-center justify-center gap-2"
-        onClick={() => toast.info("This feature is coming soon!")}
-      >
-        <Shield className="h-5 w-5 mr-2" />
-        <span>Remove Sponsor, Interaction and More</span>
       </button>
     </div>
   );

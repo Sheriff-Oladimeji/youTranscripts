@@ -34,16 +34,6 @@ export async function OPTIONS() {
   });
 }
 
-// Define the cache response type.
-interface CacheResponse {
-  transcript: TranscriptSegment[];
-  metadata: VideoMetadata;
-}
-
-// Simple in-memory cache for API responses.
-const apiCache: Record<string, { timestamp: number; data: CacheResponse }> = {};
-const CACHE_EXPIRY = 60 * 60 * 1000; // 1 hour in milliseconds
-
 export async function POST(request: Request) {
   try {
     // Log the request content type
@@ -81,16 +71,8 @@ export async function POST(request: Request) {
       );
     }
 
-    // Check cache first.
-    const now = Date.now();
-    if (apiCache[videoId] && now - apiCache[videoId].timestamp < CACHE_EXPIRY) {
-      console.log("API: Using cached data for", videoId);
-      return NextResponse.json(apiCache[videoId].data);
-    }
-
-    // Run YouTube API fetch and transcript fetch in parallel.
+    // Fetch video details and transcript in parallel
     const [videoData, transcriptResult] = await Promise.allSettled([
-      // Fetch video details via the YouTube API.
       (async () => {
         const youtube = google.youtube("v3");
         const videoResponse = await youtube.videos.list({
@@ -100,8 +82,6 @@ export async function POST(request: Request) {
         });
         return videoResponse.data.items?.[0];
       })(),
-
-      // Fetch the transcript.
       (async () => {
         try {
           return await fetchTranscript(url);
@@ -112,18 +92,17 @@ export async function POST(request: Request) {
       })(),
     ]);
 
-    // If video data is not found, return an error.
     if (videoData.status !== "fulfilled" || !videoData.value) {
       return NextResponse.json({ error: "Video not found" }, { status: 404 });
     }
 
     const video = videoData.value;
+    // Initialize transcript with explicit type to avoid implicit any
     let transcript: TranscriptSegment[] = [];
     let hasTranscript = false;
     let title = video.snippet?.title || "";
     let detectedLanguage = "en";
 
-    // Process transcript result.
     if (transcriptResult.status === "fulfilled" && transcriptResult.value) {
       const transcriptData = transcriptResult.value;
       hasTranscript = true;
@@ -151,23 +130,6 @@ export async function POST(request: Request) {
     };
 
     const responseData = { transcript, metadata };
-
-    // Update the cache.
-    apiCache[videoId] = {
-      timestamp: now,
-      data: responseData,
-    };
-
-    // Optionally limit cache size.
-    const cacheKeys = Object.keys(apiCache);
-    if (cacheKeys.length > 100) {
-      const oldestKeys = cacheKeys
-        .map((key) => ({ key, timestamp: apiCache[key].timestamp }))
-        .sort((a, b) => a.timestamp - b.timestamp)
-        .slice(0, 20)
-        .map((item) => item.key);
-      oldestKeys.forEach((key) => delete apiCache[key]);
-    }
 
     return NextResponse.json(responseData);
   } catch (error) {

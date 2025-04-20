@@ -9,7 +9,6 @@ import TranscriptHeader from "@/components/transcript/transcript-header";
 import ActionButtons from "@/components/transcript/action-buttons";
 import TranslationSettings from "@/components/transcript/translation-settings";
 import TranscriptGenerator from "@/components/transcript/transcript-generator";
-import ShareButtons from "@/components/share-buttons";
 // Removed unused tabs imports
 import { use } from "react";
 
@@ -38,9 +37,6 @@ export default function TranscriptPage({
 
   return (
     <main className="flex flex-col min-h-screen bg-background relative">
-      {/* Share Buttons */}
-      {/* <ShareButtons title={videoTitle || `Transcript of YouTube Video`} /> */}
-
       {/* Transcript Generator */}
       <TranscriptGenerator />
 
@@ -58,7 +54,6 @@ export default function TranscriptPage({
 
         {/* Action Buttons */}
         <ActionButtons
-          videoId={videoId}
           onTranslateClick={() =>
             setShowTranslationSettings(!showTranslationSettings)
           }
@@ -78,7 +73,6 @@ export default function TranscriptPage({
         {!isLoading && !error && transcript.length > 0 && (
           <div className="mt-8">
             <ActionButtons
-              videoId={videoId}
               onTranslateClick={() =>
                 setShowTranslationSettings(!showTranslationSettings)
               }

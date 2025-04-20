@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranscriptStore } from "@/store/transcript-store";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { getVideoId } from "@/lib/youtube";
@@ -10,6 +11,7 @@ import { toast } from "sonner";
 export default function TranscriptGenerator() {
   const [youtubeUrl, setYoutubeUrl] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const { clearTranscript } = useTranscriptStore();
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -28,9 +30,8 @@ export default function TranscriptGenerator() {
     try {
       const videoId = getVideoId(trimmedUrl);
       if (videoId) {
-        console.log(
-          "Valid YouTube URL detected, navigating to transcript page"
-        );
+        console.log("Valid YouTube URL detected, navigating to transcript page");
+        clearTranscript();
         router.push(`/transcript/${videoId}`);
       } else {
         console.error("Invalid YouTube URL:", trimmedUrl);
