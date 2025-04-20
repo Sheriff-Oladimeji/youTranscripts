@@ -16,10 +16,7 @@ export default function TranscriptViewer({
   isLoading,
   error,
 }: TranscriptViewerProps) {
-  const { translatedTranscript, currentLanguage, isTranslating } =
-    useTranslationStore();
-  const isTranslated = currentLanguage !== "en";
-  // No sticky video functionality
+  const { translatedTranscript, isTranslating } = useTranslationStore();
 
   if (isLoading || isTranslating) {
     return (
@@ -63,14 +60,7 @@ export default function TranscriptViewer({
   return (
     <div className="relative mt-6">
       <div className="p-6 bg-muted rounded-lg">
-        {isTranslated && (
-          <div className="mb-4 p-2 bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-200 rounded">
-            <p className="text-sm">
-              This is a machine translation and may not be 100% accurate.
-            </p>
-          </div>
-        )}
-
+        {/* Machine translation notice removed */}
         <div className="transcript-container">
           <p className="leading-relaxed text-base">
             {(translatedTranscript.length > 0
