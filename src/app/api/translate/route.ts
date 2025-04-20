@@ -46,218 +46,66 @@ async function translateWithRetry(
   targetLang: string
 ): Promise<string> {
   if (!text.trim()) return "";
-  // First attempt using open-google-translator
-  console.log("translateWithRetry: trying open-google-translator for language", targetLang);
   try {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const data = await openTranslator.TranslateLanguageData({
-      listOfWordsToTranslate: [text],
+      listOfWordsToTranslate: [text] as string[],
       fromLanguage: "auto" as any,
       toLanguage: targetLang as any,
     });
-    console.log('open-google-translator raw:', data);
-    const rawItems = Array.isArray(data) ? data : [data];
-    // Flatten translations arrays and strings
-    const flatItems: string[] = [];
-    rawItems.forEach((item: any) => {
-      if (typeof item === 'string') {
-        flatItems.push(item);
-      } else if (item && typeof item === 'object' && 'translation' in item) {
-        const t = item.translation;
-        if (Array.isArray(t)) flatItems.push(...t);
-        else flatItems.push(String(t));
-      } else {
-        flatItems.push(String(item));
+    const items = Array.isArray(data) ? data : [data];
+    const flat: string[] = [];
+    items.forEach((it: unknown) => {
+      if (typeof it === 'string') {
+        flat.push(it);
+      } else if (typeof it === 'object' && it !== null && 'translation' in it) {
+        const t = (it as any).translation;
+        if (Array.isArray(t)) flat.push(...t);
+        else flat.push(String(t));
       }
     });
-    // Remove two-letter language codes
-    const translations = flatItems.filter(str => !/^[a-z]{2}$/i.test(str));
-    const result = translations.join(' ');
-    console.log('open-google-translator success:', result.slice(0, 100));
-    return result;
+    // Filter out stray two-letter language codes (e.g. 'en', 'hi')
+    const translations = flat.filter(str => !/^[a-z]{2}$/i.test(str));
+    return translations.join(' ');
   } catch (primaryErr) {
-    console.warn(
-      "open-google-translator failed, falling back to google-translate-api:",
-      primaryErr
-    );
-    // Fallback to @vitalets/google-translate-api
+    console.warn("open-google-translator primary failed, falling back to google-translate-api:", primaryErr);
     try {
       const { text: translated } = await googleTranslate(text, { to: targetLang });
-      console.log("google-translate-api success:", translated.slice(0, 100));
       return translated;
     } catch (fallbackErr) {
-      console.error("Both translators failed:", fallbackErr);
+      console.error("googleTranslate fallback failed:", fallbackErr);
       throw new Error("Translation failed");
     }
   }
 }
 
 /**
- * Translates text, handling long texts by splitting into chunks.
- * @param text - The text to translate, possibly containing segment markers.
- * @param targetLang - The target language code.
- * @returns The translated text with segments rejoined.
+ * Translates text by splitting into size-limited chunks to avoid timeouts.
  */
 async function translateText(
   text: string,
   targetLang: string
 ): Promise<string> {
-  // Improved segment marker that's unlikely to appear in normal text
+  if (!text.trim()) return "";
+  // First handle our segment markers to preserve segment boundaries
   const SEGMENT_MARKER = "<<<SEGMENT_MARKER_12345>>>";
-  const MAX_CHUNK_SIZE = 4800; // Google Translate has a ~5000 char limit
-
-  // If the text contains our specific segment marker, handle it specially
   if (text.includes(SEGMENT_MARKER)) {
-    return translateWithSegmentMarkers(text, targetLang, SEGMENT_MARKER);
+    const segments = text.split(SEGMENT_MARKER);
+    const translatedSegments = await Promise.all(
+      segments.map((seg) =>
+        seg.trim() ? translateText(seg, targetLang) : Promise.resolve("")
+      )
+    );
+    // Rejoin using segment markers so translation-store can correctly split
+    return translatedSegments.join(SEGMENT_MARKER);
   }
-
-  // If text is short enough, translate directly
-  if (text.length <= MAX_CHUNK_SIZE) {
-    return translateWithRetry(text, targetLang);
+  const MAX_CHARS = 1000;
+  if (text.length <= MAX_CHARS) {
+    return await translateWithRetry(text, targetLang);
   }
-
-  // For long texts, split into logical chunks to avoid breaking sentences
-  return translateLongText(text, targetLang, MAX_CHUNK_SIZE);
-}
-
-/**
- * Translates long text by intelligently chunking it.
- * @param text - The long text to translate.
- * @param targetLang - The target language code.
- * @param maxChunkSize - Maximum size for each chunk.
- * @returns The translated text with chunks rejoined.
- */
-async function translateLongText(
-  text: string,
-  targetLang: string,
-  maxChunkSize: number
-): Promise<string> {
-  // Start by splitting on paragraph breaks to preserve structure
-  const paragraphs = text.split(/\n\n+/);
   const chunks: string[] = [];
-  let currentChunk = "";
-
-  // Group paragraphs into chunks
-  for (const paragraph of paragraphs) {
-    // If adding this paragraph would make the chunk too large
-    if (
-      currentChunk.length + paragraph.length + 2 > maxChunkSize &&
-      currentChunk.length > 0
-    ) {
-      chunks.push(currentChunk);
-      currentChunk = paragraph;
-    } else {
-      // Otherwise add to current chunk
-      if (currentChunk.length > 0) {
-        currentChunk += "\n\n";
-      }
-      currentChunk += paragraph;
-    }
+  for (let i = 0; i < text.length; i += MAX_CHARS) {
+    chunks.push(text.slice(i, i + MAX_CHARS));
   }
-
-  // Add the last chunk if it has content
-  if (currentChunk.length > 0) {
-    chunks.push(currentChunk);
-  }
-
-  console.log(`Split long text into ${chunks.length} chunks for translation`);
-
-  // Translate each chunk with proper error handling and rate limiting
-  const translatedChunks: string[] = [];
-  let failedChunks = 0;
-
-  for (let i = 0; i < chunks.length; i++) {
-    const chunk = chunks[i];
-    console.log(
-      `Translating chunk ${i + 1}/${chunks.length} (${chunk.length} chars)`
-    );
-
-    try {
-      const translatedChunk = await translateWithRetry(chunk, targetLang);
-      translatedChunks.push(translatedChunk);
-    } catch (error) {
-      console.error(`Error translating chunk ${i + 1}:`, error);
-      // If translation fails, use original text for that chunk
-      translatedChunks.push(chunk);
-      failedChunks++;
-    }
-
-    // Add delay between chunks to avoid rate limiting (for longer transcripts)
-    if (i < chunks.length - 1) {
-      await new Promise((resolve) => setTimeout(resolve, 500));
-    }
-  }
-
-  if (failedChunks > 0) {
-    console.warn(
-      `${failedChunks} out of ${chunks.length} chunks failed to translate`
-    );
-  }
-
-  // Join all translated chunks back together
-  return translatedChunks.join("\n\n");
-}
-
-/**
- * Translates text with explicit segment markers.
- * @param text - The text containing segment markers.
- * @param targetLang - The target language code.
- * @param marker - The segment marker used to split the text.
- * @returns The translated text with segments rejoined.
- */
-async function translateWithSegmentMarkers(
-  text: string,
-  targetLang: string,
-  marker: string
-): Promise<string> {
-  // Split the text by marker
-  const segments = text.split(marker);
-  const translatedSegments: string[] = [];
-  let failedSegments = 0;
-
-  console.log(`Translating ${segments.length} marked segments`);
-
-  for (let i = 0; i < segments.length; i++) {
-    const segment = segments[i].trim();
-
-    // Skip empty segments
-    if (!segment) {
-      translatedSegments.push("");
-      continue;
-    }
-
-    try {
-      // Break down large segments further if needed
-      if (segment.length > 4800) {
-        const translatedLongSegment = await translateLongText(
-          segment,
-          targetLang,
-          4800
-        );
-        translatedSegments.push(translatedLongSegment);
-      } else {
-        const translatedSegment = await translateWithRetry(segment, targetLang);
-        translatedSegments.push(translatedSegment);
-      }
-    } catch (error) {
-      console.error(`Error translating segment ${i + 1}:`, error);
-      // Use original segment if translation fails
-      translatedSegments.push(segment);
-      failedSegments++;
-    }
-
-    // Add delay between segments to respect rate limits
-    if (i < segments.length - 1) {
-      await new Promise((resolve) => setTimeout(resolve, 300));
-    }
-  }
-
-  if (failedSegments > 0) {
-    console.warn(
-      `${failedSegments} out of ${segments.length} segments failed to translate`
-    );
-  }
-
-  // Rejoin segments using the same marker
-  return translatedSegments.join(marker);
+  const parts = await Promise.all(chunks.map((c) => translateWithRetry(c, targetLang)));
+  return parts.join('');
 }
