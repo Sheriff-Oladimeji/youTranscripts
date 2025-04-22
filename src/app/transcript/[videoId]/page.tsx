@@ -9,6 +9,7 @@ import TranscriptHeader from "@/components/transcript/transcript-header";
 import ActionButtons from "@/components/transcript/action-buttons";
 import TranslationSettings from "@/components/transcript/translation-settings";
 import TranscriptGenerator from "@/components/transcript/transcript-generator";
+import FloatingTopButton from "@/components/transcript/floating-top-button";
 // Removed unused tabs imports
 import { use } from "react";
 
@@ -37,6 +38,8 @@ export default function TranscriptPage({
 
   return (
     <main className="flex flex-col min-h-screen bg-background relative">
+      {/* Floating TOP button */}
+      <FloatingTopButton />
       {/* Transcript Generator */}
       <TranscriptGenerator />
 
