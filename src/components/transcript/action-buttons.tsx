@@ -22,10 +22,12 @@ import BookmarkPopup from "./bookmark-popup";
 
 interface ActionButtonsProps {
   onTranslateClick: () => void;
+  isBottomButton?: boolean;
 }
 
 export default function ActionButtons({
   onTranslateClick,
+  isBottomButton = false,
 }: ActionButtonsProps) {
   const { transcript, videoTitle } = useTranscriptStore();
   const [showFormatOptions, setShowFormatOptions] = useState(false);
@@ -97,7 +99,7 @@ export default function ActionButtons({
         if (isDesktop) {
           setTimeout(() => {
             setShowBookmarkPopup(true);
-          }, 3000);
+          }, 2000);
         }
       })
       .catch((err) => {
@@ -393,7 +395,40 @@ export default function ActionButtons({
       {/* Language & Translation Settings Button */}
       <button
         className="w-full py-4 px-6 bg-[#3F51B5] hover:bg-[#3849a2] text-white font-medium rounded-lg flex items-center justify-center gap-2 shadow-md"
-        onClick={onTranslateClick}
+        onClick={() => {
+          if (isBottomButton) {
+            // Find the position of the translation settings area (just after the top action buttons)
+            const headerElement = document.querySelector(
+              ".w-full.max-w-\\[800px\\].mx-auto.px-4.py-6"
+            );
+            if (headerElement) {
+              // Calculate position to scroll to (just after the top action buttons)
+              const topActionButtons =
+                headerElement.querySelector(".space-y-3.mb-6");
+              if (topActionButtons) {
+                const rect = topActionButtons.getBoundingClientRect();
+                const scrollPosition = window.scrollY + rect.top;
+                // Scroll to the position where translation settings will appear
+                window.scrollTo({ top: scrollPosition, behavior: "smooth" });
+              } else {
+                // Fallback if we can't find the exact position
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }
+              // Short delay to ensure scroll completes before showing settings
+              setTimeout(() => {
+                onTranslateClick();
+              }, 500);
+            } else {
+              // Fallback if we can't find the header element
+              window.scrollTo({ top: 0, behavior: "smooth" });
+              setTimeout(() => {
+                onTranslateClick();
+              }, 500);
+            }
+          } else {
+            onTranslateClick();
+          }
+        }}
       >
         <div className="flex items-center justify-center flex-1">
           <Languages className="h-5 w-5 mr-2" />
