@@ -89,11 +89,11 @@ export default function BookmarkBanner() {
           <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" />
         </svg>
         <span>
-          Finding this tool useful? Bookmark us{" "}
+          Bookmark Us
           <kbd className="px-2 py-1 bg-white/30 rounded text-sm font-mono mx-1">
             {isMac ? "⌘" : "Ctrl"}+D
-          </kbd>{" "}
-          for easy and fast access!
+          </kbd>
+          for Quick Access
         </span>
       </div>
       <button

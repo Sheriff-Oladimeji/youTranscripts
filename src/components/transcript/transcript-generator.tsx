@@ -30,7 +30,9 @@ export default function TranscriptGenerator() {
     try {
       const videoId = getVideoId(trimmedUrl);
       if (videoId) {
-        console.log("Valid YouTube URL detected, navigating to transcript page");
+        console.log(
+          "Valid YouTube URL detected, navigating to transcript page"
+        );
         clearTranscript();
         router.push(`/transcript/${videoId}`);
       } else {
