@@ -75,7 +75,7 @@ export default function TranscriptViewer({
           <div className="mt-6 mb-2 flex justify-center">
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              className="flex items-center justify-center gap-2 bg-[#FFAC5F] hover:bg-[#FF9933] text-black font-medium rounded-lg py-3 px-6 w-full max-w-md transition-all duration-300 ease-in-out"
+              className="flex items-center justify-center gap-2 bg-black hover:bg-gray-800 dark:bg-[#FFD700] dark:hover:bg-[#FFCC00] dark:text-black text-white font-medium rounded-lg py-3 px-6 w-full max-w-md transition-all duration-300 ease-in-out shadow-md"
               aria-label="Back to top"
             >
               <ArrowUp className="h-5 w-5" />

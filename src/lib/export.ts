@@ -67,7 +67,7 @@ import { jsPDF } from "jspdf";
  * Generates and downloads a PDF file containing only the transcript text
  */
 export function downloadAsPdf(content: string, filename: string): void {
-  const doc = new jsPDF({ unit: 'pt', format: 'letter' });
+  const doc = new jsPDF({ unit: "pt", format: "letter" });
   const margin = 40;
   const pageWidth = doc.internal.pageSize.getWidth();
   const maxLineWidth = pageWidth - margin * 2;
@@ -86,7 +86,7 @@ export function downloadAsPdf(content: string, filename: string): void {
     doc.text(line, margin, y);
     y += lineHeight;
   });
-  const outputName = filename.endsWith('.pdf') ? filename : `${filename}.pdf`;
+  const outputName = filename.endsWith(".pdf") ? filename : `${filename}.pdf`;
   doc.save(outputName);
 }
 
@@ -96,21 +96,162 @@ export function downloadAsPdf(content: string, filename: string): void {
  * @param filename The name of the file without extension
  * @param format The format of the file (txt or pdf)
  */
+/**
+ * Formats transcript content as SRT subtitle format
+ * @param content The transcript content
+ * @returns Formatted SRT string
+ */
+function formatAsSRT(content: string): string {
+  // Split the content into lines
+  const lines = content.split("\n").filter((line) => line.trim() !== "");
+
+  // Remove header and footer lines
+  const contentLines = lines.filter(
+    (line) =>
+      !line.includes("Transcript Generated for Free by youtranscripts.com") &&
+      !line.includes(
+        "=========================================================="
+      ) &&
+      !line.startsWith("Title:") &&
+      !line.startsWith("Generated on:")
+  );
+
+  let srtContent = "";
+  let index = 1;
+
+  // Process each line as a subtitle entry
+  contentLines.forEach((line, i) => {
+    if (line.trim() === "") return;
+
+    // Calculate fake timestamps (each subtitle shows for 3 seconds)
+    const startTime = i * 3;
+    const endTime = startTime + 3;
+
+    // Format: index number
+    srtContent += `${index}\n`;
+
+    // Format: start time --> end time
+    srtContent += `${formatSRTTime(startTime)} --> ${formatSRTTime(endTime)}\n`;
+
+    // Format: subtitle text
+    srtContent += `${line}\n\n`;
+
+    index++;
+  });
+
+  return srtContent;
+}
+
+/**
+ * Formats a time in seconds to SRT timestamp format (00:00:00,000)
+ * @param seconds Time in seconds
+ * @returns Formatted SRT timestamp
+ */
+function formatSRTTime(seconds: number): string {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const secs = Math.floor(seconds % 60);
+  const milliseconds = Math.floor((seconds % 1) * 1000);
+
+  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
+    2,
+    "0"
+  )}:${String(secs).padStart(2, "0")},${String(milliseconds).padStart(3, "0")}`;
+}
+
+/**
+ * Formats transcript content as CSV
+ * @param content The transcript content
+ * @returns Formatted CSV string
+ */
+function formatAsCSV(content: string): string {
+  // Split the content into lines
+  const lines = content.split("\n").filter((line) => line.trim() !== "");
+
+  // Remove header and footer lines
+  const contentLines = lines.filter(
+    (line) =>
+      !line.includes("Transcript Generated for Free by youtranscripts.com") &&
+      !line.includes(
+        "=========================================================="
+      ) &&
+      !line.startsWith("Title:") &&
+      !line.startsWith("Generated on:")
+  );
+
+  // Create CSV header
+  let csvContent = "Index,Timestamp,Text\n";
+
+  // Process each line
+  contentLines.forEach((line, i) => {
+    if (line.trim() === "") return;
+
+    // Calculate fake timestamp (each line is 3 seconds apart)
+    const timestamp = formatTimestamp(i * 3);
+
+    // Escape any commas in the text
+    const escapedText = `"${line.replace(/"/g, '""')}"`;
+
+    // Add CSV row
+    csvContent += `${i + 1},${timestamp},${escapedText}\n`;
+  });
+
+  return csvContent;
+}
+
+/**
+ * Formats a time in seconds to a readable timestamp (MM:SS)
+ * @param seconds Time in seconds
+ * @returns Formatted timestamp
+ */
+function formatTimestamp(seconds: number): string {
+  const minutes = Math.floor(seconds / 60);
+  const secs = Math.floor(seconds % 60);
+
+  return `${String(minutes).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+}
+
 export function downloadTextFile(
   content: string,
   filename: string,
-  format: "txt" | "pdf" = "txt"
+  format: "txt" | "pdf" | "docx" | "srt" | "csv" = "txt"
 ): void {
   if (format === "pdf") {
     downloadAsPdf(content, filename);
     return;
   }
 
-  const blob = new Blob([content], { type: "text/plain" });
+  let mimeType = "text/plain";
+  let extension = ".txt";
+
+  switch (format) {
+    case "docx":
+      mimeType =
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+      extension = ".docx";
+      break;
+    case "srt":
+      mimeType = "application/x-subrip";
+      extension = ".srt";
+      content = formatAsSRT(content);
+      break;
+    case "csv":
+      mimeType = "text/csv";
+      extension = ".csv";
+      content = formatAsCSV(content);
+      break;
+    default:
+      mimeType = "text/plain";
+      extension = ".txt";
+  }
+
+  const blob = new Blob([content], { type: mimeType });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = filename.endsWith(".txt") ? filename : `${filename}.txt`;
+  a.download = filename.endsWith(extension)
+    ? filename
+    : `${filename}${extension}`;
   document.body.appendChild(a);
   a.click();
   setTimeout(() => {
