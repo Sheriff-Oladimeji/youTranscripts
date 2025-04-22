@@ -22,6 +22,7 @@ export const metadata: Metadata = {
   title: "YouTranscripts - Generate YouTube Transcripts for FREE",
   description:
     "Generate YouTube Transcript for FREE. Access all Transcript Languages, Translate to 125+ Languages, Easy Copy and Edit!",
+  robots: "index, follow",
 };
 
 export default function RootLayout({
