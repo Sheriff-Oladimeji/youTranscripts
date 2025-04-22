@@ -18,6 +18,7 @@ import {
   generateUniqueId,
   downloadTextFile,
 } from "@/lib/export";
+import BookmarkPopup from "./bookmark-popup";
 
 interface ActionButtonsProps {
   onTranslateClick: () => void;
@@ -28,6 +29,8 @@ export default function ActionButtons({
 }: ActionButtonsProps) {
   const { transcript, videoTitle } = useTranscriptStore();
   const [showFormatOptions, setShowFormatOptions] = useState(false);
+  const [showBookmarkPopup, setShowBookmarkPopup] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Handle click outside and keyboard events to close dropdown
@@ -60,6 +63,23 @@ export default function ActionButtons({
     };
   }, [showFormatOptions]);
 
+  // Check if user is on desktop
+  useEffect(() => {
+    const checkIfDesktop = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+
+    // Initial check
+    checkIfDesktop();
+
+    // Listen for resize events
+    window.addEventListener("resize", checkIfDesktop);
+
+    return () => {
+      window.removeEventListener("resize", checkIfDesktop);
+    };
+  }, []);
+
   const handleCopyTranscript = () => {
     const { translatedTranscript, currentLanguage, originalLanguage } =
       useTranslationStore.getState();
@@ -72,6 +92,13 @@ export default function ActionButtons({
       .writeText(text)
       .then(() => {
         toast.success("Transcript copied to clipboard!");
+
+        // Show bookmark popup after 3 seconds, but only on desktop
+        if (isDesktop) {
+          setTimeout(() => {
+            setShowBookmarkPopup(true);
+          }, 3000);
+        }
       })
       .catch((err) => {
         console.error("Failed to copy transcript:", err);
@@ -142,6 +169,7 @@ export default function ActionButtons({
 
   return (
     <div className="space-y-3 mb-6">
+      {/* Action buttons */}
       {/* Copy Transcript Button */}
       <button
         className="w-full py-4 px-6 bg-black hover:bg-gray-800 dark:bg-[#FFD700] dark:hover:bg-[#FFCC00] dark:text-black text-white font-medium rounded-lg flex items-center justify-center gap-2 shadow-md"
@@ -391,6 +419,14 @@ export default function ActionButtons({
         </div>
         <ExternalLink className="h-5 w-5" />
       </button>
+
+      {/* Bookmark Popup - shown below buttons */}
+      {showBookmarkPopup && (
+        <BookmarkPopup
+          isOpen={showBookmarkPopup}
+          onClose={() => setShowBookmarkPopup(false)}
+        />
+      )}
     </div>
   );
 }

@@ -48,7 +48,7 @@ export default function TranscriptGenerator() {
   };
 
   return (
-    <div className="w-full bg-gradient-to-b from-red-600 to-red-500 dark:from-red-700 dark:to-red-600 py-6 border-b border-red-400/20 dark:border-red-800/30">
+    <div className="w-full bg-gradient-to-b from-[#b63e33] to-[#b63e33] dark:from-[#b63e33] dark:to-[#b63e33] py-6 border-b border-red-400/20 dark:border-red-800/30">
       <div className="max-w-[800px] mx-auto px-4">
         <form
           onSubmit={handleSubmit}
@@ -57,16 +57,16 @@ export default function TranscriptGenerator() {
           <Input
             type="text"
             placeholder="Paste YouTube URL here..."
-            className="flex-1 h-12 bg-white/10 backdrop-blur-sm border-white/20 text-white placeholder:text-white/70 py-4"
+            className="flex-1 h-12 bg-white backdrop-blur-sm border-gray-400 border-2 py-4 text-black placeholder:text-black placeholder:font-medium"
             value={youtubeUrl}
             onChange={(e) => setYoutubeUrl(e.target.value)}
           />
           <Button
             type="submit"
-            className="h-12 px-8 bg-amber-500 hover:bg-amber-600 text-black font-bold"
+            className="h-12 px-8 bg-black hover:bg-gray-800 text-white font-bold"
             disabled={isLoading}
           >
-            {isLoading ? "Generating..." : "Get Free Transcript"}
+            {isLoading ? "Generating..." : "Generate Transcript"}
           </Button>
         </form>
       </div>
