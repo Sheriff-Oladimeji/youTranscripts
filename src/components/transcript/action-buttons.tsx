@@ -95,12 +95,15 @@ export default function ActionButtons({
       .then(() => {
         toast.success("Transcript copied to clipboard!");
 
-        // Show bookmark popup after 3 seconds, but only on desktop
+        // Show bookmark popup after 2 seconds, but only on desktop
         if (isDesktop) {
           setTimeout(() => {
             setShowBookmarkPopup(true);
           }, 2000);
         }
+
+        // For mobile, the MobileAddToHomeBanner component will handle showing its own popup
+        // when the user clicks its button
       })
       .catch((err) => {
         console.error("Failed to copy transcript:", err);
