@@ -121,7 +121,7 @@ export default function TestimonialsSection() {
                       <p className="text-gray-700 dark:text-gray-300 mb-4 flex-grow">
                         &quot;{testimonial.content}&quot;
                       </p>
-                      <div className="flex items-center mt-2 w-full">
+                      <div className="flex items-center mt-2">
                         <div className="mr-3">
                           {/* <Image
                             src="https://images.unsplash.com/photo-1656874576047-db8076ad06a1?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
