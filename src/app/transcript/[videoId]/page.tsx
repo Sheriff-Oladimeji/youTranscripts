@@ -79,6 +79,7 @@ export default function TranscriptPage({
               onTranslateClick={() =>
                 setShowTranslationSettings(!showTranslationSettings)
               }
+              isBottomButton={true}
             />
           </div>
         )}

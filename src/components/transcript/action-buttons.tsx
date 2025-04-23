@@ -18,16 +18,21 @@ import {
   generateUniqueId,
   downloadTextFile,
 } from "@/lib/export";
+import BookmarkPopup from "./bookmark-popup";
 
 interface ActionButtonsProps {
   onTranslateClick: () => void;
+  isBottomButton?: boolean;
 }
 
 export default function ActionButtons({
   onTranslateClick,
+  isBottomButton = false,
 }: ActionButtonsProps) {
   const { transcript, videoTitle } = useTranscriptStore();
   const [showFormatOptions, setShowFormatOptions] = useState(false);
+  const [showBookmarkPopup, setShowBookmarkPopup] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Handle click outside and keyboard events to close dropdown
@@ -60,6 +65,23 @@ export default function ActionButtons({
     };
   }, [showFormatOptions]);
 
+  // Check if user is on desktop
+  useEffect(() => {
+    const checkIfDesktop = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+
+    // Initial check
+    checkIfDesktop();
+
+    // Listen for resize events
+    window.addEventListener("resize", checkIfDesktop);
+
+    return () => {
+      window.removeEventListener("resize", checkIfDesktop);
+    };
+  }, []);
+
   const handleCopyTranscript = () => {
     const { translatedTranscript, currentLanguage, originalLanguage } =
       useTranslationStore.getState();
@@ -72,6 +94,13 @@ export default function ActionButtons({
       .writeText(text)
       .then(() => {
         toast.success("Transcript copied to clipboard!");
+
+        // Show bookmark popup after 3 seconds, but only on desktop
+        if (isDesktop) {
+          setTimeout(() => {
+            setShowBookmarkPopup(true);
+          }, 2000);
+        }
       })
       .catch((err) => {
         console.error("Failed to copy transcript:", err);
@@ -142,6 +171,7 @@ export default function ActionButtons({
 
   return (
     <div className="space-y-3 mb-6">
+      {/* Action buttons */}
       {/* Copy Transcript Button */}
       <button
         className="w-full py-4 px-6 bg-black hover:bg-gray-800 dark:bg-[#FFD700] dark:hover:bg-[#FFCC00] dark:text-black text-white font-medium rounded-lg flex items-center justify-center gap-2 shadow-md"
@@ -365,7 +395,40 @@ export default function ActionButtons({
       {/* Language & Translation Settings Button */}
       <button
         className="w-full py-4 px-6 bg-[#3F51B5] hover:bg-[#3849a2] text-white font-medium rounded-lg flex items-center justify-center gap-2 shadow-md"
-        onClick={onTranslateClick}
+        onClick={() => {
+          if (isBottomButton) {
+            // Find the position of the translation settings area (just after the top action buttons)
+            const headerElement = document.querySelector(
+              ".w-full.max-w-\\[800px\\].mx-auto.px-4.py-6"
+            );
+            if (headerElement) {
+              // Calculate position to scroll to (just after the top action buttons)
+              const topActionButtons =
+                headerElement.querySelector(".space-y-3.mb-6");
+              if (topActionButtons) {
+                const rect = topActionButtons.getBoundingClientRect();
+                const scrollPosition = window.scrollY + rect.top;
+                // Scroll to the position where translation settings will appear
+                window.scrollTo({ top: scrollPosition, behavior: "smooth" });
+              } else {
+                // Fallback if we can't find the exact position
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }
+              // Short delay to ensure scroll completes before showing settings
+              setTimeout(() => {
+                onTranslateClick();
+              }, 500);
+            } else {
+              // Fallback if we can't find the header element
+              window.scrollTo({ top: 0, behavior: "smooth" });
+              setTimeout(() => {
+                onTranslateClick();
+              }, 500);
+            }
+          } else {
+            onTranslateClick();
+          }
+        }}
       >
         <div className="flex items-center justify-center flex-1">
           <Languages className="h-5 w-5 mr-2" />
@@ -391,6 +454,14 @@ export default function ActionButtons({
         </div>
         <ExternalLink className="h-5 w-5" />
       </button>
+
+      {/* Bookmark Popup - shown below buttons */}
+      {showBookmarkPopup && (
+        <BookmarkPopup
+          isOpen={showBookmarkPopup}
+          onClose={() => setShowBookmarkPopup(false)}
+        />
+      )}
     </div>
   );
 }
