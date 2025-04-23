@@ -1,7 +1,15 @@
 "use client";
 
-import { useState } from "react";
-import { ChevronLeft, ChevronRight, Star } from "lucide-react";
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import { Star } from "lucide-react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 type Testimonial = {
   name: string;
@@ -11,8 +19,6 @@ type Testimonial = {
 };
 
 export default function TestimonialsSection() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
   const testimonials: Testimonial[] = [
     {
       name: "Miguel",
@@ -29,7 +35,7 @@ export default function TestimonialsSection() {
       rating: 5,
     },
     {
-      name: "Andrey K",
+      name: "Andrew K",
       role: "Community Manager",
       content:
         "In combination with other LLM tools it saves a lot of time when going through lots of videos on a quest of gathering feedback and insights from users.",
@@ -57,34 +63,6 @@ export default function TestimonialsSection() {
       rating: 4,
     },
   ];
-
-  // Calculate visible slides based on screen size
-  const [visibleSlides, setVisibleSlides] = useState(3);
-
-  // Set default visible slides based on screen size
-  useState(() => {
-    if (typeof window !== "undefined") {
-      if (window.innerWidth < 768) {
-        setVisibleSlides(1);
-      } else if (window.innerWidth < 1024) {
-        setVisibleSlides(2);
-      } else {
-        setVisibleSlides(3);
-      }
-    }
-  });
-
-  const nextSlide = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex >= testimonials.length - visibleSlides ? 0 : prevIndex + 1
-    );
-  };
-
-  const prevSlide = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? testimonials.length - visibleSlides : prevIndex - 1
-    );
-  };
 
   const renderStars = (rating: number) => {
     return Array(5)
@@ -118,57 +96,53 @@ export default function TestimonialsSection() {
           </p>
         </div>
 
-        <div className="relative">
-          <div className="flex overflow-hidden">
-            <div
-              className="flex transition-transform duration-300 ease-in-out"
-              style={{
-                transform: `translateX(-${
-                  currentIndex * (100 / visibleSlides)
-                }%)`,
-                width: `${(testimonials.length * 100) / visibleSlides}%`,
+        <div className="mt-10">
+          <div className="relative">
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
               }}
+              className="w-full"
             >
-              {testimonials.map((testimonial, index) => (
-                <div
-                  key={index}
-                  style={{ width: `${100 / visibleSlides}%` }}
-                  className="px-4"
-                >
-                  <div className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-600 h-full flex flex-col">
-                    <div className="flex mb-3">
-                      {renderStars(testimonial.rating)}
-                    </div>
-                    <p className="text-gray-700 dark:text-gray-300 mb-4 flex-grow">
-                      &quot;{testimonial.content}&quot;
-                    </p>
-                    <div>
-                      <h4 className="font-bold">{testimonial.name}</h4>
-                      <p className="text-gray-600 dark:text-gray-400 text-sm">
-                        {testimonial.role}
+              <CarouselContent className="-ml-6">
+                {testimonials.map((testimonial, index) => (
+                  <CarouselItem
+                    key={index}
+                    className="pl-6 md:basis-1/2 lg:basis-1/3"
+                  >
+                    <div className="bg-white dark:bg-gray-700 p-8 rounded-lg shadow-md border border-gray-200 dark:border-gray-600 h-full flex flex-col">
+                      <div className="flex mb-3">
+                        {renderStars(testimonial.rating)}
+                      </div>
+                      <p className="text-gray-700 dark:text-gray-300 mb-4 flex-grow">
+                        &quot;{testimonial.content}&quot;
                       </p>
+                      <div className="flex items-center mt-2">
+                        <div className="mr-3">
+                          <Image
+                            src="https://images.unsplash.com/photo-1656874576047-db8076ad06a1?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                            alt={`${testimonial.name} avatar`}
+                            width={48}
+                            height={48}
+                            className="rounded-full object-cover"
+                          />
+                        </div>
+                        <div>
+                          <h4 className="font-bold">{testimonial.name}</h4>
+                          <p className="text-gray-600 dark:text-gray-400 text-sm">
+                            {testimonial.role}
+                          </p>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-5 h-10 w-10 bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600" />
+              <CarouselNext className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-5 h-10 w-10 bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600" />
+            </Carousel>
           </div>
-
-          <button
-            onClick={prevSlide}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 bg-white dark:bg-gray-700 rounded-full p-2 shadow-md border border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
-            aria-label="Previous testimonial"
-          >
-            <ChevronLeft className="h-6 w-6" />
-          </button>
-
-          <button
-            onClick={nextSlide}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 bg-white dark:bg-gray-700 rounded-full p-2 shadow-md border border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
-            aria-label="Next testimonial"
-          >
-            <ChevronRight className="h-6 w-6" />
-          </button>
         </div>
       </div>
     </section>

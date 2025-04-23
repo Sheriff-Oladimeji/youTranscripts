@@ -3,7 +3,7 @@ import PromotionalSection from "@/components/promotional-section";
 import HowToSection from "@/components/how-to-section";
 import UseCasesSection from "@/components/use-cases-section";
 
-import TestimonialsSection from "@/components/testimonials-section-new";
+import TestimonialsSection from "@/components/testimonials-section";
 import FaqSection from "@/components/faq-section";
 
 export default function Home() {
