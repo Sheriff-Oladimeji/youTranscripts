@@ -1,0 +1,65 @@
+import { Briefcase, Video, FileText, GraduationCap } from "lucide-react";
+
+export default function UseCasesSection() {
+  return (
+    <section className="w-full py-16 md:py-20 bg-[#f5f5f5] dark:bg-gray-900">
+      <div className="w-[90%] mx-auto">
+        <div className="flex flex-col items-center text-center mb-10">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-8 max-w-4xl">
+            Use Cases
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <div className="flex items-start gap-4 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
+            <div className="mt-1 bg-red-100 dark:bg-red-900/30 p-3 rounded-full">
+              <Briefcase className="h-6 w-6 text-red-600 dark:text-red-400" />
+            </div>
+            <div className="text-left">
+              <h3 className="text-xl font-bold mb-2">For Marketers & Businesses</h3>
+              <p className="text-gray-700 dark:text-gray-300">
+                Repurpose YouTube transcripts into SEO‑optimized blog posts, social media snippets, and email campaigns in seconds.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-4 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
+            <div className="mt-1 bg-red-100 dark:bg-red-900/30 p-3 rounded-full">
+              <Video className="h-6 w-6 text-red-600 dark:text-red-400" />
+            </div>
+            <div className="text-left">
+              <h3 className="text-xl font-bold mb-2">For Content Creators & Podcasters</h3>
+              <p className="text-gray-700 dark:text-gray-300">
+                Transform episode transcripts into show notes, twitter thread, linkedin post, quotes, and social teasers to drive listener engagement.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-4 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
+            <div className="mt-1 bg-red-100 dark:bg-red-900/30 p-3 rounded-full">
+              <FileText className="h-6 w-6 text-red-600 dark:text-red-400" />
+            </div>
+            <div className="text-left">
+              <h3 className="text-xl font-bold mb-2">For Journalists & Writers</h3>
+              <p className="text-gray-700 dark:text-gray-300">
+                Quickly extract accurate quotes and timestamps from interviews for faster, more precise reporting.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-4 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
+            <div className="mt-1 bg-red-100 dark:bg-red-900/30 p-3 rounded-full">
+              <GraduationCap className="h-6 w-6 text-red-600 dark:text-red-400" />
+            </div>
+            <div className="text-left">
+              <h3 className="text-xl font-bold mb-2">For Researchers & Students</h3>
+              <p className="text-gray-700 dark:text-gray-300">
+                Analyze lecture and interview transcripts efficiently for high‑quality citations and in‑depth academic insights.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

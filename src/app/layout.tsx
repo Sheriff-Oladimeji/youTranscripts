@@ -21,7 +21,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "YouTranscripts - Generate YouTube Transcripts for FREE",
   description:
-    "Generate YouTube Transcript for FREE. Access all Transcript Languages, Translate to 125+ Languages, Easy Copy and Edit!",
+    "Use our free YouTube transcript extractor and Convert any YouTube video to Text in one click. No Signup & Free Unlimited Usage.",
   robots: "index, follow",
 };
 
