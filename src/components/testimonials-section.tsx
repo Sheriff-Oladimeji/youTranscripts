@@ -11,6 +11,9 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
+
 type Testimonial = {
   name: string;
   role: string;
@@ -118,15 +121,19 @@ export default function TestimonialsSection() {
                       <p className="text-gray-700 dark:text-gray-300 mb-4 flex-grow">
                         &quot;{testimonial.content}&quot;
                       </p>
-                      <div className="flex items-center mt-2">
+                      <div className="flex items-center mt-2 w-full">
                         <div className="mr-3">
-                          <Image
+                          {/* <Image
                             src="https://images.unsplash.com/photo-1656874576047-db8076ad06a1?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                             alt={`${testimonial.name} avatar`}
                             width={48}
                             height={48}
-                            className="rounded-full object-cover"
-                          />
+                            className="rounded-full object-contain"
+                          /> */}
+                          <Avatar>
+                            <AvatarImage src="https://images.unsplash.com/photo-1650091903029-fc3f1ddcb7f9?q=80&w=3088&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+                            <AvatarFallback>{`${testimonial.name} avatar`}</AvatarFallback>
+                          </Avatar>
                         </div>
                         <div>
                           <h4 className="font-bold">{testimonial.name}</h4>
