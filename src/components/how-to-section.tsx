@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Video } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -37,7 +36,7 @@ export default function HowToSection() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="flex flex-col items-center text-center p-6 bg-[#f5f5f5] dark:bg-gray-700 rounded-lg shadow-sm">
-                <div className="bg-red-100 dark:bg-red-900/30 p-3 rounded-full mb-4">
+                <div className="bg-red-100 dark:bg-red-900/30 p-3 rounded-full mb-4 h-14 w-14 text-center">
                   <span className="text-2xl">1</span>
                 </div>
                 <h4 className="text-lg font-bold mb-2">Paste & Go</h4>
@@ -47,7 +46,7 @@ export default function HowToSection() {
               </div>
 
               <div className="flex flex-col items-center text-center p-6 bg-[#f5f5f5] dark:bg-gray-700 rounded-lg shadow-sm">
-                <div className="bg-red-100 dark:bg-red-900/30 p-3 rounded-full mb-4">
+                <div className="bg-red-100 dark:bg-red-900/30 p-3 rounded-full mb-4 h-14 w-14 text-center">
                   <span className="text-2xl">2</span>
                 </div>
                 <h4 className="text-lg font-bold mb-2">Edit & Translate</h4>
@@ -58,7 +57,7 @@ export default function HowToSection() {
               </div>
 
               <div className="flex flex-col items-center text-center p-6 bg-[#f5f5f5] dark:bg-gray-700 rounded-lg shadow-sm">
-                <div className="bg-red-100 dark:bg-red-900/30 p-3 rounded-full mb-4">
+                <div className="bg-red-100 dark:bg-red-900/30 p-3 rounded-full mb-4 h-14 w-14 text-center">
                   <span className="text-2xl">3</span>
                 </div>
                 <h4 className="text-lg font-bold mb-2">Download & Share</h4>
