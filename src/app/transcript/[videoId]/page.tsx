@@ -10,6 +10,7 @@ import ActionButtons from "@/components/transcript/action-buttons";
 import TranslationSettings from "@/components/transcript/translation-settings";
 import TranscriptGenerator from "@/components/transcript/transcript-generator";
 import FloatingTopButton from "@/components/transcript/floating-top-button";
+import MobileAddToHomeBanner from "@/components/mobile-add-to-home-banner";
 // Removed unused tabs imports
 import { use } from "react";
 
@@ -42,6 +43,8 @@ export default function TranscriptPage({
       <FloatingTopButton />
       {/* Transcript Generator */}
       <TranscriptGenerator />
+      {/* Mobile Add to Home Banner */}
+      <MobileAddToHomeBanner />
 
       {/* Video Section */}
       <EmbeddedVideo videoId={videoId} />
