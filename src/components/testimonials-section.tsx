@@ -1,7 +1,5 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Image from "next/image";
 import { Star } from "lucide-react";
 import {
   Carousel,
@@ -12,61 +10,9 @@ import {
 } from "@/components/ui/carousel";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
-
-type Testimonial = {
-  name: string;
-  role: string;
-  content: string;
-  rating: number;
-};
+import { testimonials } from "@/constants/testimonials";
 
 export default function TestimonialsSection() {
-  const testimonials: Testimonial[] = [
-    {
-      name: "Miguel",
-      role: "Linguistics professor and researcher",
-      content:
-        "Being able to quickly discover if there is any information in a long YouTube lecture that I need to listen to. This tool saves me hours of time every week!",
-      rating: 5,
-    },
-    {
-      name: "Robert David",
-      role: "Creative Director",
-      content:
-        "I love your integration of tools and intuitive minimal and efficient UI flow, currently working on getting back in the game and definitely looking forward getting a subscription to your service once I'm back.",
-      rating: 5,
-    },
-    {
-      name: "Andrew K",
-      role: "Community Manager",
-      content:
-        "In combination with other LLM tools it saves a lot of time when going through lots of videos on a quest of gathering feedback and insights from users.",
-      rating: 5,
-    },
-    {
-      name: "Angela",
-      role: "Marketing Specialist",
-      content:
-        "I love how fast and accurate the transcripts are. The best part is the ability to translate them for the subtitles of our videos.",
-      rating: 5,
-    },
-    {
-      name: "David Chen",
-      role: "Content Creator",
-      content:
-        "This tool has completely transformed my workflow. I can quickly extract key points from long videos and repurpose them for my blog.",
-      rating: 5,
-    },
-    {
-      name: "Sarah Johnson",
-      role: "Journalist",
-      content:
-        "As a journalist, accuracy is everything. This transcript tool helps me quote sources correctly without spending hours on manual transcription.",
-      rating: 4,
-    },
-  ];
-
   const renderStars = (rating: number) => {
     return Array(5)
       .fill(0)
@@ -123,16 +69,14 @@ export default function TestimonialsSection() {
                       </p>
                       <div className="flex items-center mt-2">
                         <div className="mr-3">
-                          {/* <Image
-                            src="https://images.unsplash.com/photo-1656874576047-db8076ad06a1?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                            alt={`${testimonial.name} avatar`}
-                            width={48}
-                            height={48}
-                            className="rounded-full object-contain"
-                          /> */}
                           <Avatar>
-                            <AvatarImage src="https://images.unsplash.com/photo-1650091903029-fc3f1ddcb7f9?q=80&w=3088&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
-                            <AvatarFallback>{`${testimonial.name} avatar`}</AvatarFallback>
+                            <AvatarImage
+                              src={testimonial.avatar}
+                              alt={`${testimonial.name} avatar`}
+                            />
+                            <AvatarFallback>
+                              {testimonial.name.split(" ")[0][0]}
+                            </AvatarFallback>
                           </Avatar>
                         </div>
                         <div>

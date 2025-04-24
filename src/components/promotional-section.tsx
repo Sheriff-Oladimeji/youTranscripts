@@ -1,52 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { Clipboard, Globe, FileText, Languages } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { toast } from "sonner";
-import { getVideoId } from "@/lib/youtube";
-import { useTranscriptStore } from "@/store/transcript-store";
+import TranscriptInputForm from "./transcript-input-form";
 
 export default function PromotionalSection() {
-  const [youtubeUrl, setYoutubeUrl] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
-  const { clearTranscript } = useTranscriptStore();
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    // Trim the URL to remove any whitespace
-    const trimmedUrl = youtubeUrl.trim();
-
-    if (!trimmedUrl) {
-      toast.error("Please enter a YouTube URL");
-      return;
-    }
-
-    setIsLoading(true);
-
-    try {
-      const videoId = getVideoId(trimmedUrl);
-      if (videoId) {
-        console.log(
-          "Valid YouTube URL detected, navigating to transcript page"
-        );
-        clearTranscript();
-        router.push(`/transcript/${videoId}`);
-      } else {
-        console.error("Invalid YouTube URL:", trimmedUrl);
-        toast.error("Please enter a valid YouTube URL");
-        setIsLoading(false);
-      }
-    } catch (error) {
-      console.error("Error processing URL:", error);
-      toast.error("An error occurred. Please try again.");
-      setIsLoading(false);
-    }
-  };
   return (
     <section className="w-full py-16 md:py-20 bg-[#f5f5f5] dark:bg-gray-900">
       <div className="w-[90%] mx-auto">
@@ -120,27 +77,7 @@ export default function PromotionalSection() {
         </div>
 
         <div className="max-w-3xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-md border border-gray-200 dark:border-gray-700 p-6 md:p-8">
-          <div className="w-full">
-            <form
-              onSubmit={handleSubmit}
-              className="flex flex-col sm:flex-row gap-4"
-            >
-              <Input
-                type="text"
-                placeholder="Paste YouTube URL here..."
-                className="flex-1 h-12 bg-white backdrop-blur-sm border-gray-400 border-2 py-4 text-black placeholder:text-black placeholder:font-medium"
-                value={youtubeUrl}
-                onChange={(e) => setYoutubeUrl(e.target.value)}
-              />
-              <Button
-                type="submit"
-                className="h-12 px-8 bg-black hover:bg-gray-800 text-white font-bold"
-                disabled={isLoading}
-              >
-                {isLoading ? "Generating..." : "Generate Transcript"}
-              </Button>
-            </form>
-          </div>
+          <TranscriptInputForm />
         </div>
       </div>
     </section>

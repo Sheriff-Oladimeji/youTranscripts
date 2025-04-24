@@ -70,30 +70,34 @@ export default function Header() {
           }`}
         >
           <ul className="flex flex-col p-4 space-y-3">
-            <li>
-              <a
-                href="#features"
-                className="text-foreground hover:text-red-600 transition-colors"
-              >
-                Features
-              </a>
-            </li>
-            <li>
-              <a
-                href="#how-to"
-                className="text-foreground hover:text-red-600 transition-colors"
-              >
-                How To
-              </a>
-            </li>
-            <li>
-              <a
-                href="#faq"
-                className="text-foreground hover:text-red-600 transition-colors"
-              >
-                FAQ
-              </a>
-            </li>
+            <Link
+              href="/about"
+              className="text-foreground hover:text-red-600 transition-colors"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              About
+            </Link>
+            <Link
+              href="/terms"
+              className="text-foreground hover:text-red-600 transition-colors"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Terms and Conditions
+            </Link>
+            <Link
+              href="/privacy"
+              className="text-foreground hover:text-red-600 transition-colors"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Privacy Policy
+            </Link>
+            <Link
+              href="/contact"
+              className="text-foreground hover:text-red-600 transition-colors"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Contact
+            </Link>
           </ul>
         </nav>
       </div>
