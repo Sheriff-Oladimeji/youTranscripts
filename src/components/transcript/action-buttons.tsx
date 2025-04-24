@@ -32,7 +32,6 @@ export default function ActionButtons({
   const { transcript, videoTitle } = useTranscriptStore();
   const [showFormatOptions, setShowFormatOptions] = useState(false);
   const [showBookmarkPopup, setShowBookmarkPopup] = useState(false);
-  const [isDesktop, setIsDesktop] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Handle click outside and keyboard events to close dropdown
@@ -65,22 +64,8 @@ export default function ActionButtons({
     };
   }, [showFormatOptions]);
 
-  // Check if user is on desktop
-  useEffect(() => {
-    const checkIfDesktop = () => {
-      setIsDesktop(window.innerWidth >= 768);
-    };
-
-    // Initial check
-    checkIfDesktop();
-
-    // Listen for resize events
-    window.addEventListener("resize", checkIfDesktop);
-
-    return () => {
-      window.removeEventListener("resize", checkIfDesktop);
-    };
-  }, []);
+  // This effect was previously used to check if user is on desktop
+  // We're now handling device detection in the BookmarkPopup component
 
   const handleCopyTranscript = () => {
     const { translatedTranscript, currentLanguage, originalLanguage } =
@@ -95,15 +80,11 @@ export default function ActionButtons({
       .then(() => {
         toast.success("Transcript copied to clipboard!");
 
-        // Show bookmark popup after 2 seconds, but only on desktop
-        if (isDesktop) {
-          setTimeout(() => {
-            setShowBookmarkPopup(true);
-          }, 2000);
-        }
-
-        // For mobile, the MobileAddToHomeBanner component will handle showing its own popup
-        // when the user clicks its button
+        // Show bookmark popup after 2 seconds for all devices
+        // The popup will show different content based on device size
+        setTimeout(() => {
+          setShowBookmarkPopup(true);
+        }, 2000);
       })
       .catch((err) => {
         console.error("Failed to copy transcript:", err);
