@@ -74,7 +74,7 @@ export default function HeroSection() {
             className="h-12 px-4 sm:px-8 bg-black hover:bg-gray-800 text-white font-bold w-full sm:w-auto"
             disabled={isLoading}
           >
-            {isLoading ? "Generating..." : "Generate yt Transcript"}
+            {isLoading ? "Generating..." : "Generate Transcript"}
           </Button>
         </form>
 
