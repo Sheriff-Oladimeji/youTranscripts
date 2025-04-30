@@ -4,7 +4,22 @@ export const metadata: Metadata = {
   title: "About YouTranscripts - Free YouTube Transcript Generator",
   description:
     "Learn about YouTranscripts, the free tool that helps you generate, translate, and download YouTube video transcripts in multiple formats.",
+  keywords:
+    "about YouTranscripts, YouTube transcript tool, free transcript generator, video to text converter",
   robots: "index, follow",
+  openGraph: {
+    title: "About YouTranscripts - Free YouTube Transcript Generator",
+    description:
+      "Learn about YouTranscripts, the free tool that helps you generate, translate, and download YouTube video transcripts in multiple formats.",
+    url: "https://youtranscripts.com/about",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About YouTranscripts - Free YouTube Transcript Generator",
+    description:
+      "Learn about YouTranscripts, the free tool that helps you generate, translate, and download YouTube video transcripts in multiple formats.",
+  },
 };
 
 export default function AboutPage() {

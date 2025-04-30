@@ -1,0 +1,21 @@
+{
+  "name": "YouTranscripts",
+  "short_name": "YouTranscripts",
+  "description": "Free YouTube transcript generator - Convert any YouTube video to text in one click",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#b63e33",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

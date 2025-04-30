@@ -4,7 +4,22 @@ export const metadata: Metadata = {
   title: "Terms of Service - YouTranscripts",
   description:
     "Terms and conditions for using YouTranscripts, the free YouTube transcript generator.",
+  keywords:
+    "terms of service, terms and conditions, YouTranscripts terms, legal terms",
   robots: "index, follow",
+  openGraph: {
+    title: "Terms of Service - YouTranscripts",
+    description:
+      "Terms and conditions for using YouTranscripts, the free YouTube transcript generator.",
+    url: "https://youtranscripts.com/terms",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Terms of Service - YouTranscripts",
+    description:
+      "Terms and conditions for using YouTranscripts, the free YouTube transcript generator.",
+  },
 };
 
 export default function TermsPage() {
