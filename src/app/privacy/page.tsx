@@ -4,7 +4,22 @@ export const metadata: Metadata = {
   title: "Privacy Policy - YouTranscripts",
   description:
     "Privacy policy for YouTranscripts, the free YouTube transcript generator.",
+  keywords:
+    "privacy policy, data protection, YouTranscripts privacy, user data",
   robots: "index, follow",
+  openGraph: {
+    title: "Privacy Policy - YouTranscripts",
+    description:
+      "Privacy policy for YouTranscripts, the free YouTube transcript generator.",
+    url: "https://youtranscripts.com/privacy",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Privacy Policy - YouTranscripts",
+    description:
+      "Privacy policy for YouTranscripts, the free YouTube transcript generator.",
+  },
 };
 
 export default function PrivacyPage() {

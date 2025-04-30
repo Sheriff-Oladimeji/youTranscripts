@@ -5,7 +5,22 @@ export const metadata: Metadata = {
   title: "Contact Us - YouTranscripts",
   description:
     "Get in touch with the YouTranscripts team for support, feedback, or business inquiries.",
+  keywords:
+    "contact YouTranscripts, YouTube transcript support, transcript generator help, feedback",
   robots: "index, follow",
+  openGraph: {
+    title: "Contact Us - YouTranscripts",
+    description:
+      "Get in touch with the YouTranscripts team for support, feedback, or business inquiries.",
+    url: "https://youtranscripts.com/contact",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Contact Us - YouTranscripts",
+    description:
+      "Get in touch with the YouTranscripts team for support, feedback, or business inquiries.",
+  },
 };
 
 export default function ContactPage() {
