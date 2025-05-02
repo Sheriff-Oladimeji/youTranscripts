@@ -7,25 +7,25 @@ import TestimonialsSection from "@/components/testimonials-section";
 import FaqSection from "@/components/faq-section";
 
 export const metadata: Metadata = {
-  title: "YouTranscripts - Generate YouTube Transcripts for FREE",
+  title: "100% Free YouTube Transcript Generator - No Signup [2025]",
   description:
-    "Use our free YouTube transcript extractor and Convert any YouTube video to Text in one click. No Signup & Free Unlimited Usage.",
+    "Use our Free & Fast YouTube Video Transcript extractor and convert any YouTube video to text in just 2 seconds. Copy, Translate & Download in one click.",
   keywords:
-    "YouTube transcript, YouTube to text, video transcription, free transcript generator, YouTube captions",
+    "YouTube transcript, YouTube to text, video transcription, free transcript generator, YouTube captions, no signup",
   robots: "index, follow",
   openGraph: {
-    title: "YouTranscripts - Free YouTube Transcript Generator",
+    title: "100% Free YouTube Transcript Generator - No Signup [2025]",
     description:
-      "Convert any YouTube video to text in one click. Free, no signup required.",
+      "Use our Free & Fast YouTube Video Transcript extractor and convert any YouTube video to text in just 2 seconds. Copy, Translate & Download in one click.",
     url: "https://youtranscripts.com",
     siteName: "YouTranscripts",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "YouTranscripts - Free YouTube Transcript Generator",
+    title: "100% Free YouTube Transcript Generator - No Signup [2025]",
     description:
-      "Convert any YouTube video to text in one click. Free, no signup required.",
+      "Use our Free & Fast YouTube Video Transcript extractor and convert any YouTube video to text in just 2 seconds. Copy, Translate & Download in one click.",
   },
 };
 

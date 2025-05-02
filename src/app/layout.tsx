@@ -7,7 +7,8 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { Toaster } from "sonner";
 import ClientBannerWrapper from "@/components/client-banner-wrapper";
-import Script from "next/script";
+import { Suspense } from "react";
+import Analytics from "@/components/analytics";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,13 +23,13 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://youtranscripts.com"),
   title: {
-    default: "YouTranscripts - Generate YouTube Transcripts for FREE",
-    template: "%s | YouTranscripts",
+    default: "100% Free YouTube Transcript Generator - No Signup [2025]",
+    template: "%s",
   },
   description:
-    "Use our free YouTube transcript extractor and Convert any YouTube video to Text in one click. No Signup & Free Unlimited Usage.",
+    "Use our Free & Fast YouTube Video Transcript extractor and convert any YouTube video to text in just 2 seconds. Copy, Translate & Download in one click.",
   keywords:
-    "YouTube transcript, YouTube to text, video transcription, free transcript generator, YouTube captions",
+    "YouTube transcript, YouTube to text, video transcription, free transcript generator, YouTube captions, no signup",
   robots: {
     index: true,
     follow: true,
@@ -42,16 +43,16 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://youtranscripts.com",
-    title: "YouTranscripts - Free YouTube Transcript Generator",
+    title: "100% Free YouTube Transcript Generator - No Signup [2025]",
     description:
-      "Convert any YouTube video to text in one click. Free, no signup required.",
+      "Use our Free & Fast YouTube Video Transcript extractor and convert any YouTube video to text in just 2 seconds. Copy, Translate & Download in one click.",
     siteName: "YouTranscripts",
   },
   twitter: {
     card: "summary_large_image",
-    title: "YouTranscripts - Free YouTube Transcript Generator",
+    title: "100% Free YouTube Transcript Generator - No Signup [2025]",
     description:
-      "Convert any YouTube video to text in one click. Free, no signup required.",
+      "Use our Free & Fast YouTube Video Transcript extractor and convert any YouTube video to text in just 2 seconds. Copy, Translate & Download in one click.",
   },
   verification: {
     google: "verification_token", // Replace with actual verification token if available
@@ -65,36 +66,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        {/* Google Tag Manager */}
-        <Script id="google-tag-manager" strategy="afterInteractive">
-          {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-          })(window,document,'script','dataLayer','GTM-WCWXV68M');`}
-        </Script>
-        {/* End Google Tag Manager */}
-      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {/* Google Tag Manager (noscript) */}
-        <noscript>
-          <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-WCWXV68M"
-            height="0"
-            width="0"
-            style={{ display: "none", visibility: "hidden" }}
-          />
-        </noscript>
-        {/* End Google Tag Manager (noscript) */}
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
+          <Suspense>
+            <Analytics />
+          </Suspense>
           <ClientBannerWrapper />
           <Header />
           {children}
