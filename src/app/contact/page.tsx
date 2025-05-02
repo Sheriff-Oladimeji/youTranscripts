@@ -2,24 +2,24 @@ import type { Metadata } from "next";
 import { Mail, MessageSquare, Users, Zap } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Contact Us - YouTranscripts",
+  title: "Contact Us | YouTranscripts Support",
   description:
-    "Get in touch with the YouTranscripts team for support, feedback, or business inquiries.",
+    "Need help or have questions? Reach out to the YouTranscripts team – we're here to assist with anything related to YouTube transcript extraction.",
   keywords:
-    "contact YouTranscripts, YouTube transcript support, transcript generator help, feedback",
+    "contact YouTranscripts, YouTube transcript support, transcript generator help, feedback, technical support",
   robots: "index, follow",
   openGraph: {
-    title: "Contact Us - YouTranscripts",
+    title: "Contact Us | YouTranscripts Support",
     description:
-      "Get in touch with the YouTranscripts team for support, feedback, or business inquiries.",
+      "Need help or have questions? Reach out to the YouTranscripts team – we're here to assist with anything related to YouTube transcript extraction.",
     url: "https://youtranscripts.com/contact",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Contact Us - YouTranscripts",
+    title: "Contact Us | YouTranscripts Support",
     description:
-      "Get in touch with the YouTranscripts team for support, feedback, or business inquiries.",
+      "Need help or have questions? Reach out to the YouTranscripts team – we're here to assist with anything related to YouTube transcript extraction.",
   },
 };
 

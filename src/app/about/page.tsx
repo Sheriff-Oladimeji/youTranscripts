@@ -1,24 +1,26 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About YouTranscripts - Free YouTube Transcript Generator",
+  title: "About Us | YouTranscripts - Fast & Accurate YouTube Transcript Tool",
   description:
-    "Learn about YouTranscripts, the free tool that helps you generate, translate, and download YouTube video transcripts in multiple formats.",
+    "Learn more about YouTranscripts – the easiest way to extract, copy, and download YouTube video transcripts. Built to save time for creators, researchers, and students.",
   keywords:
-    "about YouTranscripts, YouTube transcript tool, free transcript generator, video to text converter",
+    "about YouTranscripts, YouTube transcript tool, free transcript generator, video to text converter, transcript for creators, transcript for researchers",
   robots: "index, follow",
   openGraph: {
-    title: "About YouTranscripts - Free YouTube Transcript Generator",
+    title:
+      "About Us | YouTranscripts - Fast & Accurate YouTube Transcript Tool",
     description:
-      "Learn about YouTranscripts, the free tool that helps you generate, translate, and download YouTube video transcripts in multiple formats.",
+      "Learn more about YouTranscripts – the easiest way to extract, copy, and download YouTube video transcripts. Built to save time for creators, researchers, and students.",
     url: "https://youtranscripts.com/about",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "About YouTranscripts - Free YouTube Transcript Generator",
+    title:
+      "About Us | YouTranscripts - Fast & Accurate YouTube Transcript Tool",
     description:
-      "Learn about YouTranscripts, the free tool that helps you generate, translate, and download YouTube video transcripts in multiple formats.",
+      "Learn more about YouTranscripts – the easiest way to extract, copy, and download YouTube video transcripts. Built to save time for creators, researchers, and students.",
   },
 };
 

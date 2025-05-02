@@ -1,24 +1,24 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy - YouTranscripts",
+  title: "Privacy Policy | YouTranscripts",
   description:
-    "Privacy policy for YouTranscripts, the free YouTube transcript generator.",
+    "Your privacy matters. Read how YouTranscripts collects, uses, and protects your data while ensuring a secure experience on our platform.",
   keywords:
-    "privacy policy, data protection, YouTranscripts privacy, user data",
+    "privacy policy, data protection, YouTranscripts privacy, user data, data security, personal information",
   robots: "index, follow",
   openGraph: {
-    title: "Privacy Policy - YouTranscripts",
+    title: "Privacy Policy | YouTranscripts",
     description:
-      "Privacy policy for YouTranscripts, the free YouTube transcript generator.",
+      "Your privacy matters. Read how YouTranscripts collects, uses, and protects your data while ensuring a secure experience on our platform.",
     url: "https://youtranscripts.com/privacy",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Privacy Policy - YouTranscripts",
+    title: "Privacy Policy | YouTranscripts",
     description:
-      "Privacy policy for YouTranscripts, the free YouTube transcript generator.",
+      "Your privacy matters. Read how YouTranscripts collects, uses, and protects your data while ensuring a secure experience on our platform.",
   },
 };
 
