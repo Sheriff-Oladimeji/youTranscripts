@@ -414,5 +414,91 @@
     "title": "Add to Home Screen",
     "ios": "Tap Share then 'Add to Home Screen'",
     "android": "Tap Menu then 'Add to Home Screen'"
+  },
+  "transcript": {
+    "header": {
+      "loading": "Loading transcript...",
+      "error": "Error loading transcript",
+      "of": "Transcript of",
+      "video": "YouTube Video",
+      "author": "Author:"
+    },
+    "viewer": {
+      "translating": "Translating transcript... This may take a moment.",
+      "failed": "Failed to load transcript",
+      "noTranscript": "No transcript available for this video.",
+      "backToTop": "Back To Top"
+    },
+    "actionButtons": {
+      "copy": "Copy Transcript",
+      "download": "Download Transcript",
+      "format": "Format: txt, docx, pdf, srt, csv",
+      "selectFormat": "Select Format:",
+      "plainText": "Plain Text (.txt)",
+      "simpleText": "- Simple text format",
+      "wordDocument": "Word Document (.docx)",
+      "editableDocument": "- Editable document",
+      "pdfDocument": "PDF Document (.pdf)",
+      "printableDocument": "- Printable document",
+      "subtitleFile": "Subtitle File (.srt)",
+      "forVideoSubtitles": "- For video subtitles",
+      "csvSpreadsheet": "CSV Spreadsheet (.csv)",
+      "forDataAnalysis": "- For data analysis",
+      "translate": "Translate To Another Language",
+      "free": "free",
+      "summarize": "Copy & Summarize with ChatGPT",
+      "copySuccess": "Transcript copied to clipboard!",
+      "downloadSuccess": "Transcript downloaded as",
+      "translationError": "Failed to translate transcript. Please try again.",
+      "copyError": "Failed to copy transcript. Please try again.",
+      "summarizeError": "Failed to open ChatGPT. Please try copying manually.",
+      "summarizeSuccess": "Transcript copied! Opening ChatGPT in 3 seconds - please paste the transcript there."
+    },
+    "bookmarkPopup": {
+      "copied": "Transcript copied to clipboard!",
+      "quickAccess": "📲 Quick Access on Your Phone",
+      "addToHome": "Add YouTranscripts to your home screen and open transcripts with",
+      "oneTap": "one tap",
+      "noBrowser": "—no browser, no search.",
+      "android": "Android (Chrome)",
+      "androidStep1": "Tap ⋮ menu (top-right)",
+      "androidStep2": "Choose",
+      "androidStep3": "Tap",
+      "addToHomeScreen": "Add to Home screen",
+      "add": "Add",
+      "iphone": "iPhone (Safari)",
+      "iphoneStep1": "Tap",
+      "iphoneStep2": "Scroll to",
+      "share": "Share",
+      "bookmark": "Bookmark YouTranscripts for Next Time",
+      "needLater": "Need another transcript later? Save this page now and reach it in one click.",
+      "press": "Press",
+      "mac": "(Mac)",
+      "windows": "(Windows)",
+      "or": "or",
+      "saveTime": "Save time:",
+      "jumpStraight": "Jump straight to transcripts—skip search.",
+      "stayInFlow": "Stay in flow:",
+      "creativeRhythm": "Keep your creative rhythm unbroken.",
+      "workSmarter": "Work smarter:",
+      "gotoTool": "Your goto tool, one shortcut away."
+    },
+    "floatingButton": {
+      "top": "TOP"
+    },
+    "translationSettings": {
+      "title": "Language & Translation Settings",
+      "error": "Translation error:",
+      "detected": "Detected language:",
+      "autoDetected": "Language is detected automatically from the video transcript.",
+      "originalLanguage": "The transcript is in its original language",
+      "original": "Original",
+      "translate": "Translate",
+      "cancel": "Cancel",
+      "currentlyViewing": "Currently viewing:",
+      "resetToOriginal": "Reset to original",
+      "translatingTo": "Translating to",
+      "complete": "complete"
+    }
   }
 }

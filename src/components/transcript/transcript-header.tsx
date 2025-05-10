@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranscriptStore } from "@/store/transcript-store";
+import { useT } from "@/i18n/client";
 
 interface TranscriptHeaderProps {
   videoId: string;
@@ -16,23 +17,24 @@ export default function TranscriptHeader({
   error,
 }: TranscriptHeaderProps) {
   const { channelTitle } = useTranscriptStore();
+  const { t } = useT();
 
   return (
     <div className="mb-6">
       <h1 className="text-2xl md:text-3xl font-bold mb-2">
         {isLoading ? (
-          "Loading transcript..."
+          t("transcript.header.loading")
         ) : error ? (
-          "Error loading transcript"
+          t("transcript.header.error")
         ) : title ? (
           <>
-            <span className="font-bold">Transcript of </span>
+            <span className="font-bold">{t("transcript.header.of")} </span>
             <span className="font-normal">&ldquo;{title}&rdquo;</span>
           </>
         ) : (
           <>
-            <span className="font-bold">Transcript of </span>
-            <span className="font-normal">YouTube Video</span>
+            <span className="font-bold">{t("transcript.header.of")} </span>
+            <span className="font-normal">{t("transcript.header.video")}</span>
           </>
         )}
       </h1>
@@ -40,7 +42,7 @@ export default function TranscriptHeader({
       {!isLoading && !error && channelTitle && (
         <div className="flex items-center text-sm text-muted-foreground">
           <div className="flex items-center">
-            <span className="mr-2">Author:</span>
+            <span className="mr-2">{t("transcript.header.author")}</span>
             <span className="font-medium">
               {channelTitle || "YouTube Creator"}
             </span>

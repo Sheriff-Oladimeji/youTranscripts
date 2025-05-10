@@ -19,6 +19,7 @@ import {
   downloadTextFile,
 } from "@/lib/export";
 import BookmarkPopup from "./bookmark-popup";
+import { useT } from "@/i18n/client";
 
 interface ActionButtonsProps {
   onTranslateClick: () => void;
@@ -33,6 +34,7 @@ export default function ActionButtons({
   const [showFormatOptions, setShowFormatOptions] = useState(false);
   const [showBookmarkPopup, setShowBookmarkPopup] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const { t } = useT();
 
   // Handle click outside and keyboard events to close dropdown
   useEffect(() => {
@@ -78,7 +80,7 @@ export default function ActionButtons({
     navigator.clipboard
       .writeText(text)
       .then(() => {
-        toast.success("Transcript copied to clipboard!");
+        toast.success(t("transcript.actionButtons.copySuccess"));
 
         // Show bookmark popup after 2 seconds for all devices
         // The popup will show different content based on device size
@@ -88,7 +90,7 @@ export default function ActionButtons({
       })
       .catch((err) => {
         console.error("Failed to copy transcript:", err);
-        toast.error("Failed to copy transcript. Please try again.");
+        toast.error(t("transcript.actionButtons.copyError"));
       });
   };
 
@@ -126,7 +128,7 @@ export default function ActionButtons({
 
       // Show toast message first
       toast.success(
-        "Transcript copied! Opening ChatGPT in 3 seconds - please paste the transcript there.",
+        t("transcript.actionButtons.summarizeSuccess"),
         { duration: 5000 } // Show toast for 5 seconds
       );
 
@@ -142,7 +144,7 @@ export default function ActionButtons({
       }, 3000); // 3-second delay
     } catch (err) {
       console.error("Failed to process transcript for summarization:", err);
-      toast.error("Failed to open ChatGPT. Please try copying manually.");
+      toast.error(t("transcript.actionButtons.summarizeError"));
 
       // Fallback to just copying the text
       navigator.clipboard
@@ -163,7 +165,7 @@ export default function ActionButtons({
         disabled={transcript.length === 0}
       >
         <Copy className="h-5 w-5 mr-2" />
-        <span>Copy Transcript</span>
+        <span>{t("transcript.actionButtons.copy")}</span>
       </button>
 
       {/* Download Transcript Button with Format Options */}
@@ -175,9 +177,9 @@ export default function ActionButtons({
         >
           <Download className="h-5 w-5 mr-2" />
           <div className="flex flex-col items-center">
-            <span>Download Transcript</span>
+            <span>{t("transcript.actionButtons.download")}</span>
             <span className="text-xs font-normal mt-1">
-              Format: txt, docx, pdf, srt, csv
+              {t("transcript.actionButtons.format")}
             </span>
           </div>
         </button>
@@ -186,7 +188,7 @@ export default function ActionButtons({
         {showFormatOptions && transcript.length > 0 && (
           <div className="absolute z-10 mt-2 w-full bg-white dark:bg-gray-800 rounded-md shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
             <div className="p-2 text-sm text-gray-700 dark:text-gray-300 border-b border-gray-200 dark:border-gray-700">
-              Select Format:
+              {t("transcript.actionButtons.selectFormat")}
             </div>
             <div className="divide-y divide-gray-200 dark:divide-gray-700">
               {/* TXT Format */}
@@ -214,14 +216,18 @@ export default function ActionButtons({
                   // Download the file
                   downloadTextFile(content, filename, "txt");
                   // Show success toast and close dropdown
-                  toast.success("Transcript downloaded as TXT!");
+                  toast.success(
+                    `${t("transcript.actionButtons.downloadSuccess")} TXT!`
+                  );
                   setShowFormatOptions(false);
                 }}
               >
                 <FileText className="h-4 w-4 mr-2 text-gray-500" />
-                <span className="font-medium">Plain Text (.txt)</span>
+                <span className="font-medium">
+                  {t("transcript.actionButtons.plainText")}
+                </span>
                 <span className="ml-2 text-gray-500 dark:text-gray-400">
-                  - Simple text format
+                  {t("transcript.actionButtons.simpleText")}
                 </span>
               </button>
 
@@ -250,14 +256,18 @@ export default function ActionButtons({
                     videoTitle
                   );
                   downloadTextFile(content, baseName, "docx");
-                  toast.success("Transcript downloaded as DOCX!");
+                  toast.success(
+                    `${t("transcript.actionButtons.downloadSuccess")} DOCX!`
+                  );
                   setShowFormatOptions(false);
                 }}
               >
                 <FileText className="h-4 w-4 mr-2 text-gray-500" />
-                <span className="font-medium">Word Document (.docx)</span>
+                <span className="font-medium">
+                  {t("transcript.actionButtons.wordDocument")}
+                </span>
                 <span className="ml-2 text-gray-500 dark:text-gray-400">
-                  - Editable document
+                  {t("transcript.actionButtons.editableDocument")}
                 </span>
               </button>
 
@@ -289,14 +299,18 @@ export default function ActionButtons({
                     videoTitle
                   );
                   downloadTextFile(content, filename, "pdf");
-                  toast.success("Transcript downloaded as PDF!");
+                  toast.success(
+                    `${t("transcript.actionButtons.downloadSuccess")} PDF!`
+                  );
                   setShowFormatOptions(false);
                 }}
               >
                 <FileType className="h-4 w-4 mr-2 text-gray-500" />
-                <span className="font-medium">PDF Document (.pdf)</span>
+                <span className="font-medium">
+                  {t("transcript.actionButtons.pdfDocument")}
+                </span>
                 <span className="ml-2 text-gray-500 dark:text-gray-400">
-                  - Printable document
+                  {t("transcript.actionButtons.printableDocument")}
                 </span>
               </button>
 
@@ -325,14 +339,18 @@ export default function ActionButtons({
                     videoTitle
                   );
                   downloadTextFile(content, baseName, "srt");
-                  toast.success("Transcript downloaded as SRT!");
+                  toast.success(
+                    `${t("transcript.actionButtons.downloadSuccess")} SRT!`
+                  );
                   setShowFormatOptions(false);
                 }}
               >
                 <FileText className="h-4 w-4 mr-2 text-gray-500" />
-                <span className="font-medium">Subtitle File (.srt)</span>
+                <span className="font-medium">
+                  {t("transcript.actionButtons.subtitleFile")}
+                </span>
                 <span className="ml-2 text-gray-500 dark:text-gray-400">
-                  - For video subtitles
+                  {t("transcript.actionButtons.forVideoSubtitles")}
                 </span>
               </button>
 
@@ -361,14 +379,18 @@ export default function ActionButtons({
                     videoTitle
                   );
                   downloadTextFile(content, baseName, "csv");
-                  toast.success("Transcript downloaded as CSV!");
+                  toast.success(
+                    `${t("transcript.actionButtons.downloadSuccess")} CSV!`
+                  );
                   setShowFormatOptions(false);
                 }}
               >
                 <FileText className="h-4 w-4 mr-2 text-gray-500" />
-                <span className="font-medium">CSV Spreadsheet (.csv)</span>
+                <span className="font-medium">
+                  {t("transcript.actionButtons.csvSpreadsheet")}
+                </span>
                 <span className="ml-2 text-gray-500 dark:text-gray-400">
-                  - For data analysis
+                  {t("transcript.actionButtons.forDataAnalysis")}
                 </span>
               </button>
             </div>
@@ -416,9 +438,9 @@ export default function ActionButtons({
       >
         <div className="flex items-center justify-center flex-1">
           <Languages className="h-5 w-5 mr-2" />
-          <span>Translate To Another Language</span>
+          <span>{t("transcript.actionButtons.translate")}</span>
           <span className="ml-2 text-xs bg-white/20 px-2 py-0.5 rounded">
-            free
+            {t("transcript.actionButtons.free")}
           </span>
         </div>
       </button>
@@ -431,9 +453,9 @@ export default function ActionButtons({
       >
         <div className="flex items-center justify-center flex-1">
           <Brain className="h-5 w-5 mr-2" />
-          <span>Copy & Summarize with ChatGPT</span>
+          <span>{t("transcript.actionButtons.summarize")}</span>
           <span className="ml-2 text-xs bg-white/20 px-2 py-0.5 rounded">
-            free
+            {t("transcript.actionButtons.free")}
           </span>
         </div>
         <ExternalLink className="h-5 w-5" />

@@ -40,7 +40,7 @@ export default function HeroSection({ lng }: HeroSectionProps) {
         console.log(
           "Valid YouTube URL detected, navigating to transcript page"
         );
-        router.push(`/transcript/${videoId}`);
+        router.push(`/${lng}/transcript/${videoId}`);
       } else {
         console.error("Invalid YouTube URL:", trimmedUrl);
         toast.error(t("transcriptGenerator.error"));
@@ -48,7 +48,7 @@ export default function HeroSection({ lng }: HeroSectionProps) {
       }
     } catch (error) {
       console.error("Error processing URL:", error);
-      toast.error("An error occurred. Please try again.");
+      toast.error(t("transcriptGenerator.error"));
       setIsLoading(false);
     }
   };

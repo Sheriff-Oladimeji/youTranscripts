@@ -414,5 +414,91 @@
     "title": "Adicionar à Tela Inicial",
     "ios": "Toque em Compartilhar e depois 'Adicionar à Tela Inicial'",
     "android": "Toque em Menu e depois 'Adicionar à Tela Inicial'"
+  },
+  "transcript": {
+    "header": {
+      "loading": "Carregando transcrição...",
+      "error": "Erro ao carregar transcrição",
+      "of": "Transcrição de",
+      "video": "Vídeo do YouTube",
+      "author": "Autor:"
+    },
+    "viewer": {
+      "translating": "Traduzindo transcrição... Isso pode levar um momento.",
+      "failed": "Falha ao carregar transcrição",
+      "noTranscript": "Nenhuma transcrição disponível para este vídeo.",
+      "backToTop": "Voltar ao Topo"
+    },
+    "actionButtons": {
+      "copy": "Copiar Transcrição",
+      "download": "Baixar Transcrição",
+      "format": "Formato: txt, docx, pdf, srt, csv",
+      "selectFormat": "Selecionar Formato:",
+      "plainText": "Texto Simples (.txt)",
+      "simpleText": "- Formato de texto simples",
+      "wordDocument": "Documento Word (.docx)",
+      "editableDocument": "- Documento editável",
+      "pdfDocument": "Documento PDF (.pdf)",
+      "printableDocument": "- Documento para impressão",
+      "subtitleFile": "Arquivo de Legendas (.srt)",
+      "forVideoSubtitles": "- Para legendas de vídeo",
+      "csvSpreadsheet": "Planilha CSV (.csv)",
+      "forDataAnalysis": "- Para análise de dados",
+      "translate": "Traduzir Para Outro Idioma",
+      "free": "grátis",
+      "summarize": "Copiar e Resumir com ChatGPT",
+      "copySuccess": "Transcrição copiada para a área de transferência!",
+      "downloadSuccess": "Transcrição baixada como",
+      "translationError": "Falha ao traduzir a transcrição. Por favor, tente novamente.",
+      "copyError": "Falha ao copiar a transcrição. Por favor, tente novamente.",
+      "summarizeError": "Falha ao abrir o ChatGPT. Por favor, tente copiar manualmente.",
+      "summarizeSuccess": "Transcrição copiada! Abrindo o ChatGPT em 3 segundos - por favor, cole a transcrição lá."
+    },
+    "bookmarkPopup": {
+      "copied": "Transcrição copiada para a área de transferência!",
+      "quickAccess": "📲 Acesso Rápido no Seu Telefone",
+      "addToHome": "Adicione o YouTranscripts à sua tela inicial e abra transcrições com",
+      "oneTap": "um toque",
+      "noBrowser": "—sem navegador, sem busca.",
+      "android": "Android (Chrome)",
+      "androidStep1": "Toque no menu ⋮ (canto superior direito)",
+      "androidStep2": "Escolha",
+      "androidStep3": "Toque em",
+      "addToHomeScreen": "Adicionar à tela inicial",
+      "add": "Adicionar",
+      "iphone": "iPhone (Safari)",
+      "iphoneStep1": "Toque em",
+      "iphoneStep2": "Role até",
+      "share": "Compartilhar",
+      "bookmark": "Favorite o YouTranscripts para a Próxima Vez",
+      "needLater": "Precisa de outra transcrição mais tarde? Salve esta página agora e acesse-a com um clique.",
+      "press": "Pressione",
+      "mac": "(Mac)",
+      "windows": "(Windows)",
+      "or": "ou",
+      "saveTime": "Economize tempo:",
+      "jumpStraight": "Vá direto para as transcrições—pule a busca.",
+      "stayInFlow": "Mantenha o fluxo:",
+      "creativeRhythm": "Mantenha seu ritmo criativo sem interrupções.",
+      "workSmarter": "Trabalhe de forma mais inteligente:",
+      "gotoTool": "Sua ferramenta preferida, a um atalho de distância."
+    },
+    "floatingButton": {
+      "top": "TOPO"
+    },
+    "translationSettings": {
+      "title": "Configurações de Idioma e Tradução",
+      "error": "Erro de tradução:",
+      "detected": "Idioma detectado:",
+      "autoDetected": "O idioma é detectado automaticamente a partir da transcrição do vídeo.",
+      "originalLanguage": "A transcrição está em seu idioma original",
+      "original": "Original",
+      "translate": "Traduzir",
+      "cancel": "Cancelar",
+      "currentlyViewing": "Visualizando atualmente:",
+      "resetToOriginal": "Voltar ao original",
+      "translatingTo": "Traduzindo para",
+      "complete": "concluído"
+    }
   }
 }

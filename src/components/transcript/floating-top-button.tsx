@@ -2,9 +2,11 @@
 
 import { useState, useEffect } from "react";
 import { ArrowUp } from "lucide-react";
+import { useT } from "@/i18n/client";
 
 export default function FloatingTopButton() {
   const [isVisible, setIsVisible] = useState(false);
+  const { t } = useT();
 
   // Show button when page is scrolled down
   useEffect(() => {
@@ -36,7 +38,9 @@ export default function FloatingTopButton() {
           aria-label="Scroll to top"
         >
           <ArrowUp className="h-5 w-5 mb-1" />
-          <span className="text-xs font-medium">TOP</span>
+          <span className="text-xs font-medium">
+            {t("transcript.floatingButton.top")}
+          </span>
         </button>
       )}
     </>

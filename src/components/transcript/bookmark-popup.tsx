@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { X } from "lucide-react";
+import { useT } from "@/i18n/client";
 
 interface BookmarkPopupProps {
   isOpen: boolean;
@@ -11,6 +12,7 @@ interface BookmarkPopupProps {
 export default function BookmarkPopup({ isOpen, onClose }: BookmarkPopupProps) {
   const [isMac, setIsMac] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const { t } = useT();
 
   useEffect(() => {
     // Check if user is on macOS
@@ -62,7 +64,7 @@ export default function BookmarkPopup({ isOpen, onClose }: BookmarkPopupProps) {
             </svg>
           </div>
           <h2 className="text-2xl font-bold text-green-800 mb-1 text-center">
-            Transcript copied to clipboard!
+            {t("transcript.bookmarkPopup.copied")}
           </h2>
         </div>
 
@@ -82,42 +84,56 @@ export default function BookmarkPopup({ isOpen, onClose }: BookmarkPopupProps) {
             <>
               <div className="flex items-center justify-center mb-2">
                 <h3 className="text-xl font-bold">
-                  📲 Quick Access on Your Phone
+                  {t("transcript.bookmarkPopup.quickAccess")}
                 </h3>
               </div>
 
               <div className="border-t border-b py-4 my-4">
                 <p>
-                  Add YouTranscripts to your home screen and open transcripts
-                  with <strong>one tap</strong>—no browser, no search.
+                  {t("transcript.bookmarkPopup.addToHome")}{" "}
+                  <strong>{t("transcript.bookmarkPopup.oneTap")}</strong>
+                  {t("transcript.bookmarkPopup.noBrowser")}
                 </p>
               </div>
 
               <div className="space-y-6">
                 <div>
-                  <h3 className="font-bold text-lg">Android (Chrome)</h3>
+                  <h3 className="font-bold text-lg">
+                    {t("transcript.bookmarkPopup.android")}
+                  </h3>
                   <ol className="list-decimal pl-8 mt-2 space-y-2">
-                    <li>Tap ⋮ menu (top-right)</li>
+                    <li>{t("transcript.bookmarkPopup.androidStep1")}</li>
                     <li>
-                      Choose <strong>Add to Home screen</strong>
+                      {t("transcript.bookmarkPopup.androidStep2")}{" "}
+                      <strong>
+                        {t("transcript.bookmarkPopup.addToHomeScreen")}
+                      </strong>
                     </li>
                     <li>
-                      Tap <strong>Add</strong>
+                      {t("transcript.bookmarkPopup.androidStep3")}{" "}
+                      <strong>{t("transcript.bookmarkPopup.add")}</strong>
                     </li>
                   </ol>
                 </div>
 
                 <div>
-                  <h3 className="font-bold text-lg">iPhone (Safari)</h3>
+                  <h3 className="font-bold text-lg">
+                    {t("transcript.bookmarkPopup.iphone")}
+                  </h3>
                   <ol className="list-decimal pl-8 mt-2 space-y-2">
                     <li>
-                      Tap <strong>Share</strong>
+                      {t("transcript.bookmarkPopup.iphoneStep1")}{" "}
+                      <strong>{t("transcript.bookmarkPopup.share")}</strong>
                     </li>
                     <li>
-                      Scroll to <strong>Add to Home Screen</strong>
+                      {t("transcript.bookmarkPopup.iphoneStep2")}{" "}
+                      <strong>
+                        {t("transcript.bookmarkPopup.addToHomeScreen")}
+                      </strong>
                     </li>
                     <li>
-                      Tap <strong>Add</strong>
+                      {t("transcript.bookmarkPopup.androidStep3")}{" "}
+                      <strong>{t("transcript.bookmarkPopup.add")}</strong>
                     </li>
                   </ol>
                 </div>
@@ -129,21 +145,22 @@ export default function BookmarkPopup({ isOpen, onClose }: BookmarkPopupProps) {
           {!isMobile && (
             <>
               <h3 className="text-xl font-bold mb-3">
-                Bookmark YouTranscripts for Next Time
+                {t("transcript.bookmarkPopup.bookmark")}
               </h3>
 
               <p className="mb-4 text-gray-700 dark:text-gray-300">
-                Need another transcript later? Save this page now and reach it
-                in one click.
+                {t("transcript.bookmarkPopup.needLater")}
               </p>
 
               <p className="mb-4 font-medium">
-                Press{" "}
+                {t("transcript.bookmarkPopup.press")}{" "}
                 <span className="font-mono bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">
                   {isMac ? "⌘" : "Ctrl"} + D
                 </span>{" "}
-                {isMac ? "(Mac)" : "(Windows)"}
-                {!isMac ? " or " : ""}
+                {isMac
+                  ? t("transcript.bookmarkPopup.mac")
+                  : t("transcript.bookmarkPopup.windows")}
+                {!isMac ? ` ${t("transcript.bookmarkPopup.or")} ` : ""}
                 {!isMac ? (
                   <span className="font-mono bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded ml-1">
                     ⌘ + D
@@ -151,31 +168,37 @@ export default function BookmarkPopup({ isOpen, onClose }: BookmarkPopupProps) {
                 ) : (
                   ""
                 )}
-                {!isMac ? " (Mac)" : ""}
+                {!isMac ? ` ${t("transcript.bookmarkPopup.mac")}` : ""}
               </p>
 
               <div className="space-y-3">
                 <div className="flex items-start gap-3">
                   <span className="text-xl">⏱️</span>
                   <div>
-                    <span className="font-medium">Save time:</span> Jump
-                    straight to transcripts—skip search.
+                    <span className="font-medium">
+                      {t("transcript.bookmarkPopup.saveTime")}
+                    </span>{" "}
+                    {t("transcript.bookmarkPopup.jumpStraight")}
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
                   <span className="text-xl">💡</span>
                   <div>
-                    <span className="font-medium">Stay in flow:</span> Keep your
-                    creative rhythm unbroken.
+                    <span className="font-medium">
+                      {t("transcript.bookmarkPopup.stayInFlow")}
+                    </span>{" "}
+                    {t("transcript.bookmarkPopup.creativeRhythm")}
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
                   <span className="text-xl">📈</span>
                   <div>
-                    <span className="font-medium">Work smarter:</span> Your goto
-                    tool, one shortcut away.
+                    <span className="font-medium">
+                      {t("transcript.bookmarkPopup.workSmarter")}
+                    </span>{" "}
+                    {t("transcript.bookmarkPopup.gotoTool")}
                   </div>
                 </div>
               </div>

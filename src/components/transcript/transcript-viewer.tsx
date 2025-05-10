@@ -4,6 +4,7 @@ import React from "react";
 import { TranscriptItem } from "@/store/transcript-store";
 import { useTranslationStore } from "@/store/translation-store";
 import { ArrowUp } from "lucide-react";
+import { useT } from "@/i18n/client";
 
 interface TranscriptViewerProps {
   transcript: TranscriptItem[];
@@ -17,6 +18,7 @@ export default function TranscriptViewer({
   error,
 }: TranscriptViewerProps) {
   const { translatedTranscript, isTranslating } = useTranslationStore();
+  const { t } = useT();
 
   if (isLoading || isTranslating) {
     return (
@@ -25,7 +27,7 @@ export default function TranscriptViewer({
           <div className="mb-4 p-2 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200 rounded">
             <p className="text-sm font-medium flex items-center">
               <span className="inline-block animate-pulse mr-2">⏳</span>
-              Translating transcript... This may take a moment.
+              {t("transcript.viewer.translating")}
             </p>
           </div>
         )}
@@ -41,7 +43,7 @@ export default function TranscriptViewer({
   if (error) {
     return (
       <div className="p-6 bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200 rounded-lg">
-        <p className="font-medium">Failed to load transcript</p>
+        <p className="font-medium">{t("transcript.viewer.failed")}</p>
         <p className="text-sm mt-2">{error}</p>
       </div>
     );
@@ -51,7 +53,7 @@ export default function TranscriptViewer({
     return (
       <div className="p-6 bg-muted rounded-lg">
         <p className="text-center text-muted-foreground">
-          No transcript available for this video.
+          {t("transcript.viewer.noTranscript")}
         </p>
       </div>
     );
@@ -79,7 +81,7 @@ export default function TranscriptViewer({
               aria-label="Back to top"
             >
               <ArrowUp className="h-5 w-5" />
-              <span>Back To Top</span>
+              <span>{t("transcript.viewer.backToTop")}</span>
             </button>
           </div>
         </div>

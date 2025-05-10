@@ -414,5 +414,91 @@
     "title": "Añadir a Pantalla de Inicio",
     "ios": "Toca Compartir y luego 'Añadir a Pantalla de Inicio'",
     "android": "Toca Menú y luego 'Añadir a Pantalla de Inicio'"
+  },
+  "transcript": {
+    "header": {
+      "loading": "Cargando transcripción...",
+      "error": "Error al cargar la transcripción",
+      "of": "Transcripción de",
+      "video": "Video de YouTube",
+      "author": "Autor:"
+    },
+    "viewer": {
+      "translating": "Traduciendo transcripción... Esto puede tomar un momento.",
+      "failed": "Error al cargar la transcripción",
+      "noTranscript": "No hay transcripción disponible para este video.",
+      "backToTop": "Volver Arriba"
+    },
+    "actionButtons": {
+      "copy": "Copiar Transcripción",
+      "download": "Descargar Transcripción",
+      "format": "Formato: txt, docx, pdf, srt, csv",
+      "selectFormat": "Seleccionar Formato:",
+      "plainText": "Texto Plano (.txt)",
+      "simpleText": "- Formato de texto simple",
+      "wordDocument": "Documento Word (.docx)",
+      "editableDocument": "- Documento editable",
+      "pdfDocument": "Documento PDF (.pdf)",
+      "printableDocument": "- Documento imprimible",
+      "subtitleFile": "Archivo de Subtítulos (.srt)",
+      "forVideoSubtitles": "- Para subtítulos de video",
+      "csvSpreadsheet": "Hoja de Cálculo CSV (.csv)",
+      "forDataAnalysis": "- Para análisis de datos",
+      "translate": "Traducir a Otro Idioma",
+      "free": "gratis",
+      "summarize": "Copiar y Resumir con ChatGPT",
+      "copySuccess": "¡Transcripción copiada al portapapeles!",
+      "downloadSuccess": "Transcripción descargada como",
+      "translationError": "Error al traducir la transcripción. Por favor, inténtalo de nuevo.",
+      "copyError": "Error al copiar la transcripción. Por favor, inténtalo de nuevo.",
+      "summarizeError": "Error al abrir ChatGPT. Por favor, intenta copiar manualmente.",
+      "summarizeSuccess": "¡Transcripción copiada! Abriendo ChatGPT en 3 segundos - por favor, pega la transcripción allí."
+    },
+    "bookmarkPopup": {
+      "copied": "¡Transcripción copiada al portapapeles!",
+      "quickAccess": "📲 Acceso Rápido en Tu Teléfono",
+      "addToHome": "Añade YouTranscripts a tu pantalla de inicio y abre transcripciones con",
+      "oneTap": "un toque",
+      "noBrowser": "—sin navegador, sin búsqueda.",
+      "android": "Android (Chrome)",
+      "androidStep1": "Toca el menú ⋮ (arriba a la derecha)",
+      "androidStep2": "Elige",
+      "androidStep3": "Toca",
+      "addToHomeScreen": "Añadir a la pantalla de inicio",
+      "add": "Añadir",
+      "iphone": "iPhone (Safari)",
+      "iphoneStep1": "Toca",
+      "iphoneStep2": "Desplázate hasta",
+      "share": "Compartir",
+      "bookmark": "Guarda YouTranscripts para la Próxima Vez",
+      "needLater": "¿Necesitas otra transcripción más tarde? Guarda esta página ahora y accede a ella con un clic.",
+      "press": "Presiona",
+      "mac": "(Mac)",
+      "windows": "(Windows)",
+      "or": "o",
+      "saveTime": "Ahorra tiempo:",
+      "jumpStraight": "Ve directamente a las transcripciones—sin búsquedas.",
+      "stayInFlow": "Mantén el ritmo:",
+      "creativeRhythm": "Mantén tu ritmo creativo sin interrupciones.",
+      "workSmarter": "Trabaja más inteligente:",
+      "gotoTool": "Tu herramienta preferida, a un atajo de distancia."
+    },
+    "floatingButton": {
+      "top": "ARRIBA"
+    },
+    "translationSettings": {
+      "title": "Configuración de Idioma y Traducción",
+      "error": "Error de traducción:",
+      "detected": "Idioma detectado:",
+      "autoDetected": "El idioma se detecta automáticamente de la transcripción del video.",
+      "originalLanguage": "La transcripción está en su idioma original",
+      "original": "Original",
+      "translate": "Traducir",
+      "cancel": "Cancelar",
+      "currentlyViewing": "Viendo actualmente:",
+      "resetToOriginal": "Volver al original",
+      "translatingTo": "Traduciendo a",
+      "complete": "completado"
+    }
   }
 }
