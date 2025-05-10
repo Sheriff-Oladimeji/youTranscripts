@@ -34,7 +34,7 @@ export default function FloatingTopButton() {
       {isVisible && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-6 right-6 z-50 bg-black dark:bg-[#FFD700] text-white dark:text-black p-3 rounded-lg shadow-lg flex flex-col items-center justify-center transition-all hover:bg-gray-800 dark:hover:bg-[#FFCC00] w-14 h-14"
+          className="fixed right-6 z-50 bg-black dark:bg-[#FFD700] text-white dark:text-black p-3 rounded-lg shadow-lg flex flex-col items-center justify-center transition-all hover:bg-gray-800 dark:hover:bg-[#FFCC00] w-14 h-14 bottom-[70px] md:bottom-6"
           aria-label="Scroll to top"
         >
           <ArrowUp className="h-5 w-5 mb-1" />
