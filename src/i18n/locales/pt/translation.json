@@ -24,13 +24,17 @@
     "error": "Por favor, insira uma URL válida do YouTube"
   },
   "promotional": {
-    "title": "Por que escolher o YouTranscripts?",
-    "subtitle": "O gerador de transcrição do YouTube mais confiável disponível online",
+    "title": "Gerador de Transcrição de Vídeo do YouTube Instantâneo e Gratuito – Copiar, Traduzir e Baixar",
+    "subtitle": "Use nosso conversor de vídeo do YouTube para texto em segundos—sem cadastro, sem limites, 100% grátis.",
     "benefits": {
-      "free": "100% Gratuito - Sem taxas ocultas ou cadastro necessário",
-      "fast": "Super Rápido - Obtenha transcrições em segundos",
-      "accurate": "Alta Precisão - Diretamente das legendas do YouTube",
-      "translate": "Suporte à Tradução - Converta para vários idiomas"
+      "fast": "Transcrições com Um Clique",
+      "fastDescription": "Cole sua URL do YouTube e clique em \"Obter Transcrição\" para ver o texto completo do vídeo instantaneamente.",
+      "free": "Cópia e Download Instantâneos",
+      "freeDescription": "Capture qualquer linha ou o script inteiro com um único clique—perfeito para citações, legendas ou conteúdo de blog.",
+      "accurate": "Mais de 100 Idiomas",
+      "accurateDescription": "Traduza sua transcrição na hora para mais de 100 idiomas para alcance global.",
+      "translate": "Downloads Flexíveis",
+      "translateDescription": "Exporte como TXT, SRT, DOCx ou PDF para usar em SEO, mídias sociais, legendas de vídeo ou notas de estudo."
     }
   },
   "howTo": {
@@ -96,7 +100,8 @@
   },
   "footer": {
     "copyright": "© 2025 YouTranscripts. Todos os direitos reservados.",
-    "language": "Idioma"
+    "language": "Idioma",
+    "disclaimer": "Aviso legal: YouTranscripts é um serviço independente e não está associado ou afiliado ao YouTube ou Google. Quaisquer nomes de marcas ou logotipos exibidos neste site são usados apenas para fins ilustrativos e não implicam endosso ou parceria."
   },
   "about": {
     "title": "Sobre o YouTranscripts",

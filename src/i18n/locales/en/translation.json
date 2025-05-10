@@ -24,13 +24,17 @@
     "error": "Please enter a valid YouTube URL"
   },
   "promotional": {
-    "title": "Why Choose YouTranscripts?",
-    "subtitle": "The most reliable YouTube transcript generator available online",
+    "title": "Instant, Free YouTube Video Transcript Generator – Copy, Translate & Download",
+    "subtitle": "Use our YouTube video to text converter in seconds—no signup, no limits, 100% free.",
     "benefits": {
-      "free": "100% Free - No hidden fees or signup required",
-      "fast": "Lightning Fast - Get transcripts in seconds",
-      "accurate": "Highly Accurate - Direct from YouTube's captions",
-      "translate": "Translation Support - Convert to multiple languages"
+      "fast": "One Click Transcripts",
+      "fastDescription": "Paste your YouTube URL and hit \"Get Transcript\" to see the full video text instantly.",
+      "free": "Instant Copy & Download",
+      "freeDescription": "Grab any line or the entire script with a single click—perfect for quotes, captions, or blog content.",
+      "accurate": "100+ Languages",
+      "accurateDescription": "Translate your transcript on the spot into over 100 languages for global reach.",
+      "translate": "Flexible Downloads",
+      "translateDescription": "Export as TXT, SRT, DOCx or PDF to use in SEO, social media, video captions, or study notes."
     }
   },
   "howTo": {
@@ -96,7 +100,8 @@
   },
   "footer": {
     "copyright": "© 2025 YouTranscripts. All rights reserved.",
-    "language": "Language"
+    "language": "Language",
+    "disclaimer": "Disclaimer: YouTranscripts is an independent service and is not associated or affiliated with YouTube or Google. Any brand names or logos displayed on this site are used for illustrative purposes only and do not imply endorsement or partnership."
   },
   "about": {
     "title": "About YouTranscripts",

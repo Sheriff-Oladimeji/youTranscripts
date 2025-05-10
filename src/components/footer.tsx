@@ -13,12 +13,7 @@ export default function Footer({ lng }: FooterProps) {
     <footer className="w-full border-t bg-background py-6">
       <div className="w-[90%] mx-auto">
         <div className="text-sm text-muted-foreground mb-4">
-          <p className="mb-4">
-            Disclaimer: YouTranscripts is an independent service and is not
-            associated or affiliated with YouTube or Google. Any brand names or
-            logos displayed on this site are used for illustrative purposes only
-            and do not imply endorsement or partnership.
-          </p>
+          <p className="mb-4">{t("footer.disclaimer")}</p>
         </div>
 
         <div className="flex flex-col md:flex-row justify-between items-center">

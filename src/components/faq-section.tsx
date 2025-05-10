@@ -75,7 +75,10 @@ export default function FaqSection({ lng }: FaqSectionProps) {
                 className="flex justify-between items-center w-full p-4 text-left bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                 onClick={() => toggleFaq(index)}
               >
-                <h3 className="text-lg font-medium">{item.question}</h3>
+                <h3
+                  className="text-lg font-medium"
+                  dangerouslySetInnerHTML={{ __html: item.question }}
+                />
                 {openIndex === index ? (
                   <ChevronUp className="h-5 w-5 flex-shrink-0" />
                 ) : (
@@ -84,9 +87,10 @@ export default function FaqSection({ lng }: FaqSectionProps) {
               </button>
               {openIndex === index && (
                 <div className="p-4 bg-gray-50 dark:bg-gray-700/50 border-t border-gray-200 dark:border-gray-700">
-                  <p className="text-gray-700 dark:text-gray-300">
-                    {item.answer}
-                  </p>
+                  <p
+                    className="text-gray-700 dark:text-gray-300"
+                    dangerouslySetInnerHTML={{ __html: item.answer }}
+                  />
                 </div>
               )}
             </div>

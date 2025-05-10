@@ -31,8 +31,7 @@ export default function PromotionalSection({ lng }: PromotionalSectionProps) {
                   {t("promotional.benefits.fast")}
                 </h3>
                 <p className="text-gray-700 dark:text-gray-300">
-                  Paste your YouTube URL and hit &quot;Get Transcript&quot; to
-                  see the full video text instantly.
+                  {t("promotional.benefits.fastDescription")}
                 </p>
               </div>
             </div>
@@ -46,8 +45,7 @@ export default function PromotionalSection({ lng }: PromotionalSectionProps) {
                   {t("promotional.benefits.free")}
                 </h3>
                 <p className="text-gray-700 dark:text-gray-300">
-                  Grab any line or the entire script with a single click—perfect
-                  for quotes, captions, or blog content.
+                  {t("promotional.benefits.freeDescription")}
                 </p>
               </div>
             </div>
@@ -61,8 +59,7 @@ export default function PromotionalSection({ lng }: PromotionalSectionProps) {
                   {t("promotional.benefits.accurate")}
                 </h3>
                 <p className="text-gray-700 dark:text-gray-300">
-                  Translate your transcript on the spot into over 100 languages
-                  for global reach.
+                  {t("promotional.benefits.accurateDescription")}
                 </p>
               </div>
             </div>
@@ -76,8 +73,7 @@ export default function PromotionalSection({ lng }: PromotionalSectionProps) {
                   {t("promotional.benefits.translate")}
                 </h3>
                 <p className="text-gray-700 dark:text-gray-300">
-                  Export as TXT, SRT, DOCx or CSV to use in SEO, social media,
-                  video captions, or study notes.
+                  {t("promotional.benefits.translateDescription")}
                 </p>
               </div>
             </div>

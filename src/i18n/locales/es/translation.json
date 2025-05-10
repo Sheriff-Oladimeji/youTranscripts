@@ -24,13 +24,17 @@
     "error": "Por favor ingresa una URL válida de YouTube"
   },
   "promotional": {
-    "title": "¿Por qué elegir YouTranscripts?",
-    "subtitle": "El generador de transcripciones de YouTube más confiable disponible en línea",
+    "title": "Generador de Transcripciones de Videos de YouTube Instantáneo y Gratuito – Copiar, Traducir y Descargar",
+    "subtitle": "Usa nuestro convertidor de video de YouTube a texto en segundos—sin registro, sin límites, 100% gratis.",
     "benefits": {
-      "free": "100% Gratis - Sin tarifas ocultas ni registro requerido",
-      "fast": "Súper Rápido - Obtén transcripciones en segundos",
-      "accurate": "Alta Precisión - Directamente de los subtítulos de YouTube",
-      "translate": "Soporte de Traducción - Convierte a múltiples idiomas"
+      "fast": "Transcripciones con Un Clic",
+      "fastDescription": "Pega tu URL de YouTube y presiona \"Obtener Transcripción\" para ver el texto completo del video al instante.",
+      "free": "Copia y Descarga Instantánea",
+      "freeDescription": "Toma cualquier línea o el guión completo con un solo clic—perfecto para citas, subtítulos o contenido de blog.",
+      "accurate": "Más de 100 Idiomas",
+      "accurateDescription": "Traduce tu transcripción al instante a más de 100 idiomas para alcance global.",
+      "translate": "Descargas Flexibles",
+      "translateDescription": "Exporta como TXT, SRT, DOCx o PDF para usar en SEO, redes sociales, subtítulos de video o notas de estudio."
     }
   },
   "howTo": {
@@ -96,7 +100,8 @@
   },
   "footer": {
     "copyright": "© 2025 YouTranscripts. Todos los derechos reservados.",
-    "language": "Idioma"
+    "language": "Idioma",
+    "disclaimer": "Aviso legal: YouTranscripts es un servicio independiente y no está asociado ni afiliado a YouTube o Google. Cualquier nombre de marca o logotipo mostrado en este sitio se utiliza únicamente con fines ilustrativos y no implica respaldo o asociación."
   },
   "about": {
     "title": "Acerca de YouTranscripts",

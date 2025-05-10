@@ -12,7 +12,7 @@ export default function UseCasesSection({ lng }: UseCasesSectionProps) {
       <div className="w-[90%] mx-auto">
         <div className="flex flex-col items-center text-center mb-10">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-8 max-w-4xl">
-            Use Cases
+            {t("useCases.title")}
           </h2>
         </div>
 
@@ -23,11 +23,10 @@ export default function UseCasesSection({ lng }: UseCasesSectionProps) {
             </div>
             <div className="text-left">
               <h3 className="text-xl font-bold mb-2">
-                For Marketers & Businesses
+                {t("useCases.marketers.title")}
               </h3>
               <p className="text-gray-700 dark:text-gray-300">
-                Repurpose YouTube transcripts into SEO-optimized blog posts,
-                social media snippets, and email campaigns in seconds.
+                {t("useCases.marketers.description")}
               </p>
             </div>
           </div>
