@@ -3,16 +3,17 @@ import { fallbackLng, languages } from "./settings";
 
 export async function getT(
   ns?: string | string[],
-  options?: { keyPrefix?: string }
+  options?: { keyPrefix?: string },
+  lng?: string
 ) {
   // Get language from params in the server component
-  const getTranslation = async (lng: string = fallbackLng) => {
+  const getTranslation = async (language: string = fallbackLng) => {
     // Make sure the language is supported
-    const language = languages.includes(lng) ? lng : fallbackLng;
+    const validLanguage = languages.includes(language) ? language : fallbackLng;
 
     // Change language if needed
-    if (i18n.resolvedLanguage !== language) {
-      await i18n.changeLanguage(language);
+    if (i18n.resolvedLanguage !== validLanguage) {
+      await i18n.changeLanguage(validLanguage);
     }
 
     // Load namespace if needed
@@ -22,7 +23,7 @@ export async function getT(
 
     return {
       t: i18n.getFixedT(
-        language,
+        validLanguage,
         Array.isArray(ns) ? ns[0] : ns,
         options?.keyPrefix
       ),
@@ -30,5 +31,5 @@ export async function getT(
     };
   };
 
-  return getTranslation();
+  return getTranslation(lng);
 }

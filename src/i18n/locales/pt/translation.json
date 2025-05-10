@@ -105,7 +105,47 @@
   },
   "about": {
     "title": "Sobre o YouTranscripts",
-    "subtitle": "O gerador de transcrição do YouTube gratuito em que você pode confiar"
+    "subtitle": "O gerador de transcrição do YouTube gratuito em que você pode confiar",
+    "mission": {
+      "title": "Nossa Missão",
+      "p1": "O YouTranscripts foi criado com uma missão simples: tornar o conteúdo do YouTube mais acessível para todos. Acreditamos que as valiosas informações, educação e entretenimento encontrados nos vídeos do YouTube devem estar disponíveis em formato de texto para aqueles que preferem ler, precisam referenciar partes específicas ou necessitam de opções de acessibilidade.",
+      "p2": "Nossa ferramenta gratuita permite que qualquer pessoa gere rapidamente transcrições de qualquer vídeo do YouTube, traduza-as para vários idiomas e as baixe em vários formatos para diferentes usos.",
+      "p3": "Fundado em 2023, o YouTranscripts rapidamente se tornou um recurso confiável para estudantes, pesquisadores, criadores de conteúdo e profissionais em todo o mundo que precisam de acesso rápido e confiável ao conteúdo de vídeos do YouTube em forma de texto."
+    },
+    "offer": {
+      "title": "O Que Oferecemos",
+      "free": {
+        "title": "Geração de Transcrição Gratuita",
+        "description": "Gere transcrições de qualquer vídeo do YouTube sem pagar um centavo. Sem taxas ocultas, sem assinaturas, apenas um serviço simples e eficaz."
+      },
+      "languages": {
+        "title": "Múltiplos Idiomas",
+        "description": "Acesse transcrições em todos os idiomas disponíveis do vídeo original e traduza-as para mais de 125 idiomas."
+      },
+      "download": {
+        "title": "Opções de Download Fáceis",
+        "description": "Baixe transcrições em vários formatos, incluindo TXT, PDF, DOCX, SRT e CSV para diferentes casos de uso."
+      },
+      "ai": {
+        "title": "Integração com IA",
+        "description": "Resuma facilmente as transcrições com ChatGPT e outras ferramentas de IA com nossa integração de um clique."
+      }
+    },
+    "benefit": {
+      "title": "Quem Pode se Beneficiar",
+      "students": "Estudantes e Pesquisadores - Extraia informações de vídeos educacionais para anotações e pesquisas",
+      "creators": "Criadores de Conteúdo - Reutilize conteúdo de vídeo em posts de blog, artigos e conteúdo de mídia social",
+      "learners": "Estudantes de Idiomas - Estude conteúdo no seu idioma-alvo com traduções lado a lado",
+      "professionals": "Profissionais - Extraia informações-chave de webinars e apresentações",
+      "impaired": "Pessoas com Deficiência Auditiva - Acesse conteúdo de vídeo em formato de texto"
+    },
+    "commitment": {
+      "title": "Nosso Compromisso",
+      "p1": "Estamos comprometidos em manter o YouTranscripts gratuito e acessível para todos. Acreditamos no poder do acesso aberto à informação e continuaremos a melhorar nosso serviço com base no feedback dos usuários.",
+      "p2": "Se você tiver alguma dúvida, sugestão ou feedback, não hesite em",
+      "contact": "entrar em contato conosco",
+      "p3": "Adoraríamos ouvir de você!"
+    }
   },
   "contact": {
     "title": "Entre em Contato",

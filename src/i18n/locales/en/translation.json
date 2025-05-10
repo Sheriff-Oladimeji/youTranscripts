@@ -105,7 +105,47 @@
   },
   "about": {
     "title": "About YouTranscripts",
-    "subtitle": "The free YouTube transcript generator you can trust"
+    "subtitle": "The free YouTube transcript generator you can trust",
+    "mission": {
+      "title": "Our Mission",
+      "p1": "YouTranscripts was created with a simple mission: to make YouTube content more accessible to everyone. We believe that the valuable information, education, and entertainment found in YouTube videos should be available in text format for those who prefer reading, need to reference specific parts, or require accessibility options.",
+      "p2": "Our free tool allows anyone to quickly generate transcripts from any YouTube video, translate them into multiple languages, and download them in various formats for different uses.",
+      "p3": "Founded in 2023, YouTranscripts has quickly become a trusted resource for students, researchers, content creators, and professionals worldwide who need quick and reliable access to YouTube video content in text form."
+    },
+    "offer": {
+      "title": "What We Offer",
+      "free": {
+        "title": "Free Transcript Generation",
+        "description": "Generate transcripts from any YouTube video without paying a penny. No hidden fees, no subscriptions, just a simple and effective service."
+      },
+      "languages": {
+        "title": "Multiple Languages",
+        "description": "Access transcripts in all available languages from the original video and translate them to over 125 languages."
+      },
+      "download": {
+        "title": "Easy Download Options",
+        "description": "Download transcripts in multiple formats including TXT, PDF, DOCX, SRT, and CSV for different use cases."
+      },
+      "ai": {
+        "title": "AI Integration",
+        "description": "Easily summarize transcripts with ChatGPT and other AI tools with our one-click integration."
+      }
+    },
+    "benefit": {
+      "title": "Who Can Benefit",
+      "students": "Students and Researchers - Extract information from educational videos for notes and research",
+      "creators": "Content Creators - Repurpose video content into blog posts, articles, and social media content",
+      "learners": "Language Learners - Study content in your target language with side-by-side translations",
+      "professionals": "Professionals - Extract key information from webinars and presentations",
+      "impaired": "People with Hearing Impairments - Access video content in text format"
+    },
+    "commitment": {
+      "title": "Our Commitment",
+      "p1": "We are committed to keeping YouTranscripts free and accessible to everyone. We believe in the power of open access to information and will continue to improve our service based on user feedback.",
+      "p2": "If you have any questions, suggestions, or feedback, please don't hesitate to",
+      "contact": "contact us",
+      "p3": "We'd love to hear from you!"
+    }
   },
   "contact": {
     "title": "Contact Us",
