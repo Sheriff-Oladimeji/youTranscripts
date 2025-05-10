@@ -1,3 +1,5 @@
+"use client";
+
 import { Briefcase, Video, FileText, GraduationCap } from "lucide-react";
 import { useT } from "@/i18n/client";
 

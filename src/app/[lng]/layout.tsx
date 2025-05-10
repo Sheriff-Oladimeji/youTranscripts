@@ -9,7 +9,7 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { Toaster } from "sonner";
 import ClientBannerWrapper from "@/components/client-banner-wrapper";
-import { Suspense } from "react";
+import { Suspense, use } from "react";
 import Analytics from "@/components/analytics";
 import { languages } from "@/i18n/settings";
 
@@ -31,10 +31,13 @@ export default function RootLayout({
   params,
 }: Readonly<{
   children: React.ReactNode;
-  params: { lng: string };
+  params: Promise<{ lng: string }>;
 }>) {
+  const resolvedParams = use(params);
+  const { lng } = resolvedParams;
+
   return (
-    <html lang={params.lng} suppressHydrationWarning>
+    <html lang={lng} suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
@@ -48,9 +51,9 @@ export default function RootLayout({
             <Analytics />
           </Suspense>
           <ClientBannerWrapper />
-          <Header lng={params.lng} />
+          <Header lng={lng} />
           {children}
-          <Footer lng={params.lng} />
+          <Footer lng={lng} />
           <Toaster richColors position="top-center" />
         </ThemeProvider>
       </body>

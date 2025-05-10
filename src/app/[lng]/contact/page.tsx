@@ -5,9 +5,10 @@ import { getT } from "@/i18n";
 export async function generateMetadata({
   params,
 }: {
-  params: { lng: string };
+  params: Promise<{ lng: string }>;
 }): Promise<Metadata> {
-  const { t } = await getT(undefined, undefined, params.lng);
+  const resolvedParams = await params;
+  const { t } = await getT(undefined, undefined, resolvedParams.lng);
 
   return {
     title: "Contact Us | YouTranscripts Support",
@@ -22,7 +23,11 @@ export async function generateMetadata({
       siteName: "YouTranscripts",
       type: "website",
       locale:
-        params.lng === "en" ? "en_US" : params.lng === "es" ? "es_ES" : "pt_BR",
+        resolvedParams.lng === "en"
+          ? "en_US"
+          : resolvedParams.lng === "es"
+          ? "es_ES"
+          : "pt_BR",
     },
     twitter: {
       card: "summary_large_image",
@@ -36,9 +41,10 @@ export async function generateMetadata({
 export default async function ContactPage({
   params,
 }: {
-  params: { lng: string };
+  params: Promise<{ lng: string }>;
 }) {
-  const { t } = await getT(undefined, undefined, params.lng);
+  const resolvedParams = await params;
+  const { t } = await getT(undefined, undefined, resolvedParams.lng);
 
   return (
     <main className="flex flex-col min-h-screen bg-background">

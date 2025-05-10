@@ -5,9 +5,10 @@ import I18nLink from "@/components/i18n-link";
 export async function generateMetadata({
   params,
 }: {
-  params: { lng: string };
+  params: Promise<{ lng: string }>;
 }): Promise<Metadata> {
-  const { t } = await getT(undefined, undefined, params.lng);
+  const resolvedParams = await params;
+  const { t } = await getT(undefined, undefined, resolvedParams.lng);
 
   return {
     title:
@@ -25,7 +26,11 @@ export async function generateMetadata({
       url: "https://youtranscripts.com/about",
       type: "website",
       locale:
-        params.lng === "en" ? "en_US" : params.lng === "es" ? "es_ES" : "pt_BR",
+        resolvedParams.lng === "en"
+          ? "en_US"
+          : resolvedParams.lng === "es"
+          ? "es_ES"
+          : "pt_BR",
     },
     twitter: {
       card: "summary_large_image",
@@ -40,9 +45,10 @@ export async function generateMetadata({
 export default async function AboutPage({
   params,
 }: {
-  params: { lng: string };
+  params: Promise<{ lng: string }>;
 }) {
-  const { t } = await getT(undefined, undefined, params.lng);
+  const resolvedParams = await params;
+  const { t } = await getT(undefined, undefined, resolvedParams.lng);
 
   return (
     <main className="flex flex-col min-h-screen bg-background">
