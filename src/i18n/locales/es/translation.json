@@ -1,0 +1,504 @@
+{
+  "header": {
+    "home": "Inicio",
+    "about": "Acerca de",
+    "contact": "Contacto",
+    "privacy": "Política de Privacidad",
+    "terms": "Términos de Servicio"
+  },
+  "hero": {
+    "title": "Generador de Transcripciones de YouTube Gratuito",
+    "subtitle": "Usa nuestro extractor de transcripciones de YouTube gratuito y convierte cualquier video de YouTube a texto con un solo clic",
+    "trusted": "Confiado por más de 535 mil usuarios en todo el mundo",
+    "noSignup": "Sin registro y uso ilimitado gratuito",
+    "features": {
+      "oneClick": "Copiar y descargar con un clic",
+      "translation": "Soporte de traducción",
+      "languages": "Múltiples idiomas"
+    }
+  },
+  "transcriptGenerator": {
+    "placeholder": "Ingresa URL de YouTube",
+    "button": "Generar Transcripción",
+    "generating": "Generando...",
+    "error": "Por favor ingresa una URL válida de YouTube"
+  },
+  "promotional": {
+    "title": "Generador de Transcripciones de Videos de YouTube Instantáneo y Gratuito – Copiar, Traducir y Descargar",
+    "subtitle": "Usa nuestro convertidor de video de YouTube a texto en segundos—sin registro, sin límites, 100% gratis.",
+    "benefits": {
+      "fast": "Transcripciones con Un Clic",
+      "fastDescription": "Pega tu URL de YouTube y presiona \"Obtener Transcripción\" para ver el texto completo del video al instante.",
+      "free": "Copia y Descarga Instantánea",
+      "freeDescription": "Toma cualquier línea o el guión completo con un solo clic—perfecto para citas, subtítulos o contenido de blog.",
+      "accurate": "Más de 100 Idiomas",
+      "accurateDescription": "Traduce tu transcripción al instante a más de 100 idiomas para alcance global.",
+      "translate": "Descargas Flexibles",
+      "translateDescription": "Exporta como TXT, SRT, DOCx o PDF para usar en SEO, redes sociales, subtítulos de video o notas de estudio."
+    }
+  },
+  "howTo": {
+    "mainTitle": "Genera Transcripciones de YouTube Gratis en Segundos 🎥",
+    "subtitle": "Convierte cualquier video de YouTube en texto totalmente editable y optimizado para SEO, sin registro, sin límites y 100% gratis.",
+    "title": "Cómo funciona",
+    "steps": {
+      "pasteGo": "Pegar y Listo",
+      "pasteGoDesc": "Coloca tu URL de YouTube, haz clic en Generar Mi Transcripción Gratis.",
+      "editTranslate": "Editar y Traducir",
+      "editTranslateDesc": "Elimina partes no deseadas, elige entre más de 100 idiomas y optimiza para SEO.",
+      "downloadShare": "Descargar y Compartir",
+      "downloadShareDesc": "Exporta como TXT, SRT o PDF—perfecto para subtítulos, citas, publicaciones de blog y redes sociales."
+    },
+    "trustedCreators": "Confiado por más de 100,000 creadores para la extracción rápida y precisa de transcripciones de YouTube.",
+    "generateFreeTranscript": "Generar Mi Transcripción Gratis"
+  },
+  "useCases": {
+    "title": "Casos de Uso",
+    "marketers": {
+      "title": "Para Mercadólogos y Empresas",
+      "description": "Reutiliza transcripciones de YouTube en publicaciones de blog optimizadas para SEO, fragmentos para redes sociales y campañas de correo electrónico en segundos."
+    },
+    "creators": {
+      "title": "Para Creadores de Contenido y Podcasters",
+      "description": "Transforma transcripciones de episodios en notas del programa, hilos de Twitter, publicaciones de LinkedIn, citas y avances sociales para impulsar la participación de los oyentes."
+    },
+    "journalists": {
+      "title": "Para Periodistas y Escritores",
+      "description": "Extrae rápidamente citas precisas y marcas de tiempo de entrevistas para informes más rápidos y precisos."
+    },
+    "researchers": {
+      "title": "Para Investigadores y Estudiantes",
+      "description": "Analiza transcripciones de conferencias y entrevistas de manera eficiente para obtener citas de alta calidad y conocimientos académicos profundos."
+    }
+  },
+  "testimonials": {
+    "subtitle": "Testimonios",
+    "title": "No tomes solo nuestra palabra, esto es lo que dicen nuestros usuarios",
+    "rating": "Calificación de 4.6 de 5 estrellas",
+    "reviews": "Basado en 2,363 reseñas"
+  },
+  "faq": {
+    "title": "Preguntas Frecuentes",
+    "subtitle": "Todo lo que necesitas saber sobre el uso de YouTranscripts para generar transcripciones de videos de YouTube.",
+    "tryButton": "Prueba el Generador de Transcripciones de YouTube gratis",
+    "questions": {
+      "q1": "¿Qué es una transcripción de YouTube?",
+      "a1": "Una transcripción de YouTube es el texto completo de todo lo hablado en un video, generado por el motor de subtítulos de YouTube o una herramienta de terceros. Te permite leer, buscar y reutilizar el contenido de tu video como texto.",
+      "q2": "¿Cómo genero una transcripción de YouTube para cualquier video?",
+      "a2": "Solo pega tu URL de video de YouTube en YouTranscripts (youtranscripts.com), haz clic en Generar Transcripción, y obtén el texto completo en segundos—sin necesidad de escribir manualmente.",
+      "q3": "¿Es gratuito el uso del generador de transcripciones de YouTube?",
+      "a3": "Sí—nuestra herramienta de transcripción de YouTube es 100% gratuita. Puedes generar y descargar transcripciones ilimitadas sin registro, tarifas o cargos ocultos.",
+      "q4": "¿Cómo descargo transcripciones de videos de YouTube en formato TXT, DOC, PDF o SRT?",
+      "a4": "Después de generar tu transcripción en youtranscripts.com, haz clic en Descargar y elige TXT, DOC, PDF o SRT. Tu transcripción de video de YouTube se guardará instantáneamente en el formato que necesites.",
+      "q5": "¿Puedo traducir transcripciones de YouTube a otros idiomas?",
+      "a5": "Absolutamente. Haz clic en Traducir Transcripción, selecciona cualquier idioma de destino, y nuestra herramienta entregará una transcripción de YouTube traducida con precisión lista para leer o exportar.",
+      "q6": "¿Hay un límite en la duración del video o el número de transcripciones que puedo generar?",
+      "a6": "No—no hay una duración máxima de video ni límite de uso. YouTranscripts maneja videos de cualquier duración y te permite crear tantas transcripciones como desees.",
+      "q7": "¿Qué tan precisas son las transcripciones generadas por el generador de transcripciones de videos de YouTube de YouTranscripts?",
+      "a7": "La precisión depende de la calidad del audio y la claridad del hablante. En videos bien grabados y claros, verás una precisión de ~90%+. Y siempre puedes editar cualquier error restante antes de exportar."
+    }
+  },
+  "footer": {
+    "copyright": "© 2025 YouTranscripts. Todos los derechos reservados.",
+    "language": "Idioma",
+    "disclaimer": "Aviso legal: YouTranscripts es un servicio independiente y no está asociado ni afiliado a YouTube o Google. Cualquier nombre de marca o logotipo mostrado en este sitio se utiliza únicamente con fines ilustrativos y no implica respaldo o asociación."
+  },
+  "about": {
+    "title": "Acerca de YouTranscripts",
+    "subtitle": "El generador de transcripciones de YouTube gratuito en el que puedes confiar",
+    "mission": {
+      "title": "Nuestra Misión",
+      "p1": "YouTranscripts fue creado con una misión simple: hacer que el contenido de YouTube sea más accesible para todos. Creemos que la valiosa información, educación y entretenimiento que se encuentra en los videos de YouTube debe estar disponible en formato de texto para aquellos que prefieren leer, necesitan hacer referencia a partes específicas o requieren opciones de accesibilidad.",
+      "p2": "Nuestra herramienta gratuita permite a cualquier persona generar rápidamente transcripciones de cualquier video de YouTube, traducirlas a múltiples idiomas y descargarlas en varios formatos para diferentes usos.",
+      "p3": "Fundado en 2023, YouTranscripts se ha convertido rápidamente en un recurso confiable para estudiantes, investigadores, creadores de contenido y profesionales de todo el mundo que necesitan acceso rápido y confiable al contenido de videos de YouTube en forma de texto."
+    },
+    "offer": {
+      "title": "Lo Que Ofrecemos",
+      "free": {
+        "title": "Generación de Transcripciones Gratuita",
+        "description": "Genera transcripciones de cualquier video de YouTube sin pagar un centavo. Sin tarifas ocultas, sin suscripciones, solo un servicio simple y efectivo."
+      },
+      "languages": {
+        "title": "Múltiples Idiomas",
+        "description": "Accede a transcripciones en todos los idiomas disponibles del video original y tradúcelas a más de 125 idiomas."
+      },
+      "download": {
+        "title": "Opciones de Descarga Fáciles",
+        "description": "Descarga transcripciones en múltiples formatos incluyendo TXT, PDF, DOCX, SRT y CSV para diferentes casos de uso."
+      },
+      "ai": {
+        "title": "Integración con IA",
+        "description": "Resume fácilmente las transcripciones con ChatGPT y otras herramientas de IA con nuestra integración de un solo clic."
+      }
+    },
+    "benefit": {
+      "title": "Quién Puede Beneficiarse",
+      "students": "Estudiantes e Investigadores - Extrae información de videos educativos para notas e investigación",
+      "creators": "Creadores de Contenido - Reutiliza contenido de video en publicaciones de blog, artículos y contenido de redes sociales",
+      "learners": "Estudiantes de Idiomas - Estudia contenido en tu idioma objetivo con traducciones lado a lado",
+      "professionals": "Profesionales - Extrae información clave de webinars y presentaciones",
+      "impaired": "Personas con Discapacidad Auditiva - Accede al contenido de video en formato de texto"
+    },
+    "commitment": {
+      "title": "Nuestro Compromiso",
+      "p1": "Estamos comprometidos a mantener YouTranscripts gratuito y accesible para todos. Creemos en el poder del acceso abierto a la información y continuaremos mejorando nuestro servicio basado en los comentarios de los usuarios.",
+      "p2": "Si tienes alguna pregunta, sugerencia o comentario, no dudes en",
+      "contact": "contactarnos",
+      "p3": "¡Nos encantaría saber de ti!"
+    }
+  },
+  "contact": {
+    "title": "Contáctanos",
+    "subtitle": "¡Nos encantaría saber de ti! Ponte en contacto con nuestro equipo.",
+    "email": "Envíanos un Email",
+    "emailAddress": "contact@youtranscripts.com",
+    "intro": "Ya sea que tengas preguntas, necesites ayuda o quieras darnos tu opinión, estamos aquí para ayudarte. Por favor, no dudes en contactarnos utilizando la información a continuación.",
+    "emailCard": {
+      "title": "Envíanos un Email",
+      "description": "Para todas las consultas, soporte y comentarios"
+    },
+    "sections": {
+      "assist": {
+        "title": "¿Cómo Podemos Ayudarte?",
+        "technical": {
+          "title": "Soporte Técnico",
+          "content": "Para problemas relacionados con el uso de nuestras herramientas de transcripción, acceso a la cuenta o cualquier otro asunto técnico, envíanos un email a",
+          "additional": "con detalles del problema que estás experimentando. Las capturas de pantalla o mensajes de error son útiles."
+        },
+        "feedback": {
+          "title": "Comentarios y Sugerencias",
+          "content": "¡Siempre estamos buscando mejorar! Haznos saber tus ideas en",
+          "additional": "sobre cómo podemos mejorar YouTranscripts o si hay algo que te gustaría ver añadido a nuestra plataforma."
+        },
+        "business": {
+          "title": "Asociaciones Comerciales",
+          "content": "¿Interesado en colaborar o asociarte con nosotros? Estaremos encantados de discutir oportunidades. Por favor, envíanos un email a",
+          "additional": "con detalles sobre tu organización y la naturaleza de la asociación que propones."
+        }
+      },
+      "response": {
+        "title": "Tiempo de Respuesta",
+        "content": "Nos esforzamos por responder a todas las consultas dentro de las 24-48 horas durante los días laborables. Para asuntos urgentes, por favor indícalo en el asunto del email."
+      },
+      "faq": {
+        "title": "Preguntas Frecuentes",
+        "content": "Antes de contactarnos, es posible que encuentres respuestas a preguntas comunes en nuestra sección de Preguntas Frecuentes en la página de inicio."
+      },
+      "feedback": {
+        "title": "Comentarios y Sugerencias",
+        "content": "Siempre estamos buscando mejorar YouTranscripts. Si tienes sugerencias para nuevas funciones o mejoras, háganoslo saber por email."
+      },
+      "issues": {
+        "title": "Reportar Problemas",
+        "content": "Si encuentras algún problema mientras usas nuestro servicio, por favor proporciona la siguiente información al reportarlo:",
+        "items": {
+          "url": "La URL de YouTube que estabas intentando transcribir",
+          "browser": "El navegador y dispositivo que estabas usando",
+          "description": "Una descripción de lo que sucedió",
+          "error": "Cualquier mensaje de error que hayas recibido"
+        }
+      },
+      "business": {
+        "title": "Consultas Comerciales",
+        "content": "Para oportunidades de asociación, consultas de publicidad u otros asuntos comerciales, por favor contáctanos por email con detalles de tu propuesta."
+      }
+    }
+  },
+  "privacy": {
+    "title": "Política de Privacidad",
+    "lastUpdated": "Última Actualización: 1 de Mayo de 2025",
+    "intro": {
+      "welcome": "En YouTranscripts.com",
+      "description": "nos tomamos en serio tu privacidad. Esta Política de Privacidad describe cómo recopilamos, utilizamos y protegemos tu información personal cuando accedes y utilizas nuestro sitio web, YouTranscripts.com (el \"Sitio\"). Al utilizar el Sitio, aceptas la recopilación y el uso de información de acuerdo con esta política."
+    },
+    "sections": {
+      "information": {
+        "title": "1. Información que Recopilamos",
+        "intro": "Recopilamos información personal y no personal para proporcionar y mejorar nuestros servicios. La información que podemos recopilar incluye:",
+        "personal": {
+          "title": "a. Información Personal:",
+          "registration": "Información de Registro: Cuando creas una cuenta en el Sitio, recopilamos información personal como tu nombre, dirección de correo electrónico y cualquier otro detalle que proporciones durante el registro.",
+          "payment": "Información de Pago: Si realizas una compra, recopilamos información de pago, como detalles de tarjeta de crédito u otros detalles de método de pago, a través de nuestro procesador de pagos seguro.",
+          "communication": "Información de Comunicación: Si nos contactas por correo electrónico o nuestros canales de soporte, podemos recopilar tu nombre, dirección de correo electrónico y el contenido de tu comunicación con el fin de responder a tus consultas."
+        },
+        "nonPersonal": {
+          "title": "b. Información No Personal:",
+          "log": "Datos de Registro: Recopilamos información sobre cómo se accede y utiliza el Sitio, como tu dirección IP, tipo de navegador, versión del navegador, las páginas de nuestro Sitio que visitas, la hora y fecha de tu visita, y otros datos de diagnóstico.",
+          "cookies": "Cookies y Tecnologías de Seguimiento: Utilizamos cookies para rastrear la actividad en el Sitio y almacenar cierta información. Puedes configurar tu navegador para rechazar cookies o alertarte cuando se envían cookies. Sin embargo, si no aceptas cookies, es posible que no puedas utilizar algunas partes del Sitio."
+        }
+      },
+      "usage": {
+        "title": "2. Cómo Utilizamos Tu Información",
+        "intro": "Utilizamos la información que recopilamos de las siguientes maneras:",
+        "items": {
+          "services": "Para Proporcionar Servicios: Para operar y mantener el Sitio y ofrecer sus funciones, incluyendo proporcionarte transcripciones de videos de YouTube, soporte al usuario y gestión de cuentas.",
+          "payments": "Para Procesar Pagos: Para procesar pagos por servicios comprados a través del Sitio, incluyendo suscripciones o tarifas únicas.",
+          "improve": "Para Mejorar el Sitio: Para entender cómo nuestros usuarios interactúan con el Sitio, lo que nos ayuda a mejorar la experiencia del usuario, solucionar problemas y mejorar nuestros servicios.",
+          "communicate": "Para Comunicarnos Contigo: Para enviar actualizaciones sobre tu cuenta, responder a consultas, proporcionar soporte al cliente y enviar comunicaciones de marketing (si has optado por recibir dichas comunicaciones).",
+          "legal": "Para Cumplir con Obligaciones Legales: Para cumplir con las leyes y regulaciones aplicables, incluyendo la aplicación de nuestros Términos de Servicio."
+        }
+      },
+      "sharing": {
+        "title": "3. Compartir Tu Información",
+        "intro": "No vendemos ni alquilamos tu información personal a terceros.",
+        "additional": "Sin embargo, podemos compartir tu información en las siguientes circunstancias:",
+        "items": {
+          "providers": "Con Proveedores de Servicios: Podemos compartir tu información con proveedores externos, como procesadores de pago y proveedores de servicios en la nube, para ayudarnos a operar el Sitio y proporcionar nuestros servicios. Estos proveedores de servicios externos están obligados a utilizar tus datos personales únicamente para los fines de proporcionar sus servicios a nosotros.",
+          "legal": "Por Razones Legales: Podemos divulgar tu información personal si es requerido por ley, como para cumplir con una citación, orden judicial u otro proceso legal, o para proteger nuestros derechos o la seguridad de otros.",
+          "merger": "En Caso de Fusión o Venta: Si estamos involucrados en una fusión, adquisición o venta de activos, tu información personal puede ser transferida como parte de esa transacción."
+        }
+      },
+      "retention": {
+        "title": "4. Retención de Datos",
+        "content": "Conservaremos tu información personal durante el tiempo que sea necesario para cumplir con los fines descritos en esta Política de Privacidad, a menos que se requiera o permita un período de retención más largo por ley. Si eliminas tu cuenta, retendremos cierta información personal según lo requiera la ley o para fines comerciales legítimos."
+      },
+      "security": {
+        "title": "5. Seguridad de Tu Información",
+        "content": "Tomamos medidas razonables para proteger la seguridad de tu información personal. Sin embargo, ten en cuenta que ningún método de transmisión por Internet o almacenamiento electrónico es 100% seguro, y no podemos garantizar la seguridad absoluta de tus datos."
+      },
+      "rights": {
+        "title": "6. Tus Derechos y Opciones",
+        "intro": "Tienes ciertos derechos con respecto a tu información personal:",
+        "items": {
+          "access": "Acceso: Puedes solicitar acceso a la información personal que tenemos sobre ti.",
+          "correction": "Corrección: Puedes actualizar o corregir cualquier información inexacta o incompleta que tengamos sobre ti.",
+          "deletion": "Eliminación: Puedes solicitar que eliminemos tu información personal, sujeto a ciertas excepciones.",
+          "optOut": "Optar por No Recibir Comunicaciones de Marketing: Puedes optar por no recibir correos electrónicos de marketing de nosotros siguiendo las instrucciones de cancelación de suscripción en el correo electrónico o contactándonos directamente en contact@youtranscripts.com.",
+          "cookies": "Cookies: Puedes gestionar las cookies a través de la configuración de tu navegador. Sin embargo, deshabilitar las cookies puede afectar tu capacidad para utilizar ciertas funciones del Sitio."
+        },
+        "exercise": "Para ejercer cualquiera de estos derechos, por favor contáctanos en",
+        "email": "contact@youtranscripts.com"
+      },
+      "thirdParty": {
+        "title": "7. Enlaces de Terceros",
+        "content": "El Sitio puede contener enlaces a sitios web o servicios de terceros que no son operados por nosotros. No somos responsables de las prácticas de privacidad o el contenido de estos sitios de terceros. Te animamos a revisar las políticas de privacidad de cualquier sitio de terceros que visites."
+      },
+      "children": {
+        "title": "8. Privacidad de los Niños",
+        "content": "El Sitio no está destinado para uso de personas menores de 18 años. No recopilamos a sabiendas información personal de niños menores de 18 años. Si nos enteramos de que hemos recopilado inadvertidamente información personal de un niño menor de 18 años, tomaremos medidas para eliminar esa información."
+      },
+      "international": {
+        "title": "9. Transferencias Internacionales de Datos",
+        "content": "Si estás accediendo al Sitio desde fuera de la India, ten en cuenta que tu información puede ser transferida y procesada en la India. Al utilizar el Sitio, consientes la transferencia de tu información a la India y aceptas cumplir con las leyes de esa jurisdicción."
+      },
+      "changes": {
+        "title": "10. Cambios a Esta Política de Privacidad",
+        "content": "Podemos actualizar esta Política de Privacidad de vez en cuando. Cualquier cambio será publicado en esta página, con la fecha de \"Última Actualización\" en la parte superior. Te animamos a revisar esta Política de Privacidad periódicamente para mantenerte informado sobre cómo estamos protegiendo tu información."
+      },
+      "contact": {
+        "title": "11. Contáctanos",
+        "content": "Si tienes alguna pregunta o inquietud sobre esta Política de Privacidad o la forma en que manejamos tu información personal, por favor contáctanos en:",
+        "company": "YouTranscripts.com",
+        "email": "Email:",
+        "address": "contact@youtranscripts.com"
+      }
+    }
+  },
+  "terms": {
+    "title": "Términos de Servicio",
+    "lastUpdated": "Última Actualización: 1 de Mayo de 2025",
+    "welcome": {
+      "intro": "Bienvenido a YouTranscripts.com",
+      "description": "Al acceder o utilizar nuestro sitio web, aceptas cumplir y estar sujeto a estos Términos de Servicio, incluida nuestra",
+      "privacy": "Política de Privacidad",
+      "disclaimer": "Si no estás de acuerdo con estos Términos, no debes acceder ni utilizar el Sitio."
+    },
+    "sections": {
+      "acceptance": {
+        "title": "1. Aceptación de Términos",
+        "content": "Al utilizar YouTranscripts.com, aceptas estos Términos de Servicio y cualquier término adicional que se aplique a servicios específicos proporcionados por nosotros. Podemos actualizar estos Términos de vez en cuando, y dichos cambios se publicarán en esta página. Tu uso continuado del Sitio después de que se publiquen los cambios constituirá tu aceptación de esos cambios."
+      },
+      "description": {
+        "title": "2. Descripción de Servicios",
+        "intro": "YouTranscripts.com proporciona una herramienta para generar transcripciones de videos de YouTube",
+        "content": ", permitiendo a los usuarios convertir el audio del video en texto escrito. Estos servicios pueden incluir, pero no se limitan a:",
+        "services": {
+          "transcription": "Servicios de transcripción para videos de YouTube",
+          "search": "Búsqueda y recuperación de datos de transcripción",
+          "other": "Otros servicios relacionados ofrecidos por nosotros de vez en cuando"
+        },
+        "usage": "Aceptas utilizar los servicios proporcionados únicamente para fines legales y de acuerdo con estos Términos."
+      },
+      "eligibility": {
+        "title": "3. Elegibilidad",
+        "content": "Debes tener al menos 18 años para utilizar el Sitio. Al utilizar el Sitio, declaras que tienes la edad legal para formar un contrato vinculante y que no tienes prohibido utilizar los servicios según la ley aplicable."
+      },
+      "account": {
+        "title": "4. Registro de Cuenta",
+        "content": "Para acceder a ciertas funciones del Sitio, es posible que debas registrarte para obtener una cuenta. Aceptas proporcionar información precisa y completa durante el proceso de registro y actualizarla si hay cambios. Eres responsable de mantener la confidencialidad de la información de tu cuenta y de todas las actividades que ocurran bajo tu cuenta."
+      },
+      "conduct": {
+        "title": "5. Conducta del Usuario",
+        "intro": "Al utilizar el Sitio, aceptas no:",
+        "items": {
+          "illegal": "Utilizar el Sitio para cualquier propósito ilegal o para promover actividades ilegales.",
+          "interfere": "Interferir o interrumpir los servicios o servidores conectados al Sitio.",
+          "impersonate": "Hacerte pasar por cualquier persona o entidad o afirmar falsamente una afiliación con cualquier persona o entidad.",
+          "infringe": "Subir, publicar o transmitir contenido que infrinja los derechos de propiedad intelectual de otros, sea ofensivo, abusivo o viole los derechos de otros.",
+          "damage": "Participar en cualquier comportamiento que pueda dañar la reputación de YouTranscripts.com."
+        }
+      },
+      "restrictions": {
+        "title": "6. Restricciones",
+        "intro": "Aceptas no:",
+        "items": {
+          "reproduce": "Reproducir, distribuir, modificar o crear trabajos derivados de cualquier parte del Sitio sin el consentimiento previo por escrito de YouTranscripts.com.",
+          "damage": "Utilizar el Sitio de cualquier manera que pueda deshabilitar, sobrecargar o dañar el Sitio o interferir con el disfrute del Sitio por parte de otros usuarios."
+        }
+      },
+      "payment": {
+        "title": "7. Pago y Suscripción",
+        "intro": "Ciertas funciones del Sitio pueden requerir pago. Al acceder a funciones de pago, aceptas lo siguiente:",
+        "items": {
+          "charges": "Eres responsable de todos los cargos y tarifas asociados con tu uso de los servicios de pago.",
+          "billing": "Los pagos deben realizarse a través de los métodos de pago disponibles, y aceptas proporcionar información de facturación válida.",
+          "renewal": "Los servicios de suscripción están sujetos a renovación a menos que sean cancelados por ti de acuerdo con la política de cancelación."
+        }
+      },
+      "termination": {
+        "title": "8. Terminación y Suspensión",
+        "content": "Nos reservamos el derecho de suspender o terminar tu acceso al Sitio o servicios en cualquier momento por cualquier motivo, incluyendo, pero no limitado a, una violación de estos Términos. Tras la terminación, debes cesar todo uso del Sitio, y cualquier tarifa no pagada vencerá inmediatamente."
+      },
+      "intellectual": {
+        "title": "9. Propiedad Intelectual",
+        "content": "El contenido, características y funcionalidad del Sitio son propiedad de YouTranscripts.com y están protegidos por derechos de autor, marcas comerciales y otras leyes de propiedad intelectual. Aceptas no copiar, reproducir o utilizar cualquier contenido del Sitio sin nuestro permiso expreso."
+      },
+      "privacy": {
+        "title": "10. Política de Privacidad",
+        "content": "Tu uso del Sitio también está regido por nuestra Política de Privacidad, que se puede encontrar en nuestra",
+        "link": "Página de Política de Privacidad",
+        "additional": "Al utilizar el Sitio, consientes la recopilación y el uso de tus datos como se describe en la Política de Privacidad."
+      },
+      "disclaimers": {
+        "title": "11. Descargos de Responsabilidad y Limitación de Responsabilidad",
+        "content": "Los servicios proporcionados por YouTranscripts.com se ofrecen",
+        "as_is": "\"tal cual\" y \"según disponibilidad.\"",
+        "additional": "No garantizamos que el Sitio esté libre de errores, interrupciones o defectos. Aceptas que YouTranscripts.com no será responsable de ningún daño que surja de tu uso o incapacidad para usar el Sitio o sus servicios, incluyendo, pero no limitado a, cualquier pérdida de datos o beneficios."
+      },
+      "indemnification": {
+        "title": "12. Indemnización",
+        "content": "Aceptas indemnizar y mantener a YouTranscripts.com, sus afiliados, directores, empleados, agentes y licenciantes indemnes de cualquier reclamo, daño o pérdida que surja de tu uso del Sitio o tu violación de estos Términos."
+      },
+      "governing": {
+        "title": "13. Ley Aplicable",
+        "content": "Estos Términos se regirán e interpretarán de acuerdo con las leyes de la India, sin tener en cuenta sus principios de conflicto de leyes. Cualquier disputa que surja bajo estos Términos se resolverá en los tribunales competentes ubicados en la India."
+      },
+      "modifications": {
+        "title": "14. Modificaciones a los Términos de Servicio",
+        "content": "Podemos revisar y actualizar estos Términos en cualquier momento. Todos los cambios son efectivos inmediatamente después de su publicación en el Sitio. Te animamos a revisar estos Términos periódicamente para mantenerte informado sobre cualquier actualización."
+      },
+      "contact": {
+        "title": "15. Información de Contacto",
+        "content": "Para cualquier pregunta sobre estos Términos de Servicio, por favor contáctanos en:",
+        "company": "YouTranscripts.com",
+        "email": "Email:",
+        "address": "contact@youtranscripts.com"
+      }
+    }
+  },
+  "bookmark": {
+    "title": "Guárdanos Ctrl+D para Acceso Rápido",
+    "titleMac": "Guárdanos ⌘+D para Acceso Rápido",
+    "popup": {
+      "title": "Guarda YouTranscripts para la Próxima Vez",
+      "windows": "Presiona Ctrl+D para guardar",
+      "mac": "Presiona ⌘+D para guardar",
+      "benefits": {
+        "time": "⏱️ Ahorra tiempo",
+        "flow": "💡 Mantén el flujo",
+        "smarter": "📈 Trabaja más inteligente"
+      }
+    }
+  },
+  "mobileAdd": {
+    "title": "Añadir a Pantalla de Inicio",
+    "ios": "Toca Compartir y luego 'Añadir a Pantalla de Inicio'",
+    "android": "Toca Menú y luego 'Añadir a Pantalla de Inicio'"
+  },
+  "transcript": {
+    "header": {
+      "loading": "Cargando transcripción...",
+      "error": "Error al cargar la transcripción",
+      "of": "Transcripción de",
+      "video": "Video de YouTube",
+      "author": "Autor:"
+    },
+    "viewer": {
+      "translating": "Traduciendo transcripción... Esto puede tomar un momento.",
+      "failed": "Error al cargar la transcripción",
+      "noTranscript": "No hay transcripción disponible para este video.",
+      "backToTop": "Volver Arriba"
+    },
+    "actionButtons": {
+      "copy": "Copiar Transcripción",
+      "download": "Descargar Transcripción",
+      "format": "Formato: txt, docx, pdf, srt, csv",
+      "selectFormat": "Seleccionar Formato:",
+      "plainText": "Texto Plano (.txt)",
+      "simpleText": "- Formato de texto simple",
+      "wordDocument": "Documento Word (.docx)",
+      "editableDocument": "- Documento editable",
+      "pdfDocument": "Documento PDF (.pdf)",
+      "printableDocument": "- Documento imprimible",
+      "subtitleFile": "Archivo de Subtítulos (.srt)",
+      "forVideoSubtitles": "- Para subtítulos de video",
+      "csvSpreadsheet": "Hoja de Cálculo CSV (.csv)",
+      "forDataAnalysis": "- Para análisis de datos",
+      "translate": "Traducir a Otro Idioma",
+      "free": "gratis",
+      "summarize": "Copiar y Resumir con ChatGPT",
+      "copySuccess": "¡Transcripción copiada al portapapeles!",
+      "downloadSuccess": "Transcripción descargada como",
+      "translationError": "Error al traducir la transcripción. Por favor, inténtalo de nuevo.",
+      "copyError": "Error al copiar la transcripción. Por favor, inténtalo de nuevo.",
+      "summarizeError": "Error al abrir ChatGPT. Por favor, intenta copiar manualmente.",
+      "summarizeSuccess": "¡Transcripción copiada! Abriendo ChatGPT en 3 segundos - por favor, pega la transcripción allí."
+    },
+    "bookmarkPopup": {
+      "copied": "¡Transcripción copiada al portapapeles!",
+      "quickAccess": "📲 Acceso Rápido en Tu Teléfono",
+      "addToHome": "Añade YouTranscripts a tu pantalla de inicio y abre transcripciones con",
+      "oneTap": "un toque",
+      "noBrowser": "—sin navegador, sin búsqueda.",
+      "android": "Android (Chrome)",
+      "androidStep1": "Toca el menú ⋮ (arriba a la derecha)",
+      "androidStep2": "Elige",
+      "androidStep3": "Toca",
+      "addToHomeScreen": "Añadir a la pantalla de inicio",
+      "add": "Añadir",
+      "iphone": "iPhone (Safari)",
+      "iphoneStep1": "Toca",
+      "iphoneStep2": "Desplázate hasta",
+      "share": "Compartir",
+      "bookmark": "Guarda YouTranscripts para la Próxima Vez",
+      "needLater": "¿Necesitas otra transcripción más tarde? Guarda esta página ahora y accede a ella con un clic.",
+      "press": "Presiona",
+      "mac": "(Mac)",
+      "windows": "(Windows)",
+      "or": "o",
+      "saveTime": "Ahorra tiempo:",
+      "jumpStraight": "Ve directamente a las transcripciones—sin búsquedas.",
+      "stayInFlow": "Mantén el ritmo:",
+      "creativeRhythm": "Mantén tu ritmo creativo sin interrupciones.",
+      "workSmarter": "Trabaja más inteligente:",
+      "gotoTool": "Tu herramienta preferida, a un atajo de distancia."
+    },
+    "floatingButton": {
+      "top": "ARRIBA"
+    },
+    "translationSettings": {
+      "title": "Configuración de Idioma y Traducción",
+      "error": "Error de traducción:",
+      "detected": "Idioma detectado:",
+      "autoDetected": "El idioma se detecta automáticamente de la transcripción del video.",
+      "originalLanguage": "La transcripción está en su idioma original",
+      "original": "Original",
+      "translate": "Traducir",
+      "cancel": "Cancelar",
+      "currentlyViewing": "Viendo actualmente:",
+      "resetToOriginal": "Volver al original",
+      "translatingTo": "Traduciendo a",
+      "complete": "completado"
+    }
+  }
+}

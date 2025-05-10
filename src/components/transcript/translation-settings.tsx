@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useTranscriptStore } from "@/store/transcript-store";
 import { useTranslationStore, languages } from "@/store/translation-store";
 import { Globe, Check, Loader2, Info, ChevronDown } from "lucide-react";
+import { useT } from "@/i18n/client";
 
 export default function TranslationSettings() {
   const { transcript, detectedLanguage } = useTranscriptStore();
@@ -17,6 +18,7 @@ export default function TranslationSettings() {
     progress,
     cancelTranslation,
   } = useTranslationStore();
+  const { t } = useT();
 
   // Debug logging for language detection
   useEffect(() => {
@@ -61,14 +63,16 @@ export default function TranslationSettings() {
     <div className="p-5 bg-[#222] dark:bg-[#111] rounded-lg mb-6 border border-gray-700 shadow-lg">
       {error && (
         <div className="mb-4 p-3 bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200 rounded-lg border border-red-200 dark:border-red-800">
-          <p className="text-sm font-medium">Translation error: {error}</p>
+          <p className="text-sm font-medium">
+            {t("transcript.translationSettings.error")} {error}
+          </p>
         </div>
       )}
 
       <div className="flex items-center mb-5">
         <Globe className="h-5 w-5 mr-2 text-white" />
         <h3 className="text-lg font-medium text-white">
-          Language & Translation Settings
+          {t("transcript.translationSettings.title")}
         </h3>
       </div>
 
@@ -78,13 +82,14 @@ export default function TranslationSettings() {
           <Info className="h-5 w-5 mr-2 mt-0.5 flex-shrink-0" />
           <div>
             <p className="text-sm font-medium">
-              Detected language: {originalLanguageName}
+              {t("transcript.translationSettings.detected")}{" "}
+              {originalLanguageName}
             </p>
             <p className="text-xs mt-1">
-              Language is detected automatically from the video transcript.
+              {t("transcript.translationSettings.autoDetected")}
               {detectedLanguage !== "en" && (
                 <span className="block mt-1 font-medium">
-                  The transcript is in its original language (
+                  {t("transcript.translationSettings.originalLanguage")} (
                   {originalLanguageName}).
                 </span>
               )}
@@ -113,7 +118,8 @@ export default function TranslationSettings() {
                 >
                   {/* Original language option */}
                   <option value={originalLanguage}>
-                    {originalLanguageName} (Original)
+                    {originalLanguageName} (
+                    {t("transcript.translationSettings.original")})
                   </option>
 
                   {/* Divider */}
@@ -162,15 +168,15 @@ export default function TranslationSettings() {
             {isTranslating ? (
               <>
                 <Loader2 className="h-4 w-4 animate-spin" />
-                Cancel
+                {t("transcript.translationSettings.cancel")}
               </>
             ) : currentLanguage === originalLanguage ? (
               <>
                 <Check className="h-4 w-4" />
-                Original
+                {t("transcript.translationSettings.original")}
               </>
             ) : (
-              <>Translate</>
+              <>{t("transcript.translationSettings.translate")}</>
             )}
           </button>
         </div>
@@ -179,7 +185,7 @@ export default function TranslationSettings() {
         {!isTranslating && (
           <div className="mt-3 text-sm text-gray-300 flex items-center">
             <span className="inline-block w-2 h-2 rounded-full bg-green-500 mr-2"></span>
-            Currently viewing:{" "}
+            {t("transcript.translationSettings.currentlyViewing")}{" "}
             <span className="font-medium ml-1">{currentLanguageName}</span>
             {currentLanguage !== originalLanguage && (
               <button
@@ -189,7 +195,7 @@ export default function TranslationSettings() {
                 }}
                 className="ml-3 text-xs text-blue-400 hover:text-blue-300 underline"
               >
-                Reset to original
+                {t("transcript.translationSettings.resetToOriginal")}
               </button>
             )}
           </div>
@@ -206,7 +212,9 @@ export default function TranslationSettings() {
             </div>
             <p className="text-sm flex items-center text-blue-300">
               <Loader2 className="h-4 w-4 animate-spin mr-2" />
-              Translating to {targetLanguageName}... {progress}% complete
+              {t("transcript.translationSettings.translatingTo")}{" "}
+              {targetLanguageName}... {progress}%{" "}
+              {t("transcript.translationSettings.complete")}
             </p>
           </div>
         )}
