@@ -151,15 +151,250 @@
     "title": "Contact Us",
     "subtitle": "We'd love to hear from you! Get in touch with our team.",
     "email": "Email Us",
-    "emailAddress": "contact@youtranscripts.com"
+    "emailAddress": "contact@youtranscripts.com",
+    "intro": "Whether you have questions, need support, or want to give us feedback, we're here to help. Please feel free to reach out to us using the information below.",
+    "emailCard": {
+      "title": "Email Us",
+      "description": "For all inquiries, support, and feedback"
+    },
+    "sections": {
+      "assist": {
+        "title": "How Can We Assist You?",
+        "technical": {
+          "title": "Technical Support",
+          "content": "For issues related to using our transcription tools, account access, or any other technical matters, please email us at",
+          "additional": "with details of the problem you're experiencing. Screenshots or error messages are helpful."
+        },
+        "feedback": {
+          "title": "Feedback & Suggestions",
+          "content": "We're always looking to improve! Let us know your thoughts at",
+          "additional": "on how we can make YouTranscripts better or if there's anything you'd like to see added to our platform."
+        },
+        "business": {
+          "title": "Business Partnerships",
+          "content": "Interested in collaborating or partnering with us? We'd be happy to discuss opportunities. Please email us at",
+          "additional": "with details about your organization and the nature of the partnership you're proposing."
+        }
+      },
+      "response": {
+        "title": "Response Time",
+        "content": "We strive to respond to all inquiries within 24-48 hours during business days. For urgent matters, please indicate this in your email subject line."
+      },
+      "faq": {
+        "title": "Frequently Asked Questions",
+        "content": "Before contacting us, you might find answers to common questions on our FAQ section on the homepage."
+      },
+      "feedback": {
+        "title": "Feedback and Suggestions",
+        "content": "We're always looking to improve YouTranscripts. If you have suggestions for new features or improvements, please let us know via email."
+      },
+      "issues": {
+        "title": "Report Issues",
+        "content": "If you encounter any problems while using our service, please provide the following information when reporting:",
+        "items": {
+          "url": "The YouTube URL you were trying to transcribe",
+          "browser": "The browser and device you were using",
+          "description": "A description of what happened",
+          "error": "Any error messages you received"
+        }
+      },
+      "business": {
+        "title": "Business Inquiries",
+        "content": "For partnership opportunities, advertising inquiries, or other business matters, please reach out via email with details of your proposal."
+      }
+    }
   },
   "privacy": {
     "title": "Privacy Policy",
-    "lastUpdated": "Last Updated: 1st May 2025"
+    "lastUpdated": "Last Updated: 1st May 2025",
+    "intro": {
+      "welcome": "At YouTranscripts.com",
+      "description": "we take your privacy seriously. This Privacy Policy outlines how we collect, use, and protect your personal information when you access and use our website, YouTranscripts.com (the \"Site\"). By using the Site, you agree to the collection and use of information in accordance with this policy."
+    },
+    "sections": {
+      "information": {
+        "title": "1. Information We Collect",
+        "intro": "We collect both personal and non-personal information to provide and improve our services. The information we may collect includes:",
+        "personal": {
+          "title": "a. Personal Information:",
+          "registration": "Registration Information: When you create an account on the Site, we collect personal information such as your name, email address, and any other details you provide during registration.",
+          "payment": "Payment Information: If you make a purchase, we collect payment information, such as credit card details or other payment method details, through our secure payment processor.",
+          "communication": "Communication Information: If you contact us through email or our support channels, we may collect your name, email address, and the contents of your communication for the purpose of responding to your inquiries."
+        },
+        "nonPersonal": {
+          "title": "b. Non-Personal Information:",
+          "log": "Log Data: We collect information about how the Site is accessed and used, such as your IP address, browser type, browser version, the pages of our Site you visit, the time and date of your visit, and other diagnostic data.",
+          "cookies": "Cookies and Tracking Technologies: We use cookies to track activity on the Site and to store certain information. You can set your browser to refuse cookies or to alert you when cookies are being sent. However, if you do not accept cookies, you may not be able to use some portions of the Site."
+        }
+      },
+      "usage": {
+        "title": "2. How We Use Your Information",
+        "intro": "We use the information we collect in the following ways:",
+        "items": {
+          "services": "To Provide Services: To operate and maintain the Site and offer its features, including providing you with transcripts for YouTube videos, user support, and account management.",
+          "payments": "To Process Payments: To process payments for services purchased through the Site, including subscription or one-time fees.",
+          "improve": "To Improve the Site: To understand how our users interact with the Site, which helps us improve the user experience, troubleshoot issues, and enhance our services.",
+          "communicate": "To Communicate with You: To send updates about your account, respond to inquiries, provide customer support, and send marketing communications (if you have opted into receiving such communications).",
+          "legal": "To Comply with Legal Obligations: To comply with applicable laws and regulations, including enforcing our Terms of Service."
+        }
+      },
+      "sharing": {
+        "title": "3. Sharing of Your Information",
+        "intro": "We do not sell or rent your personal information to third parties.",
+        "additional": "However, we may share your information in the following circumstances:",
+        "items": {
+          "providers": "With Service Providers: We may share your information with third-party vendors, such as payment processors and cloud service providers, to help us operate the Site and provide our services. These third-party service providers are obligated to use your personal data solely for the purposes of providing their services to us.",
+          "legal": "For Legal Reasons: We may disclose your personal information if required to do so by law, such as to comply with a subpoena, court order, or other legal process, or to protect our rights or the safety of others.",
+          "merger": "In the Event of a Merger or Sale: If we are involved in a merger, acquisition, or asset sale, your personal information may be transferred as part of that transaction."
+        }
+      },
+      "retention": {
+        "title": "4. Data Retention",
+        "content": "We will retain your personal information for as long as necessary to fulfill the purposes outlined in this Privacy Policy, unless a longer retention period is required or permitted by law. If you delete your account, we will retain certain personal information as required by law or for legitimate business purposes."
+      },
+      "security": {
+        "title": "5. Security of Your Information",
+        "content": "We take reasonable measures to protect the security of your personal information. However, please note that no method of transmission over the Internet or electronic storage is 100% secure, and we cannot guarantee the absolute security of your data."
+      },
+      "rights": {
+        "title": "6. Your Rights and Choices",
+        "intro": "You have certain rights regarding your personal information:",
+        "items": {
+          "access": "Access: You can request access to the personal information we hold about you.",
+          "correction": "Correction: You can update or correct any inaccurate or incomplete information we hold about you.",
+          "deletion": "Deletion: You can request that we delete your personal information, subject to certain exceptions.",
+          "optOut": "Opt-Out of Marketing Communications: You can opt out of receiving marketing emails from us by following the unsubscribe instructions in the email or by contacting us directly at contact@youtranscripts.com.",
+          "cookies": "Cookies: You can manage cookies through your browser settings. However, disabling cookies may affect your ability to use certain features of the Site."
+        },
+        "exercise": "To exercise any of these rights, please contact us at",
+        "email": "contact@youtranscripts.com"
+      },
+      "thirdParty": {
+        "title": "7. Third-Party Links",
+        "content": "The Site may contain links to third-party websites or services that are not operated by us. We are not responsible for the privacy practices or content of these third-party sites. We encourage you to review the privacy policies of any third-party sites you visit."
+      },
+      "children": {
+        "title": "8. Children's Privacy",
+        "content": "The Site is not intended for use by individuals under the age of 18. We do not knowingly collect personal information from children under 18. If we learn that we have inadvertently collected personal information from a child under 18, we will take steps to delete that information."
+      },
+      "international": {
+        "title": "9. International Data Transfers",
+        "content": "If you are accessing the Site from outside of India, please be aware that your information may be transferred to and processed in India. By using the Site, you consent to the transfer of your information to India and agree to comply with the laws of that jurisdiction."
+      },
+      "changes": {
+        "title": "10. Changes to This Privacy Policy",
+        "content": "We may update this Privacy Policy from time to time. Any changes will be posted on this page, with the \"Last Updated\" date at the top. You are encouraged to review this Privacy Policy periodically to stay informed about how we are protecting your information."
+      },
+      "contact": {
+        "title": "11. Contact Us",
+        "content": "If you have any questions or concerns about this Privacy Policy or the way we handle your personal information, please contact us at:",
+        "company": "YouTranscripts.com",
+        "email": "Email:",
+        "address": "contact@youtranscripts.com"
+      }
+    }
   },
   "terms": {
     "title": "Terms of Service",
-    "lastUpdated": "Last Updated: 1st May 2025"
+    "lastUpdated": "Last Updated: 1st May 2025",
+    "welcome": {
+      "intro": "Welcome to YouTranscripts.com",
+      "description": "By accessing or using our website, you agree to comply with and be bound by these Terms of Service, including our",
+      "privacy": "Privacy Policy",
+      "disclaimer": "If you do not agree to these Terms, you should not access or use the Site."
+    },
+    "sections": {
+      "acceptance": {
+        "title": "1. Acceptance of Terms",
+        "content": "By using YouTranscripts.com, you agree to these Terms of Service and any additional terms that apply to specific services provided by us. We may update these Terms from time to time, and such changes will be posted on this page. Your continued use of the Site after any changes are posted will constitute your acceptance of those changes."
+      },
+      "description": {
+        "title": "2. Description of Services",
+        "intro": "YouTranscripts.com provides a tool to generate transcripts for YouTube videos",
+        "content": ", enabling users to convert video audio into written text. These services may include but are not limited to:",
+        "services": {
+          "transcription": "Transcription services for YouTube videos",
+          "search": "Search and retrieval of transcript data",
+          "other": "Other related services as offered by us from time to time"
+        },
+        "usage": "You agree to use the services provided solely for lawful purposes and in accordance with these Terms."
+      },
+      "eligibility": {
+        "title": "3. Eligibility",
+        "content": "You must be at least 18 years old to use the Site. By using the Site, you represent that you are of legal age to form a binding contract and are not prohibited from using the services under applicable law."
+      },
+      "account": {
+        "title": "4. Account Registration",
+        "content": "To access certain features of the Site, you may be required to register for an account. You agree to provide accurate and complete information during the registration process and to update it if there are any changes. You are responsible for maintaining the confidentiality of your account information and for all activities that occur under your account."
+      },
+      "conduct": {
+        "title": "5. User Conduct",
+        "intro": "By using the Site, you agree not to:",
+        "items": {
+          "illegal": "Use the Site for any unlawful purpose or to promote illegal activities.",
+          "interfere": "Interfere with or disrupt the services or servers connected to the Site.",
+          "impersonate": "Impersonate any person or entity or falsely claim an affiliation with any person or entity.",
+          "infringe": "Upload, post, or transmit content that infringes on the intellectual property rights of others, is offensive, abusive, or violates the rights of others.",
+          "damage": "Engage in any behavior that could damage the reputation of YouTranscripts.com."
+        }
+      },
+      "restrictions": {
+        "title": "6. Restrictions",
+        "intro": "You agree not to:",
+        "items": {
+          "reproduce": "Reproduce, distribute, modify, or create derivative works of any part of the Site without prior written consent from YouTranscripts.com.",
+          "damage": "Use the Site in any way that could disable, overburden, or damage the Site or interfere with other users' enjoyment of the Site."
+        }
+      },
+      "payment": {
+        "title": "7. Payment & Subscription",
+        "intro": "Certain features of the Site may require payment. By accessing paid features, you agree to the following:",
+        "items": {
+          "charges": "You are responsible for all charges and fees associated with your use of the paid services.",
+          "billing": "Payments must be made through the available payment methods, and you agree to provide valid billing information.",
+          "renewal": "Subscription services are subject to renewal unless canceled by you in accordance with the cancellation policy."
+        }
+      },
+      "termination": {
+        "title": "8. Termination and Suspension",
+        "content": "We reserve the right to suspend or terminate your access to the Site or services at any time for any reason, including but not limited to a violation of these Terms. Upon termination, you must cease all use of the Site, and any unpaid fees will become due immediately."
+      },
+      "intellectual": {
+        "title": "9. Intellectual Property",
+        "content": "The content, features, and functionality of the Site are owned by YouTranscripts.com and are protected by copyright, trademark, and other intellectual property laws. You agree not to copy, reproduce, or use any of the content from the Site without our express permission."
+      },
+      "privacy": {
+        "title": "10. Privacy Policy",
+        "content": "Your use of the Site is also governed by our Privacy Policy, which can be found on our",
+        "link": "Privacy Policy Page",
+        "additional": "By using the Site, you consent to the collection and use of your data as described in the Privacy Policy."
+      },
+      "disclaimers": {
+        "title": "11. Disclaimers and Limitation of Liability",
+        "content": "The services provided by YouTranscripts.com are offered",
+        "as_is": "\"as is\" and \"as available.\"",
+        "additional": "We do not guarantee that the Site will be free of errors, interruptions, or defects. You agree that YouTranscripts.com shall not be liable for any damages arising from your use or inability to use the Site or its services, including but not limited to any loss of data or profits."
+      },
+      "indemnification": {
+        "title": "12. Indemnification",
+        "content": "You agree to indemnify and hold YouTranscripts.com, its affiliates, directors, employees, agents, and licensors harmless from any claims, damages, or losses arising out of your use of the Site or your violation of these Terms."
+      },
+      "governing": {
+        "title": "13. Governing Law",
+        "content": "These Terms shall be governed by and construed in accordance with the laws of India, without regard to its conflict of law principles. Any disputes arising under these Terms shall be resolved in the competent courts located in India."
+      },
+      "modifications": {
+        "title": "14. Modifications to the Terms of Service",
+        "content": "We may revise and update these Terms at any time. All changes are effective immediately upon posting to the Site. You are encouraged to review these Terms periodically to stay informed about any updates."
+      },
+      "contact": {
+        "title": "15. Contact Information",
+        "content": "For any questions regarding these Terms of Service, please contact us at:",
+        "company": "YouTranscripts.com",
+        "email": "Email:",
+        "address": "contact@youtranscripts.com"
+      }
+    }
   },
   "bookmark": {
     "title": "Bookmark Us Ctrl+D for Quick Access",

@@ -151,15 +151,250 @@
     "title": "Entre em Contato",
     "subtitle": "Adoraríamos ouvir de você! Entre em contato com nossa equipe.",
     "email": "Envie-nos um Email",
-    "emailAddress": "contact@youtranscripts.com"
+    "emailAddress": "contact@youtranscripts.com",
+    "intro": "Seja para perguntas, suporte ou feedback, estamos aqui para ajudar. Por favor, sinta-se à vontade para entrar em contato conosco usando as informações abaixo.",
+    "emailCard": {
+      "title": "Envie-nos um Email",
+      "description": "Para todas as consultas, suporte e feedback"
+    },
+    "sections": {
+      "assist": {
+        "title": "Como Podemos Ajudar Você?",
+        "technical": {
+          "title": "Suporte Técnico",
+          "content": "Para problemas relacionados ao uso de nossas ferramentas de transcrição, acesso à conta ou qualquer outro assunto técnico, envie-nos um email para",
+          "additional": "com detalhes do problema que você está enfrentando. Capturas de tela ou mensagens de erro são úteis."
+        },
+        "feedback": {
+          "title": "Feedback e Sugestões",
+          "content": "Estamos sempre buscando melhorar! Compartilhe suas ideias em",
+          "additional": "sobre como podemos melhorar o YouTranscripts ou se há algo que você gostaria de ver adicionado à nossa plataforma."
+        },
+        "business": {
+          "title": "Parcerias Comerciais",
+          "content": "Interessado em colaborar ou fazer parceria conosco? Teremos prazer em discutir oportunidades. Por favor, envie-nos um email para",
+          "additional": "com detalhes sobre sua organização e a natureza da parceria que você está propondo."
+        }
+      },
+      "response": {
+        "title": "Tempo de Resposta",
+        "content": "Nos esforçamos para responder a todas as consultas dentro de 24-48 horas durante os dias úteis. Para assuntos urgentes, por favor, indique isso no assunto do email."
+      },
+      "faq": {
+        "title": "Perguntas Frequentes",
+        "content": "Antes de nos contatar, você pode encontrar respostas para perguntas comuns em nossa seção de Perguntas Frequentes na página inicial."
+      },
+      "feedback": {
+        "title": "Feedback e Sugestões",
+        "content": "Estamos sempre buscando melhorar o YouTranscripts. Se você tiver sugestões para novos recursos ou melhorias, por favor, informe-nos por email."
+      },
+      "issues": {
+        "title": "Relatar Problemas",
+        "content": "Se você encontrar algum problema ao usar nosso serviço, por favor, forneça as seguintes informações ao relatar:",
+        "items": {
+          "url": "A URL do YouTube que você estava tentando transcrever",
+          "browser": "O navegador e dispositivo que você estava usando",
+          "description": "Uma descrição do que aconteceu",
+          "error": "Quaisquer mensagens de erro que você recebeu"
+        }
+      },
+      "business": {
+        "title": "Consultas Comerciais",
+        "content": "Para oportunidades de parceria, consultas de publicidade ou outros assuntos comerciais, entre em contato por email com detalhes da sua proposta."
+      }
+    }
   },
   "privacy": {
     "title": "Política de Privacidade",
-    "lastUpdated": "Última Atualização: 1 de Maio de 2025"
+    "lastUpdated": "Última Atualização: 1 de Maio de 2025",
+    "intro": {
+      "welcome": "No YouTranscripts.com",
+      "description": "levamos sua privacidade a sério. Esta Política de Privacidade descreve como coletamos, usamos e protegemos suas informações pessoais quando você acessa e usa nosso site, YouTranscripts.com (o \"Site\"). Ao usar o Site, você concorda com a coleta e uso de informações de acordo com esta política."
+    },
+    "sections": {
+      "information": {
+        "title": "1. Informações que Coletamos",
+        "intro": "Coletamos informações pessoais e não pessoais para fornecer e melhorar nossos serviços. As informações que podemos coletar incluem:",
+        "personal": {
+          "title": "a. Informações Pessoais:",
+          "registration": "Informações de Registro: Quando você cria uma conta no Site, coletamos informações pessoais como seu nome, endereço de e-mail e quaisquer outros detalhes que você forneça durante o registro.",
+          "payment": "Informações de Pagamento: Se você fizer uma compra, coletamos informações de pagamento, como detalhes do cartão de crédito ou outros detalhes do método de pagamento, através do nosso processador de pagamento seguro.",
+          "communication": "Informações de Comunicação: Se você nos contatar por e-mail ou nossos canais de suporte, podemos coletar seu nome, endereço de e-mail e o conteúdo da sua comunicação com o objetivo de responder às suas consultas."
+        },
+        "nonPersonal": {
+          "title": "b. Informações Não Pessoais:",
+          "log": "Dados de Log: Coletamos informações sobre como o Site é acessado e usado, como seu endereço IP, tipo de navegador, versão do navegador, as páginas do nosso Site que você visita, a hora e data da sua visita e outros dados de diagnóstico.",
+          "cookies": "Cookies e Tecnologias de Rastreamento: Usamos cookies para rastrear a atividade no Site e armazenar certas informações. Você pode configurar seu navegador para recusar cookies ou alertá-lo quando os cookies estão sendo enviados. No entanto, se você não aceitar cookies, pode não conseguir usar algumas partes do Site."
+        }
+      },
+      "usage": {
+        "title": "2. Como Usamos Suas Informações",
+        "intro": "Usamos as informações que coletamos das seguintes maneiras:",
+        "items": {
+          "services": "Para Fornecer Serviços: Para operar e manter o Site e oferecer seus recursos, incluindo fornecer transcrições de vídeos do YouTube, suporte ao usuário e gerenciamento de contas.",
+          "payments": "Para Processar Pagamentos: Para processar pagamentos por serviços comprados através do Site, incluindo assinaturas ou taxas únicas.",
+          "improve": "Para Melhorar o Site: Para entender como nossos usuários interagem com o Site, o que nos ajuda a melhorar a experiência do usuário, solucionar problemas e aprimorar nossos serviços.",
+          "communicate": "Para Comunicar com Você: Para enviar atualizações sobre sua conta, responder a consultas, fornecer suporte ao cliente e enviar comunicações de marketing (se você optou por receber tais comunicações).",
+          "legal": "Para Cumprir Obrigações Legais: Para cumprir com leis e regulamentos aplicáveis, incluindo a aplicação de nossos Termos de Serviço."
+        }
+      },
+      "sharing": {
+        "title": "3. Compartilhamento de Suas Informações",
+        "intro": "Não vendemos nem alugamos suas informações pessoais a terceiros.",
+        "additional": "No entanto, podemos compartilhar suas informações nas seguintes circunstâncias:",
+        "items": {
+          "providers": "Com Provedores de Serviços: Podemos compartilhar suas informações com fornecedores terceirizados, como processadores de pagamento e provedores de serviços em nuvem, para nos ajudar a operar o Site e fornecer nossos serviços. Esses provedores de serviços terceirizados são obrigados a usar seus dados pessoais exclusivamente para os fins de fornecer seus serviços a nós.",
+          "legal": "Por Razões Legais: Podemos divulgar suas informações pessoais se exigido por lei, como para cumprir uma intimação, ordem judicial ou outro processo legal, ou para proteger nossos direitos ou a segurança de outros.",
+          "merger": "Em Caso de Fusão ou Venda: Se estivermos envolvidos em uma fusão, aquisição ou venda de ativos, suas informações pessoais podem ser transferidas como parte dessa transação."
+        }
+      },
+      "retention": {
+        "title": "4. Retenção de Dados",
+        "content": "Manteremos suas informações pessoais pelo tempo necessário para cumprir os propósitos descritos nesta Política de Privacidade, a menos que um período de retenção mais longo seja exigido ou permitido por lei. Se você excluir sua conta, reteremos certas informações pessoais conforme exigido por lei ou para fins comerciais legítimos."
+      },
+      "security": {
+        "title": "5. Segurança de Suas Informações",
+        "content": "Tomamos medidas razoáveis para proteger a segurança de suas informações pessoais. No entanto, observe que nenhum método de transmissão pela Internet ou armazenamento eletrônico é 100% seguro, e não podemos garantir a segurança absoluta de seus dados."
+      },
+      "rights": {
+        "title": "6. Seus Direitos e Escolhas",
+        "intro": "Você tem certos direitos em relação às suas informações pessoais:",
+        "items": {
+          "access": "Acesso: Você pode solicitar acesso às informações pessoais que mantemos sobre você.",
+          "correction": "Correção: Você pode atualizar ou corrigir qualquer informação imprecisa ou incompleta que mantemos sobre você.",
+          "deletion": "Exclusão: Você pode solicitar que excluamos suas informações pessoais, sujeito a certas exceções.",
+          "optOut": "Optar por Não Receber Comunicações de Marketing: Você pode optar por não receber e-mails de marketing de nós seguindo as instruções de cancelamento de inscrição no e-mail ou entrando em contato conosco diretamente em contact@youtranscripts.com.",
+          "cookies": "Cookies: Você pode gerenciar cookies através das configurações do seu navegador. No entanto, desabilitar cookies pode afetar sua capacidade de usar certos recursos do Site."
+        },
+        "exercise": "Para exercer qualquer um desses direitos, entre em contato conosco em",
+        "email": "contact@youtranscripts.com"
+      },
+      "thirdParty": {
+        "title": "7. Links de Terceiros",
+        "content": "O Site pode conter links para sites ou serviços de terceiros que não são operados por nós. Não somos responsáveis pelas práticas de privacidade ou conteúdo desses sites de terceiros. Encorajamos você a revisar as políticas de privacidade de qualquer site de terceiros que você visite."
+      },
+      "children": {
+        "title": "8. Privacidade de Crianças",
+        "content": "O Site não é destinado ao uso por indivíduos com menos de 18 anos. Não coletamos conscientemente informações pessoais de crianças menores de 18 anos. Se soubermos que coletamos inadvertidamente informações pessoais de uma criança menor de 18 anos, tomaremos medidas para excluir essas informações."
+      },
+      "international": {
+        "title": "9. Transferências Internacionais de Dados",
+        "content": "Se você estiver acessando o Site de fora da Índia, esteja ciente de que suas informações podem ser transferidas e processadas na Índia. Ao usar o Site, você consente com a transferência de suas informações para a Índia e concorda em cumprir as leis dessa jurisdição."
+      },
+      "changes": {
+        "title": "10. Alterações nesta Política de Privacidade",
+        "content": "Podemos atualizar esta Política de Privacidade de tempos em tempos. Quaisquer alterações serão publicadas nesta página, com a data de \"Última Atualização\" no topo. Encorajamos você a revisar esta Política de Privacidade periodicamente para se manter informado sobre como estamos protegendo suas informações."
+      },
+      "contact": {
+        "title": "11. Entre em Contato Conosco",
+        "content": "Se você tiver alguma dúvida ou preocupação sobre esta Política de Privacidade ou a maneira como lidamos com suas informações pessoais, entre em contato conosco em:",
+        "company": "YouTranscripts.com",
+        "email": "Email:",
+        "address": "contact@youtranscripts.com"
+      }
+    }
   },
   "terms": {
     "title": "Termos de Serviço",
-    "lastUpdated": "Última Atualização: 1 de Maio de 2025"
+    "lastUpdated": "Última Atualização: 1 de Maio de 2025",
+    "welcome": {
+      "intro": "Bem-vindo ao YouTranscripts.com",
+      "description": "Ao acessar ou usar nosso site, você concorda em cumprir e estar vinculado a estes Termos de Serviço, incluindo nossa",
+      "privacy": "Política de Privacidade",
+      "disclaimer": "Se você não concordar com estes Termos, não deve acessar ou usar o Site."
+    },
+    "sections": {
+      "acceptance": {
+        "title": "1. Aceitação dos Termos",
+        "content": "Ao usar o YouTranscripts.com, você concorda com estes Termos de Serviço e quaisquer termos adicionais que se apliquem a serviços específicos fornecidos por nós. Podemos atualizar estes Termos de tempos em tempos, e tais alterações serão publicadas nesta página. Seu uso contínuo do Site após a publicação de quaisquer alterações constituirá sua aceitação dessas alterações."
+      },
+      "description": {
+        "title": "2. Descrição dos Serviços",
+        "intro": "O YouTranscripts.com fornece uma ferramenta para gerar transcrições de vídeos do YouTube",
+        "content": ", permitindo que os usuários convertam o áudio do vídeo em texto escrito. Esses serviços podem incluir, mas não estão limitados a:",
+        "services": {
+          "transcription": "Serviços de transcrição para vídeos do YouTube",
+          "search": "Busca e recuperação de dados de transcrição",
+          "other": "Outros serviços relacionados oferecidos por nós de tempos em tempos"
+        },
+        "usage": "Você concorda em usar os serviços fornecidos exclusivamente para fins legais e de acordo com estes Termos."
+      },
+      "eligibility": {
+        "title": "3. Elegibilidade",
+        "content": "Você deve ter pelo menos 18 anos para usar o Site. Ao usar o Site, você declara que tem idade legal para formar um contrato vinculante e que não está proibido de usar os serviços sob a lei aplicável."
+      },
+      "account": {
+        "title": "4. Registro de Conta",
+        "content": "Para acessar certos recursos do Site, você pode ser solicitado a registrar uma conta. Você concorda em fornecer informações precisas e completas durante o processo de registro e atualizá-las se houver alterações. Você é responsável por manter a confidencialidade das informações da sua conta e por todas as atividades que ocorrem sob sua conta."
+      },
+      "conduct": {
+        "title": "5. Conduta do Usuário",
+        "intro": "Ao usar o Site, você concorda em não:",
+        "items": {
+          "illegal": "Usar o Site para qualquer finalidade ilegal ou para promover atividades ilegais.",
+          "interfere": "Interferir ou interromper os serviços ou servidores conectados ao Site.",
+          "impersonate": "Personificar qualquer pessoa ou entidade ou falsamente alegar uma afiliação com qualquer pessoa ou entidade.",
+          "infringe": "Carregar, postar ou transmitir conteúdo que infrinja os direitos de propriedade intelectual de outros, seja ofensivo, abusivo ou viole os direitos de outros.",
+          "damage": "Envolver-se em qualquer comportamento que possa danificar a reputação do YouTranscripts.com."
+        }
+      },
+      "restrictions": {
+        "title": "6. Restrições",
+        "intro": "Você concorda em não:",
+        "items": {
+          "reproduce": "Reproduzir, distribuir, modificar ou criar trabalhos derivados de qualquer parte do Site sem o consentimento prévio por escrito do YouTranscripts.com.",
+          "damage": "Usar o Site de qualquer maneira que possa desativar, sobrecarregar ou danificar o Site ou interferir no uso do Site por outros usuários."
+        }
+      },
+      "payment": {
+        "title": "7. Pagamento e Assinatura",
+        "intro": "Certos recursos do Site podem exigir pagamento. Ao acessar recursos pagos, você concorda com o seguinte:",
+        "items": {
+          "charges": "Você é responsável por todas as cobranças e taxas associadas ao seu uso dos serviços pagos.",
+          "billing": "Os pagamentos devem ser feitos através dos métodos de pagamento disponíveis, e você concorda em fornecer informações de faturamento válidas.",
+          "renewal": "Os serviços de assinatura estão sujeitos a renovação, a menos que sejam cancelados por você de acordo com a política de cancelamento."
+        }
+      },
+      "termination": {
+        "title": "8. Rescisão e Suspensão",
+        "content": "Reservamo-nos o direito de suspender ou encerrar seu acesso ao Site ou serviços a qualquer momento por qualquer motivo, incluindo, mas não se limitando a, uma violação destes Termos. Após a rescisão, você deve cessar todo uso do Site, e quaisquer taxas não pagas se tornarão imediatamente devidas."
+      },
+      "intellectual": {
+        "title": "9. Propriedade Intelectual",
+        "content": "O conteúdo, recursos e funcionalidade do Site são de propriedade do YouTranscripts.com e são protegidos por direitos autorais, marcas registradas e outras leis de propriedade intelectual. Você concorda em não copiar, reproduzir ou usar qualquer conteúdo do Site sem nossa permissão expressa."
+      },
+      "privacy": {
+        "title": "10. Política de Privacidade",
+        "content": "Seu uso do Site também é regido por nossa Política de Privacidade, que pode ser encontrada em nossa",
+        "link": "Página de Política de Privacidade",
+        "additional": "Ao usar o Site, você consente com a coleta e uso de seus dados conforme descrito na Política de Privacidade."
+      },
+      "disclaimers": {
+        "title": "11. Isenções de Responsabilidade e Limitação de Responsabilidade",
+        "content": "Os serviços fornecidos pelo YouTranscripts.com são oferecidos",
+        "as_is": "\"como estão\" e \"conforme disponíveis.\"",
+        "additional": "Não garantimos que o Site estará livre de erros, interrupções ou defeitos. Você concorda que o YouTranscripts.com não será responsável por quaisquer danos decorrentes do seu uso ou incapacidade de usar o Site ou seus serviços, incluindo, mas não se limitando a, qualquer perda de dados ou lucros."
+      },
+      "indemnification": {
+        "title": "12. Indenização",
+        "content": "Você concorda em indenizar e isentar o YouTranscripts.com, seus afiliados, diretores, funcionários, agentes e licenciadores de quaisquer reclamações, danos ou perdas decorrentes do seu uso do Site ou da sua violação destes Termos."
+      },
+      "governing": {
+        "title": "13. Lei Aplicável",
+        "content": "Estes Termos serão regidos e interpretados de acordo com as leis da Índia, sem considerar seus princípios de conflito de leis. Quaisquer disputas decorrentes destes Termos serão resolvidas nos tribunais competentes localizados na Índia."
+      },
+      "modifications": {
+        "title": "14. Modificações nos Termos de Serviço",
+        "content": "Podemos revisar e atualizar estes Termos a qualquer momento. Todas as alterações são efetivas imediatamente após a publicação no Site. Você é encorajado a revisar estes Termos periodicamente para se manter informado sobre quaisquer atualizações."
+      },
+      "contact": {
+        "title": "15. Informações de Contato",
+        "content": "Para quaisquer perguntas sobre estes Termos de Serviço, entre em contato conosco em:",
+        "company": "YouTranscripts.com",
+        "email": "Email:",
+        "address": "contact@youtranscripts.com"
+      }
+    }
   },
   "bookmark": {
     "title": "Salve-nos Ctrl+D para Acesso Rápido",

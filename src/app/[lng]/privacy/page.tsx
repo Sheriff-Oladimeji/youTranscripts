@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
 import { getT } from "@/i18n";
 
-export async function generateMetadata({ params }: { params: { lng: string } }): Promise<Metadata> {
-  const { t } = await getT();
-  
+export async function generateMetadata({
+  params,
+}: {
+  params: { lng: string };
+}): Promise<Metadata> {
+  const { t } = await getT(undefined, undefined, params.lng);
+
   return {
     title: "Privacy Policy | YouTranscripts",
     description:
@@ -16,7 +20,8 @@ export async function generateMetadata({ params }: { params: { lng: string } }):
       url: "https://youtranscripts.com/privacy",
       siteName: "YouTranscripts",
       type: "website",
-      locale: params.lng === "en" ? "en_US" : params.lng === "es" ? "es_ES" : "pt_BR",
+      locale:
+        params.lng === "en" ? "en_US" : params.lng === "es" ? "es_ES" : "pt_BR",
     },
     twitter: {
       card: "summary_large_image",
@@ -27,84 +32,277 @@ export async function generateMetadata({ params }: { params: { lng: string } }):
   };
 }
 
-export default async function PrivacyPage({ params }: { params: { lng: string } }) {
-  const { t } = await getT();
-  
+export default async function PrivacyPage({
+  params,
+}: {
+  params: { lng: string };
+}) {
+  const { t } = await getT(undefined, undefined, params.lng);
+
   return (
     <main className="flex flex-col min-h-screen bg-background">
       <div className="w-full py-12 md:py-16 bg-gradient-to-b from-[#b63e33] to-[#b63e33] dark:from-[#b63e33] dark:to-[#b63e33] text-white">
         <div className="w-[90%] max-w-[800px] mx-auto">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            {t('privacy.title')}
+            {t("privacy.title")}
           </h1>
-          <p className="text-lg md:text-xl">{t('privacy.lastUpdated')}</p>
+          <p className="text-lg md:text-xl">{t("privacy.lastUpdated")}</p>
         </div>
       </div>
 
-      <div className="w-[90%] max-w-[800px] mx-auto py-12">
+      <div className="w-full max-w-[800px] mx-auto px-4 py-12">
         <div className="prose prose-lg dark:prose-invert max-w-none">
-          <h2>Introduction</h2>
-          <p>
-            At YouTranscripts, we respect your privacy and are committed to protecting your personal data. This Privacy Policy explains how we collect, use, and safeguard your information when you use our website.
-          </p>
-          <p>
-            By using YouTranscripts, you agree to the collection and use of information in accordance with this policy.
-          </p>
+          <div className="p-6 mb-6 rounded-md bg-gray-100 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+            <p className="text-lg">
+              {t("privacy.intro.welcome")} ("we", "us", "our"),{" "}
+              {t("privacy.intro.description")}
+            </p>
+          </div>
 
-          <h2>Information We Collect</h2>
-          <p>
-            <strong>Usage Data:</strong> We collect anonymous usage data such as browser type, access time, pages viewed, and referring website addresses. This helps us understand how our service is being used.
-          </p>
-          <p>
-            <strong>YouTube URLs:</strong> When you input a YouTube URL to generate a transcript, we process this URL to extract the transcript. We do not store the URLs you enter for longer than necessary to provide the service.
-          </p>
-          <p>
-            <strong>Cookies:</strong> We use cookies to remember your preferences (such as dark/light mode) and to analyze site traffic. You can control cookies through your browser settings.
-          </p>
+          <h2 className="text-2xl font-bold mt-6 mb-3">
+            {t("privacy.sections.information.title")}
+          </h2>
+          <p className="text-base">{t("privacy.sections.information.intro")}</p>
 
-          <h2>How We Use Your Information</h2>
-          <p>We use the information we collect to:</p>
-          <ul>
-            <li>Provide and maintain our service</li>
-            <li>Improve and optimize our website</li>
-            <li>Monitor the usage of our service</li>
-            <li>Detect, prevent, and address technical issues</li>
+          <h3 className="text-xl font-bold mt-4 mb-2">
+            {t("privacy.sections.information.personal.title")}
+          </h3>
+          <ul className="list-disc pl-6 space-y-2 my-4">
+            <li>
+              <strong>
+                {
+                  t("privacy.sections.information.personal.registration").split(
+                    ":"
+                  )[0]
+                }
+                :
+              </strong>{" "}
+              {
+                t("privacy.sections.information.personal.registration").split(
+                  ":"
+                )[1]
+              }
+            </li>
+            <li>
+              <strong>
+                {
+                  t("privacy.sections.information.personal.payment").split(
+                    ":"
+                  )[0]
+                }
+                :
+              </strong>{" "}
+              {t("privacy.sections.information.personal.payment").split(":")[1]}
+            </li>
+            <li>
+              <strong>
+                {
+                  t(
+                    "privacy.sections.information.personal.communication"
+                  ).split(":")[0]
+                }
+                :
+              </strong>{" "}
+              {
+                t("privacy.sections.information.personal.communication").split(
+                  ":"
+                )[1]
+              }
+            </li>
           </ul>
 
-          <h2>Data Sharing and Disclosure</h2>
-          <p>
-            We do not sell, trade, or otherwise transfer your information to third parties. However, we may share anonymous usage data with trusted analytics providers who help us analyze website traffic.
-          </p>
-
-          <h2>Data Security</h2>
-          <p>
-            We implement appropriate security measures to protect against unauthorized access, alteration, disclosure, or destruction of your information. However, no method of transmission over the Internet or electronic storage is 100% secure, and we cannot guarantee absolute security.
-          </p>
-
-          <h2>Your Rights</h2>
-          <p>Depending on your location, you may have the following rights:</p>
-          <ul>
-            <li>The right to access information we hold about you</li>
-            <li>The right to request correction of your personal data</li>
-            <li>The right to request deletion of your personal data</li>
-            <li>The right to restrict processing of your personal data</li>
-            <li>The right to data portability</li>
-            <li>The right to object to processing of your personal data</li>
+          <h3 className="text-xl font-bold mt-4 mb-2">
+            {t("privacy.sections.information.nonPersonal.title")}
+          </h3>
+          <ul className="list-disc pl-6 space-y-2 my-4">
+            <li>
+              <strong>
+                {
+                  t("privacy.sections.information.nonPersonal.log").split(
+                    ":"
+                  )[0]
+                }
+                :
+              </strong>{" "}
+              {t("privacy.sections.information.nonPersonal.log").split(":")[1]}
+            </li>
+            <li>
+              <strong>
+                {
+                  t("privacy.sections.information.nonPersonal.cookies").split(
+                    ":"
+                  )[0]
+                }
+                :
+              </strong>{" "}
+              {
+                t("privacy.sections.information.nonPersonal.cookies").split(
+                  ":"
+                )[1]
+              }
+            </li>
           </ul>
 
-          <h2>Children's Privacy</h2>
-          <p>
-            Our service is not intended for use by children under the age of 13. We do not knowingly collect personal information from children under 13. If you are a parent or guardian and believe your child has provided us with personal information, please contact us.
+          <h2 className="text-2xl font-bold mt-6 mb-3">
+            {t("privacy.sections.usage.title")}
+          </h2>
+          <p className="text-base">{t("privacy.sections.usage.intro")}</p>
+          <ul>
+            <li>
+              <strong>
+                {t("privacy.sections.usage.items.services").split(":")[0]}:
+              </strong>{" "}
+              {t("privacy.sections.usage.items.services").split(":")[1]}
+            </li>
+            <li>
+              <strong>
+                {t("privacy.sections.usage.items.payments").split(":")[0]}:
+              </strong>{" "}
+              {t("privacy.sections.usage.items.payments").split(":")[1]}
+            </li>
+            <li>
+              <strong>
+                {t("privacy.sections.usage.items.improve").split(":")[0]}:
+              </strong>{" "}
+              {t("privacy.sections.usage.items.improve").split(":")[1]}
+            </li>
+            <li>
+              <strong>
+                {t("privacy.sections.usage.items.communicate").split(":")[0]}:
+              </strong>{" "}
+              {t("privacy.sections.usage.items.communicate").split(":")[1]}
+            </li>
+            <li>
+              <strong>
+                {t("privacy.sections.usage.items.legal").split(":")[0]}:
+              </strong>{" "}
+              {t("privacy.sections.usage.items.legal").split(":")[1]}
+            </li>
+          </ul>
+
+          <h2 className="text-2xl font-bold mt-6 mb-3">
+            {t("privacy.sections.sharing.title")}
+          </h2>
+          <p className="text-base">
+            <strong>{t("privacy.sections.sharing.intro")}</strong>{" "}
+            {t("privacy.sections.sharing.additional")}
+          </p>
+          <ul>
+            <li>
+              <strong>
+                {t("privacy.sections.sharing.items.providers").split(":")[0]}:
+              </strong>{" "}
+              {t("privacy.sections.sharing.items.providers").split(":")[1]}
+            </li>
+            <li>
+              <strong>
+                {t("privacy.sections.sharing.items.legal").split(":")[0]}:
+              </strong>{" "}
+              {t("privacy.sections.sharing.items.legal").split(":")[1]}
+            </li>
+            <li>
+              <strong>
+                {t("privacy.sections.sharing.items.merger").split(":")[0]}:
+              </strong>{" "}
+              {t("privacy.sections.sharing.items.merger").split(":")[1]}
+            </li>
+          </ul>
+
+          <h2 className="text-2xl font-bold mt-6 mb-3">
+            {t("privacy.sections.retention.title")}
+          </h2>
+          <p className="text-base">{t("privacy.sections.retention.content")}</p>
+
+          <h2 className="text-2xl font-bold mt-6 mb-3">
+            {t("privacy.sections.security.title")}
+          </h2>
+          <p className="text-base">{t("privacy.sections.security.content")}</p>
+
+          <h2 className="text-2xl font-bold mt-6 mb-3">
+            {t("privacy.sections.rights.title")}
+          </h2>
+          <p className="text-base">{t("privacy.sections.rights.intro")}</p>
+          <ul>
+            <li>
+              <strong>
+                {t("privacy.sections.rights.items.access").split(":")[0]}:
+              </strong>{" "}
+              {t("privacy.sections.rights.items.access").split(":")[1]}
+            </li>
+            <li>
+              <strong>
+                {t("privacy.sections.rights.items.correction").split(":")[0]}:
+              </strong>{" "}
+              {t("privacy.sections.rights.items.correction").split(":")[1]}
+            </li>
+            <li>
+              <strong>
+                {t("privacy.sections.rights.items.deletion").split(":")[0]}:
+              </strong>{" "}
+              {t("privacy.sections.rights.items.deletion").split(":")[1]}
+            </li>
+            <li>
+              <strong>
+                {t("privacy.sections.rights.items.optOut").split(":")[0]}:
+              </strong>{" "}
+              {t("privacy.sections.rights.items.optOut").split(":")[1]}
+            </li>
+            <li>
+              <strong>
+                {t("privacy.sections.rights.items.cookies").split(":")[0]}:
+              </strong>{" "}
+              {t("privacy.sections.rights.items.cookies").split(":")[1]}
+            </li>
+          </ul>
+          <p className="text-base">
+            {t("privacy.sections.rights.exercise")}{" "}
+            <a
+              href="mailto:contact@youtranscripts.com"
+              className="text-blue-400 hover:underline"
+            >
+              {t("privacy.sections.rights.email")}
+            </a>
+            .
           </p>
 
-          <h2>Changes to This Privacy Policy</h2>
-          <p>
-            We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last Updated" date.
+          <h2 className="text-2xl font-bold mt-6 mb-3">
+            {t("privacy.sections.thirdParty.title")}
+          </h2>
+          <p className="text-base">
+            {t("privacy.sections.thirdParty.content")}
           </p>
 
-          <h2>Contact Us</h2>
-          <p>
-            If you have any questions about this Privacy Policy, please contact us at contact@youtranscripts.com.
+          <h2 className="text-2xl font-bold mt-6 mb-3">
+            {t("privacy.sections.children.title")}
+          </h2>
+          <p className="text-base">{t("privacy.sections.children.content")}</p>
+
+          <h2 className="text-2xl font-bold mt-6 mb-3">
+            {t("privacy.sections.international.title")}
+          </h2>
+          <p className="text-base">
+            {t("privacy.sections.international.content")}
+          </p>
+
+          <h2 className="text-2xl font-bold mt-6 mb-3">
+            {t("privacy.sections.changes.title")}
+          </h2>
+          <p className="text-base">{t("privacy.sections.changes.content")}</p>
+
+          <h2 className="text-2xl font-bold mt-6 mb-3">
+            {t("privacy.sections.contact.title")}
+          </h2>
+          <p className="text-base">{t("privacy.sections.contact.content")}</p>
+          <p className="text-base mt-2">
+            <strong>{t("privacy.sections.contact.company")}</strong>
+            <br />
+            {t("privacy.sections.contact.email")}{" "}
+            <a
+              href="mailto:contact@youtranscripts.com"
+              className="text-blue-400 hover:underline"
+            >
+              {t("privacy.sections.contact.address")}
+            </a>
           </p>
         </div>
       </div>
