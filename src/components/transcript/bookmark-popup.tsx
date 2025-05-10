@@ -43,7 +43,10 @@ export default function BookmarkPopup({ isOpen, onClose }: BookmarkPopupProps) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 animate-in fade-in duration-300">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 animate-in fade-in duration-300"
+      onClick={onClose}
+    >
       <div className="relative w-full max-w-md mx-4 shadow-xl">
         {/* Success notification */}
         <div className="bg-[#e8f5e9] p-6 rounded-t-lg flex flex-col items-center">
