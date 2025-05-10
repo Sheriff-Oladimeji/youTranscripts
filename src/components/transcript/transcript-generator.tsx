@@ -7,8 +7,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { getVideoId } from "@/lib/youtube";
 import { toast } from "sonner";
+import { useT } from "@/i18n/client";
 
-export default function TranscriptGenerator() {
+interface TranscriptGeneratorProps {
+  lng?: string;
+}
+
+export default function TranscriptGenerator({ lng }: TranscriptGeneratorProps) {
+  const { t } = useT();
   const [youtubeUrl, setYoutubeUrl] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { clearTranscript } = useTranscriptStore();
@@ -21,7 +27,7 @@ export default function TranscriptGenerator() {
     const trimmedUrl = youtubeUrl.trim();
 
     if (!trimmedUrl) {
-      toast.error("Please enter a YouTube URL");
+      toast.error(t("transcriptGenerator.error"));
       return;
     }
 
@@ -34,15 +40,19 @@ export default function TranscriptGenerator() {
           "Valid YouTube URL detected, navigating to transcript page"
         );
         clearTranscript();
-        router.push(`/transcript/${videoId}`);
+        // If we have a language parameter, include it in the URL
+        const path = lng
+          ? `/${lng}/transcript/${videoId}`
+          : `/transcript/${videoId}`;
+        router.push(path);
       } else {
         console.error("Invalid YouTube URL:", trimmedUrl);
-        toast.error("Please enter a valid YouTube URL");
+        toast.error(t("transcriptGenerator.error"));
         setIsLoading(false);
       }
     } catch (error) {
       console.error("Error processing URL:", error);
-      toast.error("An error occurred. Please try again.");
+      toast.error(t("transcriptGenerator.error"));
       setIsLoading(false);
     }
   };
@@ -56,7 +66,7 @@ export default function TranscriptGenerator() {
         >
           <Input
             type="text"
-            placeholder="Paste YouTube URL here..."
+            placeholder={t("transcriptGenerator.placeholder")}
             className="flex-1 h-12 bg-white backdrop-blur-sm border-gray-400 border-2 py-4 text-black placeholder:text-black placeholder:font-medium"
             value={youtubeUrl}
             onChange={(e) => setYoutubeUrl(e.target.value)}
@@ -66,7 +76,7 @@ export default function TranscriptGenerator() {
             className="h-12 px-8 bg-black hover:bg-gray-800 text-white font-bold"
             disabled={isLoading}
           >
-            {isLoading ? "Generating..." : "Generate Transcript"}
+            {isLoading ? "Generating..." : t("transcriptGenerator.button")}
           </Button>
         </form>
       </div>

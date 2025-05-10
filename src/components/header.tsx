@@ -5,12 +5,19 @@ import { Menu, X } from "lucide-react";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { Sun, Moon } from "lucide-react";
-import Link from "next/link";
 import Image from "next/image";
+import I18nLink from "@/components/i18n-link";
+import LanguageSwitcher from "@/components/language-switcher";
+import { useT } from "@/i18n/client";
 
-export default function Header() {
+interface HeaderProps {
+  lng?: string;
+}
+
+export default function Header({ lng }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { theme, setTheme } = useTheme();
+  const { t } = useT();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -45,13 +52,14 @@ export default function Header() {
               height={30}
             />
           </div>
-          <Link href="/" className="text-xl font-bold">
+          <I18nLink href="/" className="text-xl font-bold">
             YouTranscripts
-          </Link>
+          </I18nLink>
         </div>
 
-        {/* Right: Theme Toggle */}
-        <div>
+        {/* Right: Theme Toggle and Language Switcher */}
+        <div className="flex items-center gap-2">
+          <LanguageSwitcher />
           <Button
             variant="ghost"
             aria-label="Toggle theme"
@@ -70,34 +78,34 @@ export default function Header() {
           }`}
         >
           <ul className="flex flex-col p-4 space-y-3">
-            <Link
+            <I18nLink
               href="/about"
               className="text-foreground hover:text-red-600 transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
-              About
-            </Link>
-            <Link
+              {t("header.about")}
+            </I18nLink>
+            <I18nLink
               href="/terms"
               className="text-foreground hover:text-red-600 transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
-              Terms and Conditions
-            </Link>
-            <Link
+              {t("header.terms")}
+            </I18nLink>
+            <I18nLink
               href="/privacy"
               className="text-foreground hover:text-red-600 transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
-              Privacy Policy
-            </Link>
-            <Link
+              {t("header.privacy")}
+            </I18nLink>
+            <I18nLink
               href="/contact"
               className="text-foreground hover:text-red-600 transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
-              Contact
-            </Link>
+              {t("header.contact")}
+            </I18nLink>
           </ul>
         </nav>
       </div>

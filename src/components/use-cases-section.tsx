@@ -1,6 +1,12 @@
 import { Briefcase, Video, FileText, GraduationCap } from "lucide-react";
+import { useT } from "@/i18n/client";
 
-export default function UseCasesSection() {
+interface UseCasesSectionProps {
+  lng?: string;
+}
+
+export default function UseCasesSection({ lng }: UseCasesSectionProps) {
+  const { t } = useT();
   return (
     <section className="w-full py-16 md:py-20 bg-[#f5f5f5] dark:bg-gray-900">
       <div className="w-[90%] mx-auto">
@@ -16,9 +22,12 @@ export default function UseCasesSection() {
               <Briefcase className="h-6 w-6 text-red-600 dark:text-red-400" />
             </div>
             <div className="text-left">
-              <h3 className="text-xl font-bold mb-2">For Marketers & Businesses</h3>
+              <h3 className="text-xl font-bold mb-2">
+                For Marketers & Businesses
+              </h3>
               <p className="text-gray-700 dark:text-gray-300">
-                Repurpose YouTube transcripts into SEO‑optimized blog posts, social media snippets, and email campaigns in seconds.
+                Repurpose YouTube transcripts into SEO-optimized blog posts,
+                social media snippets, and email campaigns in seconds.
               </p>
             </div>
           </div>
@@ -28,9 +37,11 @@ export default function UseCasesSection() {
               <Video className="h-6 w-6 text-red-600 dark:text-red-400" />
             </div>
             <div className="text-left">
-              <h3 className="text-xl font-bold mb-2">For Content Creators & Podcasters</h3>
+              <h3 className="text-xl font-bold mb-2">
+                {t("useCases.creators.title")}
+              </h3>
               <p className="text-gray-700 dark:text-gray-300">
-                Transform episode transcripts into show notes, twitter thread, linkedin post, quotes, and social teasers to drive listener engagement.
+                {t("useCases.creators.description")}
               </p>
             </div>
           </div>
@@ -40,9 +51,11 @@ export default function UseCasesSection() {
               <FileText className="h-6 w-6 text-red-600 dark:text-red-400" />
             </div>
             <div className="text-left">
-              <h3 className="text-xl font-bold mb-2">For Journalists & Writers</h3>
+              <h3 className="text-xl font-bold mb-2">
+                {t("useCases.journalists.title")}
+              </h3>
               <p className="text-gray-700 dark:text-gray-300">
-                Quickly extract accurate quotes and timestamps from interviews for faster, more precise reporting.
+                {t("useCases.journalists.description")}
               </p>
             </div>
           </div>
@@ -52,9 +65,11 @@ export default function UseCasesSection() {
               <GraduationCap className="h-6 w-6 text-red-600 dark:text-red-400" />
             </div>
             <div className="text-left">
-              <h3 className="text-xl font-bold mb-2">For Researchers & Students</h3>
+              <h3 className="text-xl font-bold mb-2">
+                {t("useCases.researchers.title")}
+              </h3>
               <p className="text-gray-700 dark:text-gray-300">
-                Analyze lecture and interview transcripts efficiently for high‑quality citations and in‑depth academic insights.
+                {t("useCases.researchers.description")}
               </p>
             </div>
           </div>

@@ -3,10 +3,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import Header from "@/components/header";
-import Footer from "@/components/footer";
 import { Toaster } from "sonner";
-import ClientBannerWrapper from "@/components/client-banner-wrapper";
 import { Suspense } from "react";
 import Analytics from "@/components/analytics";
 
@@ -78,10 +75,7 @@ export default function RootLayout({
           <Suspense>
             <Analytics />
           </Suspense>
-          <ClientBannerWrapper />
-          <Header />
           {children}
-          <Footer />
           <Toaster richColors position="top-center" />
         </ThemeProvider>
       </body>

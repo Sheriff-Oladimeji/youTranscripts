@@ -7,20 +7,27 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { getVideoId } from "@/lib/youtube";
 import { useTranscriptStore } from "@/store/transcript-store";
+import { useT } from "@/i18n/client";
 
 interface TranscriptInputFormProps {
   buttonText?: string;
   className?: string;
+  lng?: string;
 }
 
 export default function TranscriptInputForm({
-  buttonText = "Generate Transcript",
+  buttonText,
   className = "",
+  lng,
 }: TranscriptInputFormProps) {
+  const { t } = useT();
   const [youtubeUrl, setYoutubeUrl] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { clearTranscript } = useTranscriptStore();
+
+  // Use the provided buttonText or get it from translations
+  const submitButtonText = buttonText || t("transcriptGenerator.button");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,7 +36,7 @@ export default function TranscriptInputForm({
     const trimmedUrl = youtubeUrl.trim();
 
     if (!trimmedUrl) {
-      toast.error("Please enter a YouTube URL");
+      toast.error(t("transcriptGenerator.error"));
       return;
     }
 
@@ -42,28 +49,29 @@ export default function TranscriptInputForm({
           "Valid YouTube URL detected, navigating to transcript page"
         );
         clearTranscript();
-        router.push(`/transcript/${videoId}`);
+        // If we have a language parameter, include it in the URL
+        const path = lng
+          ? `/${lng}/transcript/${videoId}`
+          : `/transcript/${videoId}`;
+        router.push(path);
       } else {
         console.error("Invalid YouTube URL:", trimmedUrl);
-        toast.error("Please enter a valid YouTube URL");
+        toast.error(t("transcriptGenerator.error"));
         setIsLoading(false);
       }
     } catch (error) {
       console.error("Error processing URL:", error);
-      toast.error("An error occurred. Please try again.");
+      toast.error(t("transcriptGenerator.error"));
       setIsLoading(false);
     }
   };
 
   return (
     <div className={`w-full ${className}`}>
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col sm:flex-row gap-4"
-      >
+      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4">
         <Input
           type="text"
-          placeholder="Paste YouTube URL here..."
+          placeholder={t("transcriptGenerator.placeholder")}
           className="flex-1 h-12 bg-white backdrop-blur-sm border-gray-400 border-2 py-4 text-black placeholder:text-black dark:placeholder:text-white placeholder:font-medium"
           value={youtubeUrl}
           onChange={(e) => setYoutubeUrl(e.target.value)}
@@ -73,7 +81,7 @@ export default function TranscriptInputForm({
           className="h-12 px-8 bg-black hover:bg-gray-800 text-white font-bold"
           disabled={isLoading}
         >
-          {isLoading ? "Generating..." : buttonText}
+          {isLoading ? "Generating..." : submitButtonText}
         </Button>
       </form>
     </div>

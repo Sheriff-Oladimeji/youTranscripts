@@ -11,8 +11,14 @@ import {
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { testimonials } from "@/constants/testimonials";
+import { useT } from "@/i18n/client";
 
-export default function TestimonialsSection() {
+interface TestimonialsSectionProps {
+  lng?: string;
+}
+
+export default function TestimonialsSection({ lng }: TestimonialsSectionProps) {
+  const { t } = useT();
   const renderStars = (rating: number) => {
     return Array(5)
       .fill(0)
@@ -30,18 +36,20 @@ export default function TestimonialsSection() {
     <section className="w-full py-16 md:py-20 bg-white dark:bg-gray-800">
       <div className="w-[90%] max-w-6xl mx-auto">
         <div className="text-center mb-10">
-          <p className="text-red-500 font-medium mb-2">Testimonials</p>
+          <p className="text-red-500 font-medium mb-2">
+            {t("testimonials.subtitle")}
+          </p>
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4">
-            Don&apos;t take our word for it, here&apos;s what our users say
+            {t("testimonials.title")}
           </h2>
           <div className="flex items-center justify-center gap-2 mb-1">
             {renderStars(5)}
           </div>
           <p className="text-gray-600 dark:text-gray-300">
-            Rated 4.6 out of 5 stars
+            {t("testimonials.rating")}
           </p>
           <p className="text-gray-500 dark:text-gray-400 text-sm">
-            Based on 2,363 reviews
+            {t("testimonials.reviews")}
           </p>
         </div>
 

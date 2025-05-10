@@ -1,0 +1,138 @@
+{
+  "header": {
+    "home": "Inicio",
+    "about": "Acerca de",
+    "contact": "Contacto",
+    "privacy": "Política de Privacidad",
+    "terms": "Términos de Servicio"
+  },
+  "hero": {
+    "title": "Generador de Transcripciones de YouTube Gratuito",
+    "subtitle": "Usa nuestro extractor de transcripciones de YouTube gratuito y convierte cualquier video de YouTube a texto con un solo clic",
+    "trusted": "Confiado por más de 535 mil usuarios en todo el mundo",
+    "noSignup": "Sin registro y uso ilimitado gratuito",
+    "features": {
+      "oneClick": "Copiar y descargar con un clic",
+      "translation": "Soporte de traducción",
+      "languages": "Múltiples idiomas"
+    }
+  },
+  "transcriptGenerator": {
+    "placeholder": "Ingresa URL de YouTube",
+    "button": "Generar Transcripción",
+    "generating": "Generando...",
+    "error": "Por favor ingresa una URL válida de YouTube"
+  },
+  "promotional": {
+    "title": "¿Por qué elegir YouTranscripts?",
+    "subtitle": "El generador de transcripciones de YouTube más confiable disponible en línea",
+    "benefits": {
+      "free": "100% Gratis - Sin tarifas ocultas ni registro requerido",
+      "fast": "Súper Rápido - Obtén transcripciones en segundos",
+      "accurate": "Alta Precisión - Directamente de los subtítulos de YouTube",
+      "translate": "Soporte de Traducción - Convierte a múltiples idiomas"
+    }
+  },
+  "howTo": {
+    "mainTitle": "Genera Transcripciones de YouTube Gratis en Segundos 🎥",
+    "subtitle": "Convierte cualquier video de YouTube en texto totalmente editable y optimizado para SEO, sin registro, sin límites y 100% gratis.",
+    "title": "Cómo funciona",
+    "steps": {
+      "pasteGo": "Pegar y Listo",
+      "pasteGoDesc": "Coloca tu URL de YouTube, haz clic en Generar Mi Transcripción Gratis.",
+      "editTranslate": "Editar y Traducir",
+      "editTranslateDesc": "Elimina partes no deseadas, elige entre más de 100 idiomas y optimiza para SEO.",
+      "downloadShare": "Descargar y Compartir",
+      "downloadShareDesc": "Exporta como TXT, SRT o PDF—perfecto para subtítulos, citas, publicaciones de blog y redes sociales."
+    },
+    "trustedCreators": "Confiado por más de 100,000 creadores para la extracción rápida y precisa de transcripciones de YouTube.",
+    "generateFreeTranscript": "Generar Mi Transcripción Gratis"
+  },
+  "useCases": {
+    "title": "Casos de Uso",
+    "marketers": {
+      "title": "Para Mercadólogos y Empresas",
+      "description": "Reutiliza transcripciones de YouTube en publicaciones de blog optimizadas para SEO, fragmentos para redes sociales y campañas de correo electrónico en segundos."
+    },
+    "creators": {
+      "title": "Para Creadores de Contenido y Podcasters",
+      "description": "Transforma transcripciones de episodios en notas del programa, hilos de Twitter, publicaciones de LinkedIn, citas y avances sociales para impulsar la participación de los oyentes."
+    },
+    "journalists": {
+      "title": "Para Periodistas y Escritores",
+      "description": "Extrae rápidamente citas precisas y marcas de tiempo de entrevistas para informes más rápidos y precisos."
+    },
+    "researchers": {
+      "title": "Para Investigadores y Estudiantes",
+      "description": "Analiza transcripciones de conferencias y entrevistas de manera eficiente para obtener citas de alta calidad y conocimientos académicos profundos."
+    }
+  },
+  "testimonials": {
+    "subtitle": "Testimonios",
+    "title": "No tomes solo nuestra palabra, esto es lo que dicen nuestros usuarios",
+    "rating": "Calificación de 4.6 de 5 estrellas",
+    "reviews": "Basado en 2,363 reseñas"
+  },
+  "faq": {
+    "title": "Preguntas Frecuentes",
+    "subtitle": "Todo lo que necesitas saber sobre el uso de YouTranscripts para generar transcripciones de videos de YouTube.",
+    "tryButton": "Prueba el Generador de Transcripciones de YouTube gratis",
+    "questions": {
+      "q1": "¿Qué es una transcripción de YouTube?",
+      "a1": "Una transcripción de YouTube es el texto completo de todo lo hablado en un video, generado por el motor de subtítulos de YouTube o una herramienta de terceros. Te permite leer, buscar y reutilizar el contenido de tu video como texto.",
+      "q2": "¿Cómo genero una transcripción de YouTube para cualquier video?",
+      "a2": "Solo pega tu URL de video de YouTube en YouTranscripts (youtranscripts.com), haz clic en Generar Transcripción, y obtén el texto completo en segundos—sin necesidad de escribir manualmente.",
+      "q3": "¿Es gratuito el uso del generador de transcripciones de YouTube?",
+      "a3": "Sí—nuestra herramienta de transcripción de YouTube es 100% gratuita. Puedes generar y descargar transcripciones ilimitadas sin registro, tarifas o cargos ocultos.",
+      "q4": "¿Cómo descargo transcripciones de videos de YouTube en formato TXT, DOC, PDF o SRT?",
+      "a4": "Después de generar tu transcripción en youtranscripts.com, haz clic en Descargar y elige TXT, DOC, PDF o SRT. Tu transcripción de video de YouTube se guardará instantáneamente en el formato que necesites.",
+      "q5": "¿Puedo traducir transcripciones de YouTube a otros idiomas?",
+      "a5": "Absolutamente. Haz clic en Traducir Transcripción, selecciona cualquier idioma de destino, y nuestra herramienta entregará una transcripción de YouTube traducida con precisión lista para leer o exportar.",
+      "q6": "¿Hay un límite en la duración del video o el número de transcripciones que puedo generar?",
+      "a6": "No—no hay una duración máxima de video ni límite de uso. YouTranscripts maneja videos de cualquier duración y te permite crear tantas transcripciones como desees.",
+      "q7": "¿Qué tan precisas son las transcripciones generadas por el generador de transcripciones de videos de YouTube de YouTranscripts?",
+      "a7": "La precisión depende de la calidad del audio y la claridad del hablante. En videos bien grabados y claros, verás una precisión de ~90%+. Y siempre puedes editar cualquier error restante antes de exportar."
+    }
+  },
+  "footer": {
+    "copyright": "© 2025 YouTranscripts. Todos los derechos reservados.",
+    "language": "Idioma"
+  },
+  "about": {
+    "title": "Acerca de YouTranscripts",
+    "subtitle": "El generador de transcripciones de YouTube gratuito en el que puedes confiar"
+  },
+  "contact": {
+    "title": "Contáctanos",
+    "subtitle": "¡Nos encantaría saber de ti! Ponte en contacto con nuestro equipo.",
+    "email": "Envíanos un Email",
+    "emailAddress": "contact@youtranscripts.com"
+  },
+  "privacy": {
+    "title": "Política de Privacidad",
+    "lastUpdated": "Última Actualización: 1 de Mayo de 2025"
+  },
+  "terms": {
+    "title": "Términos de Servicio",
+    "lastUpdated": "Última Actualización: 1 de Mayo de 2025"
+  },
+  "bookmark": {
+    "title": "Guárdanos Ctrl+D para Acceso Rápido",
+    "titleMac": "Guárdanos ⌘+D para Acceso Rápido",
+    "popup": {
+      "title": "Guarda YouTranscripts para la Próxima Vez",
+      "windows": "Presiona Ctrl+D para guardar",
+      "mac": "Presiona ⌘+D para guardar",
+      "benefits": {
+        "time": "⏱️ Ahorra tiempo",
+        "flow": "💡 Mantén el flujo",
+        "smarter": "📈 Trabaja más inteligente"
+      }
+    }
+  },
+  "mobileAdd": {
+    "title": "Añadir a Pantalla de Inicio",
+    "ios": "Toca Compartir y luego 'Añadir a Pantalla de Inicio'",
+    "android": "Toca Menú y luego 'Añadir a Pantalla de Inicio'"
+  }
+}

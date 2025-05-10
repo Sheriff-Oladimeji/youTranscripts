@@ -1,4 +1,14 @@
-export default function Footer() {
+"use client";
+
+import I18nLink from "@/components/i18n-link";
+import { useT } from "@/i18n/client";
+
+interface FooterProps {
+  lng?: string;
+}
+
+export default function Footer({ lng }: FooterProps) {
+  const { t } = useT();
   return (
     <footer className="w-full border-t bg-background py-6">
       <div className="w-[90%] mx-auto">
@@ -13,34 +23,34 @@ export default function Footer() {
 
         <div className="flex flex-col md:flex-row justify-between items-center">
           <p className="text-sm text-muted-foreground">
-            Copyright © {new Date().getFullYear()} - All rights reserved.
+            {t("footer.copyright")}
           </p>
 
           <div className="flex gap-4 mt-4 md:mt-0">
-            <a
+            <I18nLink
               href="/about"
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
-              About
-            </a>
-            <a
+              {t("header.about")}
+            </I18nLink>
+            <I18nLink
               href="/terms"
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
-              Terms and Conditions
-            </a>
-            <a
+              {t("header.terms")}
+            </I18nLink>
+            <I18nLink
               href="/privacy"
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
-              Privacy Policy
-            </a>
-            <a
+              {t("header.privacy")}
+            </I18nLink>
+            <I18nLink
               href="/contact"
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
-              Contact
-            </a>
+              {t("header.contact")}
+            </I18nLink>
           </div>
         </div>
       </div>

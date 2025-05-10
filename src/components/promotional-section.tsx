@@ -2,19 +2,23 @@
 
 import { Clipboard, Globe, FileText, Languages } from "lucide-react";
 import TranscriptInputForm from "./transcript-input-form";
+import { useT } from "@/i18n/client";
 
-export default function PromotionalSection() {
+interface PromotionalSectionProps {
+  lng: string;
+}
+
+export default function PromotionalSection({ lng }: PromotionalSectionProps) {
+  const { t } = useT();
   return (
     <section className="w-full py-16 md:py-20 bg-[#f5f5f5] dark:bg-gray-900">
       <div className="w-[90%] mx-auto">
         <div className="flex flex-col items-center text-center mb-10">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 max-w-4xl">
-            Instant, Free YouTube Video Transcript Generator – Copy, Translate &
-            Download
+            {t("promotional.title")}
           </h2>
           <p className="max-w-[800px] text-lg mb-10">
-            Use our YouTube video to text converter in seconds—no signup, no
-            limits, 100% free.
+            {t("promotional.subtitle")}
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mb-10">
@@ -24,7 +28,7 @@ export default function PromotionalSection() {
               </div>
               <div>
                 <h3 className="font-bold text-lg mb-1">
-                  One Click Transcripts
+                  {t("promotional.benefits.fast")}
                 </h3>
                 <p className="text-gray-700 dark:text-gray-300">
                   Paste your YouTube URL and hit &quot;Get Transcript&quot; to
@@ -39,7 +43,7 @@ export default function PromotionalSection() {
               </div>
               <div>
                 <h3 className="font-bold text-lg mb-1">
-                  Instant Copy & Download
+                  {t("promotional.benefits.free")}
                 </h3>
                 <p className="text-gray-700 dark:text-gray-300">
                   Grab any line or the entire script with a single click—perfect
@@ -53,7 +57,9 @@ export default function PromotionalSection() {
                 <Globe className="h-5 w-5 text-red-600" />
               </div>
               <div>
-                <h3 className="font-bold text-lg mb-1">100+ Languages</h3>
+                <h3 className="font-bold text-lg mb-1">
+                  {t("promotional.benefits.accurate")}
+                </h3>
                 <p className="text-gray-700 dark:text-gray-300">
                   Translate your transcript on the spot into over 100 languages
                   for global reach.
@@ -66,9 +72,11 @@ export default function PromotionalSection() {
                 <Languages className="h-5 w-5 text-red-600" />
               </div>
               <div>
-                <h3 className="font-bold text-lg mb-1">Flexible Downloads</h3>
+                <h3 className="font-bold text-lg mb-1">
+                  {t("promotional.benefits.translate")}
+                </h3>
                 <p className="text-gray-700 dark:text-gray-300">
-                  Export as TXT, SRT, DOCx or PDF to use in SEO, social media,
+                  Export as TXT, SRT, DOCx or CSV to use in SEO, social media,
                   video captions, or study notes.
                 </p>
               </div>
@@ -77,7 +85,7 @@ export default function PromotionalSection() {
         </div>
 
         <div className="max-w-3xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-md border border-gray-200 dark:border-gray-700 p-6 md:p-8">
-          <TranscriptInputForm />
+          <TranscriptInputForm lng={lng} />
         </div>
       </div>
     </section>
