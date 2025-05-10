@@ -8,7 +8,8 @@ const i18n = i18next.createInstance();
 i18n
   .use(
     resourcesToBackend(
-      (language, namespace) => import(`./locales/${language}/${namespace}.json`)
+      (language: string, namespace: string) =>
+        import(`./locales/${language}/${namespace}.json`)
     )
   )
   .init({
