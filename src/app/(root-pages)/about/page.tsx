@@ -1,4 +1,8 @@
 import type { Metadata } from "next";
+import { getT } from "@/i18n";
+import { fallbackLng } from "@/i18n/settings";
+import Link from "next/link";
+
 
 export const metadata: Metadata = {
   title: "About Us | YouTranscripts - Fast & Accurate YouTube Transcript Tool",
@@ -24,17 +28,18 @@ export const metadata: Metadata = {
   },
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  // Use English as the default language
+  const { t } = await getT(undefined, undefined, fallbackLng);
+
   return (
     <main className="flex flex-col min-h-screen bg-background">
       <div className="w-full py-12 md:py-24 bg-gradient-to-b from-[#b63e33] to-[#b63e33] dark:from-[#b63e33] dark:to-[#b63e33] text-white">
         <div className="w-[90%] max-w-[800px] mx-auto">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            About YouTranscripts
+            {t("about.title")}
           </h1>
-          <p className="text-lg md:text-xl">
-            The free YouTube transcript generator you can trust
-          </p>
+          <p className="text-lg md:text-xl">{t("about.subtitle")}</p>
         </div>
       </div>
 
@@ -138,9 +143,9 @@ export default function AboutPage() {
           <p className="text-lg">
             If you have any questions, suggestions, or feedback, please don't
             hesitate to{" "}
-            <a href="/contact" className="text-blue-600 hover:underline">
+            <Link href="/contact" className="text-blue-600 hover:underline">
               contact us
-            </a>
+            </Link>
             . We'd love to hear from you!
           </p>
         </section>

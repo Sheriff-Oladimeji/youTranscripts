@@ -19,13 +19,27 @@ export default function I18nLink({
   const params = useParams();
   const lang = params?.lng as string;
 
-  // If we're not in a language route or the href already starts with a language code, don't modify it
-  if (
-    !lang ||
-    href.startsWith("/en/") ||
-    href.startsWith("/es/") ||
-    href.startsWith("/pt/")
-  ) {
+  // If the href already starts with a language code, don't modify it
+  if (href.startsWith("/es/") || href.startsWith("/pt/")) {
+    return (
+      <Link href={href} className={className} onClick={onClick}>
+        {children}
+      </Link>
+    );
+  }
+
+  // If we're in English mode or not in a language route
+  if (lang === "en" || !lang) {
+    // If href is just '/', we want to go to the root
+    if (href === "/") {
+      return (
+        <Link href="/" className={className} onClick={onClick}>
+          {children}
+        </Link>
+      );
+    }
+
+    // For English, don't add language prefix
     return (
       <Link href={href} className={className} onClick={onClick}>
         {children}
@@ -42,7 +56,7 @@ export default function I18nLink({
     );
   }
 
-  // Otherwise, prepend the current language to the href
+  // For non-English languages, prepend the current language to the href
   const localizedHref = href.startsWith("/")
     ? `/${lang}${href}`
     : `/${lang}/${href}`;

@@ -28,7 +28,21 @@ export default function LanguageSwitcher() {
     // Get the path segments
     const segments = pathname.split("/").filter(Boolean);
 
-    // The first segment should be the current language
+    // Special handling for English (root URL)
+    if (newLang === "en") {
+      // If we're switching to English, go to the root URL with the same path
+      // If the first segment is a language code, remove it
+      if (segments.length > 0 && languages.includes(segments[0])) {
+        segments.shift(); // Remove the language segment
+      }
+
+      // Reconstruct the path without language prefix for English
+      const newPathname = segments.length > 0 ? `/${segments.join("/")}` : "/";
+      window.location.href = newPathname;
+      return;
+    }
+
+    // For non-English languages
     if (segments.length > 0 && languages.includes(segments[0])) {
       // Replace the language segment
       segments[0] = newLang;
