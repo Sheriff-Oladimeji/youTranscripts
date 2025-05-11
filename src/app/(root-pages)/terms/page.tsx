@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { getT } from "@/i18n";
+import { fallbackLng } from "@/i18n/settings";
 
 export const metadata: Metadata = {
   title: "Terms & Conditions | YouTranscripts",
@@ -22,15 +24,18 @@ export const metadata: Metadata = {
   },
 };
 
-export default function TermsPage() {
+export default async function TermsPage() {
+  // Use English as the default language
+  const { t } = await getT(undefined, undefined, fallbackLng);
+
   return (
     <main className="flex flex-col min-h-screen bg-background">
       <div className="w-full py-12 md:py-16 bg-gradient-to-b from-[#b63e33] to-[#b63e33] dark:from-[#b63e33] dark:to-[#b63e33] text-white">
         <div className="w-[90%] max-w-[800px] mx-auto">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            Terms of Service
+            {t("terms.title")}
           </h1>
-          <p className="text-lg md:text-xl">Last Updated: 1st May 2025</p>
+          <p className="text-lg md:text-xl">{t("terms.lastUpdated")}</p>
         </div>
       </div>
 

@@ -7,12 +7,12 @@ import { useTranslation } from "react-i18next";
 
 export function useT(ns?: string | string[], options?: { keyPrefix?: string }) {
   const params = useParams();
-  const lng = params?.lng as string;
+  const lng = (params?.lng as string) || "en"; // Default to English if no language parameter
 
   // Initialize language if we have a language parameter
   useEffect(() => {
     // If we have a language from the route, use it
-    if (typeof lng === "string" && i18nClient.resolvedLanguage !== lng) {
+    if (i18nClient.resolvedLanguage !== lng) {
       i18nClient.changeLanguage(lng);
     }
   }, [lng]);

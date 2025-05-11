@@ -50,11 +50,12 @@ export function middleware(req: NextRequest) {
   const headers = new Headers(req.headers);
   headers.set(headerName, lng);
 
-  // If the language is not in the path, redirect to include it
+  // If the language is not in the path and it's not English, redirect to include it
   if (
     !lngInPath &&
     !req.nextUrl.pathname.startsWith("/_next") &&
-    !req.nextUrl.pathname.startsWith("/transcript")
+    !req.nextUrl.pathname.startsWith("/transcript") &&
+    lng !== fallbackLng // Only redirect non-English languages
   ) {
     return NextResponse.redirect(
       new URL(`/${lng}${req.nextUrl.pathname}${req.nextUrl.search}`, req.url)

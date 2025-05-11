@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Mail, MessageSquare, Users, Zap } from "lucide-react";
+import { getT } from "@/i18n";
+import { fallbackLng } from "@/i18n/settings";
 
 export const metadata: Metadata = {
   title: "Contact Us | YouTranscripts Support",
@@ -23,15 +25,18 @@ export const metadata: Metadata = {
   },
 };
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  // Use English as the default language
+  const { t } = await getT(undefined, undefined, fallbackLng);
+
   return (
     <main className="flex flex-col min-h-screen bg-background">
       <div className="w-full py-12 md:py-16 bg-gradient-to-b from-[#b63e33] to-[#b63e33] dark:from-[#b63e33] dark:to-[#b63e33] text-white">
         <div className="w-[90%] max-w-[800px] mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Contact Us</h1>
-          <p className="text-lg md:text-xl">
-            We'd love to hear from you! Get in touch with our team.
-          </p>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+            {t("contact.title")}
+          </h1>
+          <p className="text-lg md:text-xl">{t("contact.subtitle")}</p>
         </div>
       </div>
 

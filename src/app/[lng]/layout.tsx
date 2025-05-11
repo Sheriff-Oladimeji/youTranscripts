@@ -36,27 +36,35 @@ export default function RootLayout({
   const resolvedParams = use(params);
   const { lng } = resolvedParams;
 
-  return (
-    <html lang={lng} suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
+  // For non-English languages, we'll render the full layout
+  // For English, we'll just render the children (since the root layout already has header/footer)
+  if (lng !== "en") {
+    return (
+      <html lang={lng} suppressHydrationWarning>
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          <Suspense>
-            <Analytics />
-          </Suspense>
-          <ClientBannerWrapper />
-          <Header lng={lng} />
-          {children}
-          <Footer lng={lng} />
-          <Toaster richColors position="top-center" />
-        </ThemeProvider>
-      </body>
-    </html>
-  );
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Suspense>
+              <Analytics />
+            </Suspense>
+            <ClientBannerWrapper />
+            <Header lng={lng} />
+            {children}
+            <Footer lng={lng} />
+            <Toaster richColors position="top-center" />
+          </ThemeProvider>
+        </body>
+      </html>
+    );
+  }
+
+  // For English, we'll just render the children without any layout
+  // since the root layout already handles this
+  return <>{children}</>;
 }
