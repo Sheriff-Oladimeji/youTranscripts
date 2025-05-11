@@ -49,7 +49,7 @@ export default function TranscriptViewer({
     );
   }
 
-  if (transcript.length === 0) {
+  if (!transcript || transcript.length === 0) {
     return (
       <div className="p-6 bg-muted rounded-lg">
         <p className="text-center text-muted-foreground">

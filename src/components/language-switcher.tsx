@@ -24,38 +24,51 @@ export default function LanguageSwitcher() {
     // Set the language cookie
     document.cookie = `i18next=${newLang};path=/;max-age=31536000`;
 
-    // For all language changes, use a hard refresh to avoid caching issues
     // Get the path segments
     const segments = pathname.split("/").filter(Boolean);
 
-    // Special handling for English (root URL)
-    if (newLang === "en") {
-      // If we're switching to English, go to the root URL with the same path
-      // If the first segment is a language code, remove it
-      if (segments.length > 0 && languages.includes(segments[0])) {
-        segments.shift(); // Remove the language segment
-      }
+    // Handle transcript pages specially
+    const isTranscriptPage = segments.includes("transcript");
 
-      // Reconstruct the path without language prefix for English
-      const newPathname = segments.length > 0 ? `/${segments.join("/")}` : "/";
-      window.location.href = newPathname;
+    // Special handling for English
+    if (newLang === "en") {
+      let newPath = "/";
+      if (segments.length > 0) {
+        // If we're in a transcript page, keep that path
+        if (isTranscriptPage) {
+          const videoId = segments[segments.length - 1];
+          newPath = `/transcript/${videoId}`;
+        } else {
+          // For other pages, remove the language prefix if it exists
+          if (languages.includes(segments[0])) {
+            segments.shift();
+          }
+          newPath = `/${segments.join("/")}`;
+        }
+      }
+      window.location.href = newPath;
       return;
     }
 
     // For non-English languages
-    if (segments.length > 0 && languages.includes(segments[0])) {
-      // Replace the language segment
-      segments[0] = newLang;
-    } else {
-      // If no language segment exists, add it at the beginning
-      segments.unshift(newLang);
+    let newPath = `/${newLang}`;
+    if (segments.length > 0) {
+      if (isTranscriptPage) {
+        // For transcript pages, ensure correct path structure
+        const videoId = segments[segments.length - 1];
+        newPath = `/${newLang}/transcript/${videoId}`;
+      } else {
+        // For other pages, handle normally
+        if (languages.includes(segments[0])) {
+          segments[0] = newLang;
+        } else {
+          segments.unshift(newLang);
+        }
+        newPath = `/${segments.join("/")}`;
+      }
     }
 
-    // Reconstruct the path
-    const newPathname = `/${segments.join("/")}`;
-
-    // Use window.location for a full page refresh
-    window.location.href = newPathname;
+    window.location.href = newPath;
   };
 
   // Map language codes to display names

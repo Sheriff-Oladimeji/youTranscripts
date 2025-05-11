@@ -20,7 +20,7 @@ export default function TranscriptHeader({
   const { t } = useT();
 
   return (
-    <div className="mb-6">
+    <div className="mb-3">
       <h1 className="text-2xl md:text-3xl font-bold mb-2">
         {isLoading ? (
           t("transcript.header.loading")

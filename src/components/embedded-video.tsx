@@ -6,9 +6,9 @@ interface EmbeddedVideoProps {
 
 export function EmbeddedVideo({ videoId }: EmbeddedVideoProps) {
   return (
-    <div className="w-full mt-8">
+    <div className="w-full">
       <div id="video-container" className="w-full">
-        <div className="max-w-[800px] mx-auto px-4 pt-4">
+        <div className="max-w-[800px] mx-auto px-4 pt-2">
           <div className="relative w-full rounded-lg overflow-hidden shadow-lg">
             <div className="relative pb-[56.25%] bg-black">
               <iframe

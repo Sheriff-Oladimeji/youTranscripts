@@ -412,8 +412,14 @@
   },
   "mobileAdd": {
     "title": "Añadir a Pantalla de Inicio",
-    "ios": "Toca Compartir y luego 'Añadir a Pantalla de Inicio'",
-    "android": "Toca Menú y luego 'Añadir a Pantalla de Inicio'"
+    "instructions": "Añade YouTranscripts a tu pantalla de inicio para acceso rápido—sin navegador, sin búsqueda.",
+    "menuTop": "Toca el menú ⋮ (arriba-derecha)",
+    "android": "Elige 'Añadir a Pantalla de Inicio'",
+    "ios": "Desplázate hasta 'Añadir a Pantalla de Inicio'",
+    "tapShare": "Toca Compartir",
+    "tapAdd": "Toca Añadir",
+    "androidTitle": "Android (Chrome)",
+    "iosTitle": "iPhone (Safari)"
   },
   "transcript": {
     "header": {

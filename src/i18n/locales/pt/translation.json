@@ -412,8 +412,14 @@
   },
   "mobileAdd": {
     "title": "Adicionar à Tela Inicial",
-    "ios": "Toque em Compartilhar e depois 'Adicionar à Tela Inicial'",
-    "android": "Toque em Menu e depois 'Adicionar à Tela Inicial'"
+    "instructions": "Adicione YouTranscripts à sua tela inicial para acesso rápido—sem navegador, sem pesquisa.",
+    "menuTop": "Toque no menu ⋮ (canto superior direito)",
+    "android": "Escolha 'Adicionar à Tela Inicial'",
+    "ios": "Role até 'Adicionar à Tela Inicial'",
+    "tapShare": "Toque em Compartilhar",
+    "tapAdd": "Toque em Adicionar",
+    "androidTitle": "Android (Chrome)",
+    "iosTitle": "iPhone (Safari)"
   },
   "transcript": {
     "header": {

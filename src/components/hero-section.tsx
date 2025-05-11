@@ -10,6 +10,7 @@ import { Languages, Globe, Clipboard } from "lucide-react";
 import { toast } from "sonner";
 import { getVideoId } from "@/lib/youtube";
 import { useT } from "@/i18n/client";
+import { fallbackLng } from "@/i18n/settings";
 
 interface HeroSectionProps {
   lng: string;
@@ -40,7 +41,15 @@ export default function HeroSection({ lng }: HeroSectionProps) {
         console.log(
           "Valid YouTube URL detected, navigating to transcript page"
         );
-        router.push(`/${lng}/transcript/${videoId}`);
+
+        // For English (or no language specified), use root route
+        // For other languages, include the language prefix
+        const path =
+          !lng || lng === fallbackLng
+            ? `/transcript/${videoId}`
+            : `/${lng}/transcript/${videoId}`;
+
+        router.push(path);
       } else {
         console.error("Invalid YouTube URL:", trimmedUrl);
         toast.error(t("transcriptGenerator.error"));

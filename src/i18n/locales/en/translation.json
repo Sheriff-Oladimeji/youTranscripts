@@ -412,8 +412,14 @@
   },
   "mobileAdd": {
     "title": "Add to Home Screen",
-    "ios": "Tap Share then 'Add to Home Screen'",
-    "android": "Tap Menu then 'Add to Home Screen'"
+    "instructions": "Add YouTranscripts to your home screen for quick access—no browser, no search.",
+    "menuTop": "Tap ⋮ menu (top-right)",
+    "android": "Choose 'Add to Home Screen'",
+    "ios": "Scroll to 'Add to Home Screen'",
+    "tapShare": "Tap Share",
+    "tapAdd": "Tap Add",
+    "androidTitle": "Android (Chrome)",
+    "iosTitle": "iPhone (Safari)"
   },
   "transcript": {
     "header": {
