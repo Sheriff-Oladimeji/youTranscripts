@@ -10,15 +10,33 @@ import {
 } from "@/components/ui/carousel";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { testimonials } from "@/constants/testimonials";
+import {
+  testimonials as fallbackTestimonials,
+  Testimonial,
+} from "@/constants/testimonials";
 import { useT } from "@/i18n/client";
 
 interface TestimonialsSectionProps {
   lng?: string;
 }
 
+interface TranslatedTestimonial {
+  name: string;
+  role: string;
+  content: string;
+  rating?: number;
+  avatar?: string;
+}
+
 export default function TestimonialsSection({ lng }: TestimonialsSectionProps) {
   const { t } = useT();
+
+  // Get translated testimonials or use fallback
+  const translatedTestimonials =
+    (t("testimonials.items", { returnObjects: true }) as
+      | TranslatedTestimonial[]
+      | undefined) || fallbackTestimonials;
+
   const renderStars = (rating: number) => {
     return Array(5)
       .fill(0)
@@ -63,40 +81,53 @@ export default function TestimonialsSection({ lng }: TestimonialsSectionProps) {
               className="w-full"
             >
               <CarouselContent className="-ml-6">
-                {testimonials.map((testimonial, index) => (
-                  <CarouselItem
-                    key={index}
-                    className="pl-6 md:basis-1/2 lg:basis-1/3"
-                  >
-                    <div className="bg-white dark:bg-gray-700 p-8 rounded-lg shadow-md border border-gray-200 dark:border-gray-600 h-full flex flex-col">
-                      <div className="flex mb-3">
-                        {renderStars(testimonial.rating)}
-                      </div>
-                      <p className="text-gray-700 dark:text-gray-300 mb-4 flex-grow">
-                        &quot;{testimonial.content}&quot;
-                      </p>
-                      <div className="flex items-center mt-2">
-                        <div className="mr-3">
-                          <Avatar>
-                            <AvatarImage
-                              src={testimonial.avatar}
-                              alt={`${testimonial.name} avatar`}
-                            />
-                            <AvatarFallback>
-                              {testimonial.name.split(" ")[0][0]}
-                            </AvatarFallback>
-                          </Avatar>
-                        </div>
-                        <div>
-                          <h4 className="font-bold">{testimonial.name}</h4>
-                          <p className="text-gray-600 dark:text-gray-400 text-sm">
-                            {testimonial.role}
+                {translatedTestimonials.map(
+                  (testimonial: TranslatedTestimonial, index: number) => {
+                    // Get the corresponding fallback testimonial for the avatar
+                    const fallbackTestimonial =
+                      fallbackTestimonials[index] || fallbackTestimonials[0];
+
+                    return (
+                      <CarouselItem
+                        key={index}
+                        className="pl-6 md:basis-1/2 lg:basis-1/3"
+                      >
+                        <div className="bg-white dark:bg-gray-700 p-8 rounded-lg shadow-md border border-gray-200 dark:border-gray-600 h-full flex flex-col">
+                          <div className="flex mb-3">
+                            {renderStars(
+                              testimonial.rating || fallbackTestimonial.rating
+                            )}
+                          </div>
+                          <p className="text-gray-700 dark:text-gray-300 mb-4 flex-grow">
+                            &quot;{testimonial.content}&quot;
                           </p>
+                          <div className="flex items-center mt-2">
+                            <div className="mr-3">
+                              <Avatar>
+                                <AvatarImage
+                                  src={
+                                    testimonial.avatar ||
+                                    fallbackTestimonial.avatar
+                                  }
+                                  alt={`${testimonial.name} avatar`}
+                                />
+                                <AvatarFallback>
+                                  {testimonial.name.split(" ")[0][0]}
+                                </AvatarFallback>
+                              </Avatar>
+                            </div>
+                            <div>
+                              <h4 className="font-bold">{testimonial.name}</h4>
+                              <p className="text-gray-600 dark:text-gray-400 text-sm">
+                                {testimonial.role}
+                              </p>
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                  </CarouselItem>
-                ))}
+                      </CarouselItem>
+                    );
+                  }
+                )}
               </CarouselContent>
               <CarouselPrevious className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-5 h-10 w-10 bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600" />
               <CarouselNext className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-5 h-10 w-10 bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600" />

@@ -75,7 +75,34 @@
     "subtitle": "Testimonials",
     "title": "Don't take our word for it, here's what our users say",
     "rating": "Rated 4.6 out of 5 stars",
-    "reviews": "Based on 2,363 reviews"
+    "reviews": "Based on 2,363 reviews",
+    "items": [
+      {
+        "name": "Tanya M.",
+        "role": "Research Assistant",
+        "content": "Instead of rewatching long videos, I just search the transcript to find the part I need. It's like Ctrl+F for YouTube. Love it!"
+      },
+      {
+        "name": "Matt",
+        "role": "Content Writer",
+        "content": "I often watch industry videos to get content ideas. Now I use YouTranscripts to grab the text and brainstorm faster."
+      },
+      {
+        "name": "Steve T.",
+        "role": "Small Business Owner",
+        "content": "I'm not very tech-savvy, but this tool just works. Paste the link, click a button, and done. Can't believe something so simple saves so much effort."
+      },
+      {
+        "name": "Jessica S.",
+        "role": "College Student",
+        "content": "I just needed the text from a 60-minute video for quick reference, and YouTranscripts did it in seconds. No need to watch the whole video again. Huge time-saver!"
+      },
+      {
+        "name": "Saurabh",
+        "role": "Strategy Analyst",
+        "content": "We analyze industry interviews and podcasts from YouTube using YouTranscripts. It's a game-changer for research and presentation prep."
+      }
+    ]
   },
   "faq": {
     "title": "Frequently Asked Questions",

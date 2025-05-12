@@ -75,7 +75,34 @@
     "subtitle": "Depoimentos",
     "title": "Não acredite apenas em nossa palavra, veja o que nossos usuários dizem",
     "rating": "Avaliação de 4.6 de 5 estrelas",
-    "reviews": "Baseado em 2.363 avaliações"
+    "reviews": "Baseado em 2.363 avaliações",
+    "items": [
+      {
+        "name": "Tanya M.",
+        "role": "Assistente de Pesquisa",
+        "content": "Em vez de assistir a vídeos longos novamente, eu apenas pesquiso na transcrição para encontrar a parte que preciso. É como Ctrl+F para o YouTube. Adoro!"
+      },
+      {
+        "name": "Matt",
+        "role": "Redator de Conteúdo",
+        "content": "Frequentemente assisto a vídeos do setor para obter ideias de conteúdo. Agora uso o YouTranscripts para capturar o texto e fazer brainstorming mais rapidamente."
+      },
+      {
+        "name": "Steve T.",
+        "role": "Proprietário de Pequena Empresa",
+        "content": "Não sou muito experiente em tecnologia, mas esta ferramenta simplesmente funciona. Cole o link, clique em um botão e pronto. Não acredito que algo tão simples economize tanto esforço."
+      },
+      {
+        "name": "Jessica S.",
+        "role": "Estudante Universitária",
+        "content": "Eu só precisava do texto de um vídeo de 60 minutos para referência rápida, e o YouTranscripts fez isso em segundos. Não preciso assistir ao vídeo inteiro novamente. Economiza muito tempo!"
+      },
+      {
+        "name": "Saurabh",
+        "role": "Analista de Estratégia",
+        "content": "Analisamos entrevistas e podcasts do setor do YouTube usando o YouTranscripts. É um divisor de águas para pesquisa e preparação de apresentações."
+      }
+    ]
   },
   "faq": {
     "title": "Perguntas Frequentes",
