@@ -3,6 +3,7 @@
 import { useParams, usePathname } from "next/navigation";
 import { languages } from "@/i18n/settings";
 import { useT } from "@/i18n/client";
+import Image from "next/image";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,13 +11,24 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { Globe } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 
 export default function LanguageSwitcher() {
   const { t } = useT();
   const params = useParams();
   const pathname = usePathname();
   const currentLang = (params?.lng as string) || "en";
+
+  // Check if we're on an English-only page
+  const englishOnlyPages = ["/about", "/privacy", "/contact", "/terms"];
+  const isEnglishOnlyPage = englishOnlyPages.some(
+    (page) => pathname === page || pathname.startsWith(`${page}/`)
+  );
+
+  // Don't render the language switcher on English-only pages
+  if (isEnglishOnlyPage) {
+    return null;
+  }
 
   const handleLanguageChange = (newLang: string) => {
     if (newLang === currentLang) return;
@@ -71,29 +83,58 @@ export default function LanguageSwitcher() {
     window.location.href = newPath;
   };
 
-  // Map language codes to display names
-  const languageNames: Record<string, string> = {
-    en: "English",
-    es: "Español",
-    pt: "Português",
+  // Map language codes to display names and flags
+  const languageInfo: Record<string, { name: string; flag: string }> = {
+    en: { name: "English", flag: "/flags/us.svg" },
+    es: { name: "Español", flag: "/flags/es.svg" },
+    pt: { name: "Português", flag: "/flags/pt.svg" },
   };
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm" className="flex items-center gap-1">
-          <Globe className="h-4 w-4" />
-          <span>{languageNames[currentLang]}</span>
+        <Button
+          variant="outline"
+          size="sm"
+          className="flex items-center gap-2 rounded-full border-gray-200 bg-white/50 backdrop-blur-sm hover:bg-white/80 dark:border-gray-800 dark:bg-gray-950/50 dark:hover:bg-gray-950/80 px-3 h-9"
+        >
+          <div className="relative w-5 h-5 overflow-hidden rounded-full">
+            <Image
+              src={languageInfo[currentLang].flag}
+              alt={languageInfo[currentLang].name}
+              fill
+              className="object-cover"
+            />
+          </div>
+          <span className="text-sm font-medium">
+            {languageInfo[currentLang].name}
+          </span>
+          <ChevronDown className="h-4 w-4 opacity-70" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent
+        align="end"
+        className="min-w-[150px] p-1 rounded-xl border-gray-200 bg-white/95 backdrop-blur-sm dark:border-gray-800 dark:bg-gray-950/95"
+      >
         {languages.map((lang) => (
           <DropdownMenuItem
             key={lang}
             onClick={() => handleLanguageChange(lang)}
-            className={lang === currentLang ? "font-bold" : ""}
+            className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm ${
+              lang === currentLang
+                ? "bg-gray-100 font-medium dark:bg-gray-800/60"
+                : "hover:bg-gray-100 dark:hover:bg-gray-800/60"
+            }`}
           >
-            {languageNames[lang]}
+            <div className="relative w-5 h-5 overflow-hidden rounded-full">
+              <Image
+                src={languageInfo[lang].flag}
+                alt={languageInfo[lang].name}
+                fill
+                className="object-cover"
+              />
+            </div>
+            <span>{languageInfo[lang].name}</span>
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>
