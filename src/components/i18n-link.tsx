@@ -19,6 +19,23 @@ export default function I18nLink({
   const params = useParams();
   const lang = params?.lng as string;
 
+  // List of pages that should always be in English
+  const englishOnlyPages = ["/about", "/privacy", "/contact", "/terms"];
+
+  // Check if the current href is for an English-only page
+  const isEnglishOnlyPage = englishOnlyPages.some(
+    (page) => href === page || href.startsWith(`${page}/`)
+  );
+
+  // If it's an English-only page, always use the non-localized href
+  if (isEnglishOnlyPage) {
+    return (
+      <Link href={href} className={className} onClick={onClick}>
+        {children}
+      </Link>
+    );
+  }
+
   // If the href already starts with a language code, don't modify it
   if (href.startsWith("/es/") || href.startsWith("/pt/")) {
     return (

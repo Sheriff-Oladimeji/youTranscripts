@@ -20,6 +20,9 @@ export const config = {
 export function middleware(req: NextRequest) {
   const pathname = req.nextUrl.pathname;
 
+  // List of pages that should only be available in English
+  const englishOnlyPages = ["/about", "/privacy", "/contact", "/terms"];
+
   // Exclude paths starting with api, _next, static files etc.
   if (
     pathname.match(/\.(ico|jpg|jpeg|png|gif|svg|css|js)$/) ||
@@ -27,6 +30,22 @@ export function middleware(req: NextRequest) {
     pathname.startsWith("/_next/")
   ) {
     return NextResponse.next();
+  }
+
+  // Check if this is a localized version of an English-only page
+  const isLocalizedEnglishOnlyPage = languages.some((lng) => {
+    if (lng === fallbackLng) return false; // Skip English
+    return englishOnlyPages.some(
+      (page) =>
+        pathname === `/${lng}${page}` || pathname.startsWith(`/${lng}${page}/`)
+    );
+  });
+
+  // If it's a localized version of an English-only page, redirect to the English version
+  if (isLocalizedEnglishOnlyPage) {
+    // Extract the path without the language prefix
+    const pathWithoutLang = pathname.substring(3); // Remove first 3 chars (e.g., '/es')
+    return NextResponse.redirect(new URL(pathWithoutLang, req.url));
   }
 
   // If path starts with /en, redirect to the root path without /en
@@ -99,7 +118,13 @@ export function middleware(req: NextRequest) {
     !req.nextUrl.pathname.startsWith("/_next") &&
     !req.nextUrl.pathname.startsWith("/en/") &&
     !req.nextUrl.pathname.startsWith("/transcript/") && // No redirect for English transcript URLs
-    lng !== fallbackLng // Only redirect non-English languages
+    lng !== fallbackLng && // Only redirect non-English languages
+    // Don't redirect English-only pages
+    !englishOnlyPages.some(
+      (page) =>
+        req.nextUrl.pathname === page ||
+        req.nextUrl.pathname.startsWith(`${page}/`)
+    )
   ) {
     return NextResponse.redirect(
       new URL(`/${lng}${req.nextUrl.pathname}${req.nextUrl.search}`, req.url)

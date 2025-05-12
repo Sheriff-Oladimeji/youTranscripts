@@ -1,5 +1,6 @@
-import { languages } from "@/i18n/settings";
+import { languages, fallbackLng } from "@/i18n/settings";
 
 export async function generateStaticParams() {
-  return languages.map((lng) => ({ lng }));
+  // Filter out English (fallbackLng) since About page should only be in English
+  return languages.filter((lng) => lng !== fallbackLng).map((lng) => ({ lng }));
 }

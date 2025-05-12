@@ -12,7 +12,6 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   testimonials as fallbackTestimonials,
-  Testimonial,
 } from "@/constants/testimonials";
 import { useT } from "@/i18n/client";
 
