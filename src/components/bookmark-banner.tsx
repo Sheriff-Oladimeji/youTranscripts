@@ -2,11 +2,21 @@
 
 import { useState, useEffect } from "react";
 import { X } from "lucide-react";
+import { useT } from "@/i18n/client";
+import { usePathname } from "next/navigation";
 
 export default function BookmarkBanner() {
+  const { t } = useT();
+  const pathname = usePathname();
   const [isVisible, setIsVisible] = useState(false);
   const [isMac, setIsMac] = useState(false);
   const [isMobile, setIsMobile] = useState(true);
+
+  // Check if we're on an English-only page
+  const englishOnlyPages = ["/about", "/privacy", "/contact", "/terms"];
+  const isEnglishOnlyPage = englishOnlyPages.some(
+    (page) => pathname === page || pathname.startsWith(`${page}/`)
+  );
 
   useEffect(() => {
     // Check if user has dismissed the banner before
@@ -51,6 +61,16 @@ export default function BookmarkBanner() {
     return null;
   }
 
+  // Get the appropriate translation key based on device
+  const titleKey = isMac ? "bookmark.titleMac" : "bookmark.title";
+
+  // For English-only pages, use English text
+  const bookmarkText = isEnglishOnlyPage
+    ? isMac
+      ? "Bookmark Us ⌘+D for Quick Access"
+      : "Bookmark Us Ctrl+D for Quick Access"
+    : t(titleKey);
+
   return (
     <div className="bg-amber-400 text-black py-2 px-4 flex items-center justify-center relative banner-animation">
       {/* Animation is defined in a style tag that will be added to the document head */}
@@ -88,13 +108,16 @@ export default function BookmarkBanner() {
         >
           <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" />
         </svg>
-        <span>
-          Bookmark Us
-          <kbd className="px-2 py-1 bg-white/30 rounded text-sm font-mono mx-1">
-            {isMac ? "⌘" : "Ctrl"}+D
-          </kbd>
-          for Quick Access
-        </span>
+        <span
+          dangerouslySetInnerHTML={{
+            __html: bookmarkText.replace(
+              isMac ? "⌘+D" : "Ctrl+D",
+              `<kbd class="px-2 py-1 bg-white/30 rounded text-sm font-mono mx-1">${
+                isMac ? "⌘" : "Ctrl"
+              }+D</kbd>`
+            ),
+          }}
+        />
       </div>
       <button
         onClick={() => {
