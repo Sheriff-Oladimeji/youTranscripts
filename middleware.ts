@@ -18,6 +18,49 @@ export const config = {
 };
 
 export function middleware(req: NextRequest) {
+  const pathname = req.nextUrl.pathname;
+
+  // Exclude paths starting with api, _next, static files etc.
+  if (
+    pathname.match(/\.(ico|jpg|jpeg|png|gif|svg|css|js)$/) ||
+    pathname.startsWith("/api/") ||
+    pathname.startsWith("/_next/")
+  ) {
+    return NextResponse.next();
+  }
+
+  // If path starts with /en, redirect to the root path without /en
+  if (pathname.startsWith("/en/")) {
+    // Special handling for /en/transcript paths
+    if (pathname.startsWith("/en/transcript/")) {
+      const newPath = pathname.replace("/en/transcript/", "/transcript/");
+      return NextResponse.redirect(new URL(newPath, req.url));
+    }
+    const newPath = pathname.replace("/en/", "/");
+    return NextResponse.redirect(new URL(newPath, req.url));
+  }
+  if (pathname === "/en") {
+    return NextResponse.redirect(new URL("/", req.url));
+  }
+
+  // For non-English languages, check if the path starts with a language code
+  const pathnameHasLang = languages.some(
+    (loc) => pathname.startsWith(`/${loc}/`) || pathname === `/${loc}`
+  );
+
+  // For non-English paths that don't have a language prefix, redirect to add it
+  if (!pathnameHasLang && pathname !== "/") {
+    const segments = pathname.split("/").filter(Boolean);
+    // Don't redirect if we're already on an English page
+    if (segments[0] !== "en") {
+      // For all other languages, if no language is specified, use Spanish as default
+      const lang = req.cookies.get("i18next")?.value || "es";
+      if (languages.includes(lang) && lang !== "en") {
+        return NextResponse.redirect(new URL(`/${lang}${pathname}`, req.url));
+      }
+    }
+  }
+
   // Ignore paths with "icon" or "chrome"
   if (
     req.nextUrl.pathname.indexOf("icon") > -1 ||
@@ -54,7 +97,8 @@ export function middleware(req: NextRequest) {
   if (
     !lngInPath &&
     !req.nextUrl.pathname.startsWith("/_next") &&
-    !req.nextUrl.pathname.startsWith("/transcript") &&
+    !req.nextUrl.pathname.startsWith("/en/") &&
+    !req.nextUrl.pathname.startsWith("/transcript/") && // No redirect for English transcript URLs
     lng !== fallbackLng // Only redirect non-English languages
   ) {
     return NextResponse.redirect(

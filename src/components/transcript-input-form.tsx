@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import { getVideoId } from "@/lib/youtube";
 import { useTranscriptStore } from "@/store/transcript-store";
 import { useT } from "@/i18n/client";
+import { fallbackLng } from "@/i18n/settings";
 
 interface TranscriptInputFormProps {
   buttonText?: string;
@@ -49,10 +50,14 @@ export default function TranscriptInputForm({
           "Valid YouTube URL detected, navigating to transcript page"
         );
         clearTranscript();
-        // If we have a language parameter, include it in the URL
-        const path = lng
-          ? `/${lng}/transcript/${videoId}`
-          : `/transcript/${videoId}`;
+
+        // For English (or no language specified), use root route
+        // For other languages, include the language prefix
+        const path =
+          !lng || lng === fallbackLng
+            ? `/transcript/${videoId}`
+            : `/${lng}/transcript/${videoId}`;
+
         router.push(path);
       } else {
         console.error("Invalid YouTube URL:", trimmedUrl);

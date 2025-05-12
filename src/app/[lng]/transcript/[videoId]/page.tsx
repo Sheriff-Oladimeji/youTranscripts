@@ -50,7 +50,7 @@ export default function TranscriptPage({
       {/* Video Section */}
       <EmbeddedVideo videoId={videoId} />
 
-      <div className="w-full max-w-[800px] mx-auto px-4 py-6 pb-24 md:pb-6">
+      <div className="w-full max-w-[800px] mx-auto px-4 py-2 pb-20 md:pb-6">
         {/* Transcript Header */}
         <TranscriptHeader
           videoId={videoId}
