@@ -42,6 +42,13 @@ export default function HeroSection({ lng }: HeroSectionProps) {
           "Valid YouTube URL detected, navigating to transcript page"
         );
 
+        // Import the transcript store dynamically to avoid circular dependencies
+        const { useTranscriptStore } = await import("@/store/transcript-store");
+
+        // Clear the transcript store and wait for it to complete
+        await useTranscriptStore.getState().clearTranscript();
+        console.log("Transcript store cleared, now navigating");
+
         // For English (or no language specified), use root route
         // For other languages, include the language prefix
         const path =
@@ -49,6 +56,8 @@ export default function HeroSection({ lng }: HeroSectionProps) {
             ? `/transcript/${videoId}`
             : `/${lng}/transcript/${videoId}`;
 
+        // Reset loading state and navigate
+        setIsLoading(false);
         router.push(path);
       } else {
         console.error("Invalid YouTube URL:", trimmedUrl);

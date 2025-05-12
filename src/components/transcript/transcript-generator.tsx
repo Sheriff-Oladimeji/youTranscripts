@@ -40,7 +40,10 @@ export default function TranscriptGenerator({ lng }: TranscriptGeneratorProps) {
         console.log(
           "Valid YouTube URL detected, navigating to transcript page"
         );
-        clearTranscript();
+
+        // Clear the transcript store and wait for it to complete
+        await clearTranscript();
+        console.log("Transcript store cleared, now navigating");
 
         // For English (or no language specified), use root route
         // For other languages, include the language prefix
@@ -49,6 +52,8 @@ export default function TranscriptGenerator({ lng }: TranscriptGeneratorProps) {
             ? `/transcript/${videoId}`
             : `/${lng}/transcript/${videoId}`;
 
+        // Reset loading state and navigate
+        setIsLoading(false);
         router.push(path);
       } else {
         console.error("Invalid YouTube URL:", trimmedUrl);
@@ -81,7 +86,9 @@ export default function TranscriptGenerator({ lng }: TranscriptGeneratorProps) {
             className="h-12 px-8 bg-black hover:bg-gray-800 text-white font-bold"
             disabled={isLoading}
           >
-            {isLoading ? "Generating..." : t("transcriptGenerator.button")}
+            {isLoading
+              ? t("transcriptGenerator.generating")
+              : t("transcriptGenerator.button")}
           </Button>
         </form>
       </div>

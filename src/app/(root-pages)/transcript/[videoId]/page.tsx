@@ -27,11 +27,9 @@ export default function TranscriptPage({
 
   useEffect(() => {
     if (videoId) {
-      // Check if we already have data for this video to avoid duplicate calls
-      const currentVideoId = useTranscriptStore.getState().videoId;
-      if (currentVideoId !== videoId) {
-        fetchTranscriptData(videoId);
-      }
+      console.log(`[root] Fetching transcript data for videoId: ${videoId}`);
+      // Always fetch data when the component mounts
+      fetchTranscriptData(videoId);
     }
   }, [videoId, fetchTranscriptData]);
 

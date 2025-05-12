@@ -32,7 +32,7 @@ interface TranscriptState {
   setSelectedLanguage: (language: string) => void;
   setTranslationTarget: (language: string | null) => void;
   translateTranscript: (language: string) => Promise<void>;
-  clearTranscript: () => void;
+  clearTranscript: () => Promise<void>;
 }
 
 export const useTranscriptStore = create<TranscriptState>((set, get) => ({
@@ -124,10 +124,9 @@ export const useTranscriptStore = create<TranscriptState>((set, get) => ({
           isLoading: false,
         });
         // Sync to translation store
-        useTranslationStore.getState().setOriginalTranscript(
-          data.transcript,
-          detectedLanguage
-        );
+        useTranslationStore
+          .getState()
+          .setOriginalTranscript(data.transcript, detectedLanguage);
       } catch (fetchError) {
         // Handle fetch-specific errors
         clearTimeout(timeoutId);
@@ -235,8 +234,10 @@ export const useTranscriptStore = create<TranscriptState>((set, get) => ({
     }
   },
 
-  clearTranscript: () =>
+  clearTranscript: () => {
+    console.log("Clearing transcript store");
     set({
+      videoId: null, // Also clear the videoId
       transcript: [],
       originalTranscript: [],
       videoTitle: "",
@@ -250,5 +251,8 @@ export const useTranscriptStore = create<TranscriptState>((set, get) => ({
       selectedLanguage: "en",
       detectedLanguage: "en",
       translationTarget: null,
-    }),
+    });
+    // Return a resolved promise to allow for awaiting the state update
+    return Promise.resolve();
+  },
 }));
