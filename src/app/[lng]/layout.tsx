@@ -1,6 +1,5 @@
-"use client";
-
 import type React from "react";
+import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -8,7 +7,7 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { Toaster } from "sonner";
 import ClientBannerWrapper from "@/components/client-banner-wrapper";
-import { Suspense, use } from "react";
+import { Suspense } from "react";
 import Analytics from "@/components/analytics";
 import { notFound } from "next/navigation";
 
@@ -22,15 +21,32 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export default function RootLayout({
+// Base metadata for language-specific routes
+// This will be overridden by page-specific metadata
+export const metadata: Metadata = {
+  metadataBase: new URL("https://youtranscripts.com"),
+  robots: {
+    index: true,
+    follow: true,
+  },
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
+  manifest: "/manifest.json",
+  verification: {
+    google: "verification_token", // Replace with actual verification token if available
+  },
+};
+
+export default async function RootLayout({
   children,
   params,
 }: Readonly<{
   children: React.ReactNode;
-  params: Promise<{ lng: string }>;
+  params: { lng: string };
 }>) {
-  const resolvedParams = use(params);
-  const { lng } = resolvedParams;
+  const { lng } = params;
 
   // Return 404 for English routes - they should use the root layout
   if (lng === "en") {
