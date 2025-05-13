@@ -51,6 +51,16 @@ export const metadata: Metadata = {
   verification: {
     google: "verification_token", // Replace with actual verification token if available
   },
+  // Add hreflang alternate language links
+  alternates: {
+    canonical: "https://youtranscripts.com",
+    languages: {
+      en: "https://youtranscripts.com",
+      es: "https://youtranscripts.com/es",
+      pt: "https://youtranscripts.com/pt",
+      "x-default": "https://youtranscripts.com",
+    },
+  },
 };
 
 export default function RootLayout({
