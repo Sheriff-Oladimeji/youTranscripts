@@ -21,23 +21,40 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// Base metadata for language-specific routes
-// This will be overridden by page-specific metadata
-export const metadata: Metadata = {
-  metadataBase: new URL("https://youtranscripts.com"),
-  robots: {
-    index: true,
-    follow: true,
-  },
-  icons: {
-    icon: "/logo.png",
-    apple: "/logo.png",
-  },
-  manifest: "/manifest.json",
-  verification: {
-    google: "verification_token", // Replace with actual verification token if available
-  },
-};
+// Generate metadata for language-specific routes
+export async function generateMetadata({
+  params,
+}: {
+  params: { lng: string };
+}): Promise<Metadata> {
+  const { lng } = params;
+
+  return {
+    metadataBase: new URL("https://youtranscripts.com"),
+    robots: {
+      index: true,
+      follow: true,
+    },
+    icons: {
+      icon: "/logo.png",
+      apple: "/logo.png",
+    },
+    manifest: "/manifest.json",
+    verification: {
+      google: "verification_token", // Replace with actual verification token if available
+    },
+    // Add hreflang alternate language links
+    alternates: {
+      canonical: `https://youtranscripts.com/${lng}`,
+      languages: {
+        en: "https://youtranscripts.com",
+        es: "https://youtranscripts.com/es",
+        pt: "https://youtranscripts.com/pt",
+        "x-default": "https://youtranscripts.com",
+      },
+    },
+  };
+}
 
 export default async function RootLayout({
   children,
