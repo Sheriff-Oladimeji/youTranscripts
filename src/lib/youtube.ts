@@ -6,9 +6,9 @@ export function getVideoId(url: string): string | null {
   }
 
   try {
-    // Try to match standard YouTube URLs and shorts
+    // Try to match standard YouTube URLs, shorts, and live videos
     const match = url.match(
-      /(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=|\/shorts\/))([^"&?\/\s]{11})/
+      /(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=|\/shorts\/|\/live\/))([^"&?\/\s]{11})/
     );
 
     if (match && match[1]) {
@@ -17,7 +17,7 @@ export function getVideoId(url: string): string | null {
 
     // Additional check for mobile YouTube URLs
     const mobileMatch = url.match(
-      /(?:m\.youtube\.com\/watch\?v=)([^"&?\/\s]{11})/
+      /(?:m\.youtube\.com(?:\/watch\?v=|\/live\/))([^"&?\/\s]{11})/
     );
     if (mobileMatch && mobileMatch[1]) {
       return mobileMatch[1];
